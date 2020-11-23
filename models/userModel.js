@@ -1,7 +1,7 @@
 'use strict';
 const pool = require('../database/database');
 const promisePool = pool.promise();
-const TAG = 'userModel: '
+const TAG = 'userModel: ';
 
 const getAllUsers = async () =>  {
   try {
@@ -11,8 +11,8 @@ const getAllUsers = async () =>  {
   catch (e) {
     console.log(TAG + e.message);
   }
-}
+};
 
 module.exports = {
   getAllUsers
-}
+};

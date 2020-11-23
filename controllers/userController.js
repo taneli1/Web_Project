@@ -10,4 +10,4 @@ const user_list_get = async (req, res) => {
 
 module.exports = {
   user_list_get
-}
+};
