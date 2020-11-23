@@ -1,5 +1,6 @@
 'use strict';
 
+const TAG = 'userController: '
 const userModel = require('../models/userModel');
 
 const user_list_get = async (req, res) => {
