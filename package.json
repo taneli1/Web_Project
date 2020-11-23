@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
+    "express-validator": "^6.6.1",
     "mysql2": "^2.2.5"
   }
 }
