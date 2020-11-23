@@ -3,9 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Log In</title>
+    <link href="./css/login.css" rel="stylesheet">
 </head>
 <body>
-
-
+<div class="forms" id="login-wrapper">
+    <div class="form-wrapper">
+        <h3>Login</h3>
+        <form id="login-form" class="light-border">
+            <div>
+                <label>Email:</label>
+                <input class="light-border"
+                       type="text"
+                       name="username"/>
+            </div>
+            <div>
+                <label>Password:</label>
+                <input class="light-border"
+                       type="password"
+                       name="password"/>
+            </div>
+            <div>
+                <button class="light-border" type="submit">Log In</button>
+            </div>
+        </form>
+    </div>
+    <div class="form-wrapper">
+        <h3>Register</h3>
+        <form class="light-border" id="add-user-form">
+            <input class="light-border"
+                   type="text"
+                   name="name"
+                   pattern=".{3,}"
+                   placeholder="Name"
+                   required>
+            <input class="light-border"
+                   type="email"
+                   name="username"
+                   placeholder="email"
+                   required>
+            <input class="light-border"
+                   name="phone_number"
+                   placeholder="phone number"
+                   pattern="[0-9]"
+                   required>
+            <input class="light-border"
+                   name="city"
+                   placeholder="city"
+                   required>
+            <input class="light-border"
+                   type="password"
+                   name="password"
+                   pattern="(?=.*[A-Z]).{8,}"
+                   placeholder="Password" required>
+            <button class="light-border" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+<script src="./js/login.js"></script>
 </body>
 </html>

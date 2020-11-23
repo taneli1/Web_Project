@@ -1,23 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="14c24b8a-7f5a-4c82-b0b7-97fdac8cc3a0" name="Default Changelist" comment="" />
+    <list default="true" id="14c24b8a-7f5a-4c82-b0b7-97fdac8cc3a0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web_Project" beforeDir="false" afterPath="$PROJECT_DIR$/Web_Project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web_Project/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Web_Project/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/login.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
   <component name="ProjectId" id="1kYNvza3HWmlUmcUL1iE5M2LS2N" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="E:/Downloads/bcwt-example-week5/bcwt-example-week5" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jasuh\WebstormProjects\BetterMarket\html" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -27,11 +73,47 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605873799523</updated>
-      <workItem from="1605873800566" duration="324000" />
+      <workItem from="1605873800566" duration="1298000" />
+      <workItem from="1606065859483" duration="1056000" />
+      <workItem from="1606080266844" duration="1047000" />
+      <workItem from="1606131806347" duration="6597000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="640" y="458" key="FileChooserDialogImpl" timestamp="1606145100413">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="640" y="458" key="FileChooserDialogImpl/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606145100413" />
+    <state width="1696" height="297" key="GridCell.Tab.0.bottom" timestamp="1606148940343">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1696" height="297" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606148940343" />
+    <state width="1696" height="297" key="GridCell.Tab.0.center" timestamp="1606148940343">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1696" height="297" key="GridCell.Tab.0.center/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606148940343" />
+    <state width="1696" height="297" key="GridCell.Tab.0.left" timestamp="1606148940343">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1696" height="297" key="GridCell.Tab.0.left/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606148940343" />
+    <state width="1696" height="297" key="GridCell.Tab.0.right" timestamp="1606148940343">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1696" height="297" key="GridCell.Tab.0.right/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606148940343" />
   </component>
 </project>
