@@ -8,7 +8,7 @@ const app = express();
 
 // --- Routes
 const rootRoute = require('./routes/rootRoute');
-const userRoute = require('./routes/userRoute')
+const userRoute = require('./routes/userRoute');
 
 
 // --- Setup
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/', rootRoute);
-app.use('/user', userRoute)
+app.use('/user', userRoute);
 
 
 // ---
