@@ -1,5 +1,10 @@
 'use strict';
+<<<<<<< HEAD
 // TODO Validation
+=======
+// TODO Validation of all registration fields, dont res with all data
+//  - Login automatically after account creation
+>>>>>>> 972094a188db4f36c1a627374b127382f49eedfb
 const express = require('express');
 const router = express.Router();
 const {body} = require('express-validator');
@@ -15,8 +20,12 @@ router.post('/register',
       body('password', 'at least one upper case letter').
           matches('(?=.*[A-Z]).{8,}'),
     ],
+<<<<<<< HEAD
     authController.user_create_post,
     authController.login,
+=======
+    authController.user_create_post
+>>>>>>> 972094a188db4f36c1a627374b127382f49eedfb
 );
 
 
