@@ -19,12 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14c24b8a-7f5a-4c82-b0b7-97fdac8cc3a0" name="Default Changelist" comment="">
+    <list default="true" id="5faad90e-3718-4bc0-8213-062a5c0b858c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web_Project" beforeDir="false" afterPath="$PROJECT_DIR$/Web_Project" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web_Project/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Web_Project/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/main.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +52,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="E:/Downloads/bcwt-example-week5/bcwt-example-week5" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -65,10 +65,25 @@
       <recent name="C:\Users\jasuh\WebstormProjects\BetterMarket\html" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="14c24b8a-7f5a-4c82-b0b7-97fdac8cc3a0" name="Default Changelist" comment="" />
+      <changelist id="5faad90e-3718-4bc0-8213-062a5c0b858c" name="Default Changelist" comment="" />
       <created>1605873799523</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -77,24 +92,31 @@
       <workItem from="1606065859483" duration="1056000" />
       <workItem from="1606080266844" duration="1047000" />
       <workItem from="1606131806347" duration="6597000" />
+      <workItem from="1606219946740" duration="334000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="393" y="8" key="CommitChangelistDialog2" timestamp="1606220459720">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="393" y="8" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606220459720" />
     <state x="640" y="458" key="FileChooserDialogImpl" timestamp="1606145100413">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
@@ -115,5 +137,9 @@
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
     <state width="1696" height="297" key="GridCell.Tab.0.right/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606148940343" />
+    <state x="495" y="205" key="git4idea.merge.GitPullDialog" timestamp="1606149968349">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="495" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1606149968349" />
   </component>
 </project>
