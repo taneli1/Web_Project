@@ -1,8 +1,8 @@
 'use strict';
 
-const TAG = 'userController: '
+const TAG = 'userController: ';
 const userModel = require('../models/userModel');
-const { validationResult} = require('express-validator');
+const {validationResult} = require('express-validator');
 
 /**
  * Get all users
@@ -28,9 +28,18 @@ const user_create = async (req, res) => {
   const id = await userModel.createUser(req);
   const user = await userModel.getUser(id);
   res.send(user);
-}
+};
+
+/**
+ * Return a single user with user id
+ */
+const user_get_by_id = async (req, res) => {
+  const user = await userModel.getUser(req.params.id);
+  res.json(user);
+};
 
 module.exports = {
   user_list_get,
-  user_create
-}
+  user_create,
+  user_get_by_id,
+};
