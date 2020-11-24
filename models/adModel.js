@@ -11,6 +11,7 @@ const promisePool = pool.promise();
 const getAllAdsTypeSell = async () =>  {
   try {
     const [rows] = await promisePool.execute('SELECT item_name, city, price, description, listed_by FROM bm_ad');
+    console.log(rows);
     return rows;
   }
   catch (e) {
