@@ -1,11 +1,12 @@
 'use strict';
+// TODO Image uploads, Validation
 
 const express = require('express');
 const router = express.Router();
 const adController = require('../controllers/adController');
 
 // Both of these requests need a specifying parameter to decide which
-// type of ads we want to fetch
+// type of ads we want to fetch = req.body.ad_type
 router.get('/', adController.ad_get_list);
 router.get('/:id', adController.ad_get_by_id);
 // TODO VALIDATION REQUIRED

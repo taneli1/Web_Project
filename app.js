@@ -1,6 +1,11 @@
 'use strict';
 
 // TODO Secure user route, reputation posting
+//  - Foreign keys
+//  - Table for Reputation
+//  - Image Uploads
+//  - Separate table which keeps track of user ads?
+
 // --- Stuff
 const express = require('express');
 const bodyParser = require('body-parser');
