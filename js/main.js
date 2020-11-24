@@ -8,12 +8,15 @@ const new_item = document.querySelector(".new-items");
 const getAllAdsTypeSell = async () =>  {
   const response = await fetch(url + '/ad');
   const items = await response.json();
-  createNewItems(items);
+  const response1 = await fetch(url + '/user');
+  const users = await response1.json();
+
+  createNewItems(items, users);
 };
 
 getAllAdsTypeSell();
 
-const createNewItems = (items) => {
+const createNewItems = (items, users) => {
   let item = {
     'name': '',
     'city': '',
@@ -31,8 +34,8 @@ const createNewItems = (items) => {
         items[i].price : 'No price';
     item.desc = items[i].description != null ?
         items[i].description : 'No description';
-    item.listed_by = items[i].listed_by != null ?
-        items[i].listed_by : 'No';
+    item.listed_by = users[i].name != null ?
+        users[i].name : 'No';
 
     showItems(item);
   }
