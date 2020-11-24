@@ -1,6 +1,8 @@
 'use strict';
 // TODO Validation of all registration fields, dont res with all data
 //  - Login automatically after account creation
+//  - Probably require auth to access some routes
+
 const express = require('express');
 const router = express.Router();
 const {body} = require('express-validator');
@@ -16,8 +18,9 @@ router.post('/register',
       body('password', 'at least one upper case letter').
           matches('(?=.*[A-Z]).{8,}'),
     ],
-    authController.user_create_post
+    authController.user_create_post,
 );
 
+router.delete('/:id', authController.user_delete);
 
 module.exports = router;

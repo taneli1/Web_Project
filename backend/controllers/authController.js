@@ -1,12 +1,12 @@
 'use strict';
 // TODO SecretOrPrivateKey into a file, read from there
 
-const TAG = 'authController: '
+const TAG = 'authController: ';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const userModel = require('../models/userModel');
-const { validationResult} = require('express-validator');
+const {validationResult} = require('express-validator');
 
 /**
  * Login to a user account with req params
@@ -14,13 +14,13 @@ const { validationResult} = require('express-validator');
 const login = (req, res) => {
 
   // Need to save email as username to make authentication work in passport
-  req.body.username = req.body.email
+  req.body.username = req.body.email;
 
   passport.authenticate('local', {session: false}, (err, user, info) => {
 
-    if (info) console.log('authController login info: ', info)
+    if (info) console.log('authController login info: ', info);
 
-    delete user.password
+    delete user.password;
     if (err || !user) {
       return res.status(400).json({
         message: `${TAG}: Something is not right`,
@@ -45,17 +45,18 @@ const login = (req, res) => {
  */
 const user_create_post = async (req, res, next) => {
 
-  console.log(TAG , "UserCreate")
+  console.log(TAG, 'UserCreate');
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log(TAG,'user create error', errors);
+    console.log(TAG, 'user create error', errors);
     res.send(errors.array());
-  } else {
+  }
+  else {
 
     // Password Hashing
     const salt = bcrypt.genSaltSync(10);
-    req.body.password = bcrypt.hashSync(req.body.password, salt)
+    req.body.password = bcrypt.hashSync(req.body.password, salt);
 
     /*
     Since createUser returns the insertID of the account created,
@@ -63,16 +64,26 @@ const user_create_post = async (req, res, next) => {
     User registration completed successfully.
     Else respond with the err message, inside of const ok
      */
-    const ok = await userModel.createUser(req)
+    const ok = await userModel.createUser(req);
 
     if (!isNaN(ok)) {
       next();
-    } else {
+    }
+    else {
       res.status(400).json({error: ok});
     }
   }
 };
 
+/**
+ * Delete an user
+ */
+const user_delete = async (req, res) => {
+  const userDeletion = userModel.deleteUser(req);
+  res.json(userDeletion);
+};
+
+// Logout
 const logout = (req, res) => {
   req.logout();
   res.json({message: 'logout'});
@@ -81,5 +92,6 @@ const logout = (req, res) => {
 module.exports = {
   login,
   user_create_post,
-  logout
+  logout,
+  user_delete
 };

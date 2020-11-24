@@ -46,7 +46,7 @@ passport.use(new JWTStrategy({
       // find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
       try {
         console.log('jwtPayload', jwtPayload)
-        const user = await userModel.getUser(jwtPayload.user_id);
+        const user = await userModel.getUserById(jwtPayload.user_id);
         if (user === undefined) {
           return done(null, false);
         }

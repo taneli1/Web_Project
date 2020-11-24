@@ -1,6 +1,6 @@
 'use strict';
 
-// TODO Secure user route????
+// TODO Secure user route, reputation posting
 // --- Stuff
 const express = require('express');
 const bodyParser = require('body-parser');
