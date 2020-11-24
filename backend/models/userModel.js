@@ -18,7 +18,7 @@ const getAllUsers = async () => {
 
 /**
  * Returns a single user from db with the req id. (ALL the data under that id)
- * TODO Return only stuff needed?
+ * TODO Return only stuff needed? Currently returns everything
  */
 const getUser = async (id) => {
   try {
@@ -40,7 +40,8 @@ const createUser = async (req) => {
 
   // Check if account with the email exists, if not, continue with registration
   const exists = await getUserLogin([req.body.email]);
-  console.log(TAG , "Exists: " , exists)
+  // console.log(TAG , "Exists: " , exists)
+
   if (exists.length === 0) {
     try {
       const [rows] = await promisePool.execute(
