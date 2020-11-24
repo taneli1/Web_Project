@@ -20,7 +20,7 @@ const getAllUsers = async () => {
  * Returns a single user from db with the req id. (ALL the data under that id)
  * TODO Return only stuff needed? Currently returns everything
  */
-const getUser = async (id) => {
+const getUserById = async (id) => {
   try {
     console.log(TAG + 'getUser :', id);
     const [rows] = await promisePool.execute(
@@ -90,6 +90,6 @@ const getUserLogin = async (params) => {
 module.exports = {
   getAllUsers,
   createUser,
-  getUser,
+  getUserById,
   getUserLogin,
 };
