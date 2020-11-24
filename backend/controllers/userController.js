@@ -28,9 +28,9 @@ const user_create = async (req, res) => {
   const id = await userModel.createUser(req);
   const user = await userModel.getUser(id);
   res.send(user);
-};
+}
 
 module.exports = {
   user_list_get,
   user_create
-};
+}

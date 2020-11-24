@@ -1,4 +1,5 @@
 'use strict';
+// TODO SecretOrPrivateKey into a file, read from there
 
 const TAG = 'authController: '
 const jwt = require('jsonwebtoken');
@@ -7,10 +8,12 @@ const bcrypt = require('bcryptjs')
 const userModel = require('../models/userModel');
 const { validationResult} = require('express-validator');
 
-
+/**
+ * Login to a user account with req params
+ */
 const login = (req, res) => {
 
-  // Need to save email in username to make authentication work
+  // Need to save email as username to make authentication work in passport
   req.body.username = req.body.email
 
   passport.authenticate('local', {session: false}, (err, user, info) => {
@@ -36,8 +39,13 @@ const login = (req, res) => {
   (req, res);
 };
 
+/**
+ * Create an user with req params, checks if user with the email requested
+ * already exists. Res includes the err message if user already exists.
+ */
 const user_create_post = async (req, res, next) => {
 
+  console.log(TAG , "UserCreate")
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -45,13 +53,22 @@ const user_create_post = async (req, res, next) => {
     res.send(errors.array());
   } else {
 
+    // Password Hashing
     const salt = bcrypt.genSaltSync(10);
     req.body.password = bcrypt.hashSync(req.body.password, salt)
 
-    if (await userModel.createUser(req)) {
+    /*
+    Since createUser returns the insertID of the account created,
+    Check if the answer is number, if it is, we know that the
+    User registration completed successfully.
+    Else respond with the err message, inside of const ok
+     */
+    const ok = await userModel.createUser(req)
+
+    if (!isNaN(ok)) {
       next();
     } else {
-      res.status(400).json({error: 'register error'});
+      res.status(400).json({error: ok});
     }
   }
 };

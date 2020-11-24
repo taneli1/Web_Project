@@ -1,6 +1,6 @@
 'use strict';
 
-const TAG = 'adModel: ';
+const TAG = 'adModel: '
 const pool = require('../database/database');
 const promisePool = pool.promise();
 
@@ -10,14 +10,14 @@ const promisePool = pool.promise();
  */
 const getAllAdsTypeSell = async () =>  {
   try {
-    const [rows] = await promisePool.execute('SELECT item_name, city, price, description, listed_by FROM bm_ad_sell');
+    const [rows] = await promisePool.execute('SELECT item_name, city, price, description, listed_by FROM bm_ad');
     return rows;
   }
   catch (e) {
     console.log(TAG + e.message);
   }
-};
+}
 
 module.exports = {
   getAllAdsTypeSell
-};
+}
