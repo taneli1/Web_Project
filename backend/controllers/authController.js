@@ -1,5 +1,8 @@
 'use strict';
+<<<<<<< HEAD
+=======
 // TODO SecretOrPrivateKey into a file, read from there
+>>>>>>> 972094a188db4f36c1a627374b127382f49eedfb
 
 const TAG = 'authController: '
 const jwt = require('jsonwebtoken');
@@ -8,12 +11,19 @@ const bcrypt = require('bcryptjs')
 const userModel = require('../models/userModel');
 const { validationResult} = require('express-validator');
 
+<<<<<<< HEAD
+
+const login = (req, res) => {
+
+  // Need to save email in username to make authentication work
+=======
 /**
  * Login to a user account with req params
  */
 const login = (req, res) => {
 
   // Need to save email as username to make authentication work in passport
+>>>>>>> 972094a188db4f36c1a627374b127382f49eedfb
   req.body.username = req.body.email
 
   passport.authenticate('local', {session: false}, (err, user, info) => {
@@ -39,6 +49,10 @@ const login = (req, res) => {
   (req, res);
 };
 
+<<<<<<< HEAD
+const user_create_post = async (req, res, next) => {
+
+=======
 /**
  * Create an user with req params, checks if user with the email requested
  * already exists. Res includes the err message if user already exists.
@@ -46,6 +60,7 @@ const login = (req, res) => {
 const user_create_post = async (req, res, next) => {
 
   console.log(TAG , "UserCreate")
+>>>>>>> 972094a188db4f36c1a627374b127382f49eedfb
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -53,6 +68,15 @@ const user_create_post = async (req, res, next) => {
     res.send(errors.array());
   } else {
 
+<<<<<<< HEAD
+    const salt = bcrypt.genSaltSync(10);
+    req.body.password = bcrypt.hashSync(req.body.password, salt)
+
+    if (await userModel.createUser(req)) {
+      next();
+    } else {
+      res.status(400).json({error: 'register error'});
+=======
     // Password Hashing
     const salt = bcrypt.genSaltSync(10);
     req.body.password = bcrypt.hashSync(req.body.password, salt)
@@ -69,6 +93,7 @@ const user_create_post = async (req, res, next) => {
       next();
     } else {
       res.status(400).json({error: ok});
+>>>>>>> 972094a188db4f36c1a627374b127382f49eedfb
     }
   }
 };
