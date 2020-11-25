@@ -1,13 +1,13 @@
 'use strict';
 const sharp = require('sharp');
 
-const makeThumbnail = async (size, file, thumbname) => {
+const resizeImg = async (size, file, thumbname) => {
 
-  console.log('makeThumbnail', file, thumbname);
+  console.log('makeSmaller', file, thumbname);
   return await sharp(file).resize(size.width, size.height).toFile(thumbname);
 
 };
 
 module.exports = {
-  makeThumbnail,
+  resizeImg
 };

@@ -2,6 +2,7 @@
 
 const TAG = 'adController: ';
 const adModel = require('../models/adModel');
+const {resizeImg} = require('../utils/resize');
 
 /**
  * Responds with ads of requested type from database
@@ -41,10 +42,28 @@ const ad_delete_by_id = async (req,res ) => {
   res.json(deleteCompleted);
 }
 
+/**
+ * Resize an image
+ */
+const resize_image = async (req, res, next) => {
+  try {
+    const ready = await resizeImg({width: 160, height: 160}, req.file.path,
+        './backend/imgcache' + req.file.filename);
+    if (ready) {
+      console.log(TAG, "Resize", ready);
+      next();
+    }
+  } catch (e) {
+    console.log(TAG , e)
+    next();
+  }
+}
+
 
 module.exports = {
   ad_get_list,
   ad_get_by_id,
   ad_post,
-  ad_delete_by_id
+  ad_delete_by_id,
+  resize_image
 };
