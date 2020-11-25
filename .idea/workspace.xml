@@ -20,14 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5faad90e-3718-4bc0-8213-062a5c0b858c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/utils/resize.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web_Project" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/adController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/adController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/authController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/adModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/adModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/userModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/adRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/adRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/authRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/authRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/userRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/userRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/passport.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
@@ -92,7 +95,7 @@
       <workItem from="1606131806347" duration="6597000" />
       <workItem from="1606219946740" duration="334000" />
       <workItem from="1606227680965" duration="8254000" />
-      <workItem from="1606298726398" duration="7875000" />
+      <workItem from="1606298726398" duration="8390000" />
     </task>
     <servers />
   </component>
@@ -120,27 +123,39 @@
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
     <state x="640" y="458" key="FileChooserDialogImpl/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606226579390" />
-    <state width="1696" height="282" key="GridCell.Tab.0.bottom" timestamp="1606227662726">
-      <screen x="0" y="0" width="3440" height="1400" />
+    <state width="949" height="207" key="GridCell.Tab.0.bottom" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
     </state>
     <state width="1696" height="282" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662726" />
-    <state width="1696" height="282" key="GridCell.Tab.0.center" timestamp="1606227662725">
-      <screen x="0" y="0" width="3440" height="1400" />
+    <state width="949" height="207" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state width="949" height="207" key="GridCell.Tab.0.center" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
     </state>
     <state width="1696" height="282" key="GridCell.Tab.0.center/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662725" />
-    <state width="1696" height="282" key="GridCell.Tab.0.left" timestamp="1606227662725">
-      <screen x="0" y="0" width="3440" height="1400" />
+    <state width="949" height="207" key="GridCell.Tab.0.center/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state width="949" height="207" key="GridCell.Tab.0.left" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
     </state>
     <state width="1696" height="282" key="GridCell.Tab.0.left/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662725" />
-    <state width="1696" height="282" key="GridCell.Tab.0.right" timestamp="1606227662725">
-      <screen x="0" y="0" width="3440" height="1400" />
+    <state width="949" height="207" key="GridCell.Tab.0.left/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state width="949" height="207" key="GridCell.Tab.0.right" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
     </state>
     <state width="1696" height="282" key="GridCell.Tab.0.right/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662725" />
-    <state x="3878" y="695" key="MultipleFileMergeDialog" timestamp="1606228195887">
+    <state width="949" height="207" key="GridCell.Tab.0.right/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state x="3440" y="356" key="MergeDialog" timestamp="1606307706611">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state x="3440" y="356" key="MergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307706611" />
+    <state x="3878" y="695" key="MultipleFileMergeDialog" timestamp="1606307709844">
       <screen x="3440" y="356" width="1920" height="1040" />
     </state>
     <state x="498" y="464" key="MultipleFileMergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227718479" />
-    <state x="3878" y="695" key="MultipleFileMergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606228195887" />
+    <state x="3878" y="695" key="MultipleFileMergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307709844" />
+    <state x="4189" y="588" key="git4idea.branch.GitSmartOperationDialog" timestamp="1606307373868">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state x="4189" y="588" key="git4idea.branch.GitSmartOperationDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307373868" />
     <state x="495" y="205" key="git4idea.merge.GitPullDialog" timestamp="1606149968349">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
