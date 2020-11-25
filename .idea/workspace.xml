@@ -20,19 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5faad90e-3718-4bc0-8213-062a5c0b858c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/utils/resize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/adController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/adController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/authController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/adModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/adModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/userModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/adRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/adRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/authRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/authRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/userRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/userRoute.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/utils/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/passport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +84,7 @@
       <workItem from="1606219946740" duration="334000" />
       <workItem from="1606227680965" duration="8254000" />
       <workItem from="1606298726398" duration="8390000" />
+      <workItem from="1606307741728" duration="298000" />
     </task>
     <servers />
   </component>
@@ -152,6 +141,10 @@
     </state>
     <state x="498" y="464" key="MultipleFileMergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227718479" />
     <state x="3878" y="695" key="MultipleFileMergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307709844" />
+    <state x="3992" y="608" key="Vcs.Push.Dialog.v2" timestamp="1606307864124">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state x="3992" y="608" key="Vcs.Push.Dialog.v2/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307864124" />
     <state x="4189" y="588" key="git4idea.branch.GitSmartOperationDialog" timestamp="1606307373868">
       <screen x="3440" y="356" width="1920" height="1040" />
     </state>
