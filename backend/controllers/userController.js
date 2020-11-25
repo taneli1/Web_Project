@@ -41,5 +41,5 @@ const user_get_by_id = async (req, res) => {
 module.exports = {
   user_list_get,
   user_create,
-  user_get_by_id
+  user_get_by_id,
 };

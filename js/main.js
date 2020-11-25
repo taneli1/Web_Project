@@ -10,6 +10,8 @@ const logoutButton = document.getElementById('logout')
 const getAllAdsTypeSell = async () =>  {
   const response = await fetch(url + '/ad');
   const items = await response.json();
+
+
   createNewItems(items);
 };
 
@@ -37,7 +39,7 @@ getAllAdsTypeSell();
 buttonVisibility()
 logoutAction()
 
-const createNewItems = (items) => {
+const createNewItems = async (items) => {
   let item = {
     'name': '',
     'city': '',
@@ -46,7 +48,11 @@ const createNewItems = (items) => {
     'listed_by': '',
   };
 
+
   for (let i = 0; i < items.length; i++) {
+    const response = await fetch(url + '/user' + '/' + items[i].listed_by);
+    const user = await response.json();
+
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
     item.city = items[i].city != null ?
@@ -55,8 +61,8 @@ const createNewItems = (items) => {
         items[i].price : 'No price';
     item.desc = items[i].description != null ?
         items[i].description : 'No description';
-    item.listed_by = items[i].listed_by != null ?
-        items[i].listed_by : 'No';
+    item.listed_by = user.name != null ?
+        user.name : 'No username';
 
     showItems(item);
   }
