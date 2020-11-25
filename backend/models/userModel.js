@@ -87,9 +87,30 @@ const getUserLogin = async (params) => {
   }
 };
 
+/**
+ * Delete an user
+ * @param req
+ * @return boolean, true if something was removed, false otherwise
+ */
+const deleteUser = async (req) => {
+
+  // TODO Check that user_id matches do delete
+
+  try {
+    console.log(TAG , 'delete user');
+    const [rows] = await promisePool.execute(
+        'DELETE FROM bm_user WHERE user_id = ?', [req.params.id]);
+    return rows.affectedRows === 1;
+  }
+  catch (e) {
+    console.error(TAG, 'delete:', e.message);
+  }
+}
+
 module.exports = {
   getAllUsers,
   createUser,
   getUserById,
   getUserLogin,
+  deleteUser
 };

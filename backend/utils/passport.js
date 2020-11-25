@@ -71,7 +71,7 @@ passport.use(new JWTStrategy({
 >>>>>>> 972094a188db4f36c1a627374b127382f49eedfb
       try {
         console.log('jwtPayload', jwtPayload)
-        const user = await userModel.getUser(jwtPayload.user_id);
+        const user = await userModel.getUserById(jwtPayload.user_id);
         if (user === undefined) {
           return done(null, false);
         }
