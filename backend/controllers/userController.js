@@ -26,7 +26,7 @@ const user_create = async (req, res) => {
     return res.status(400).json({errors: errors.array()});
   }
   const id = await userModel.createUser(req);
-  const user = await userModel.getUser(id);
+  const user = await userModel.getUserById(id);
   res.send(user);
 };
 
@@ -34,7 +34,7 @@ const user_create = async (req, res) => {
  * Return a single user with user id
  */
 const user_get_by_id = async (req, res) => {
-  const user = await userModel.getUser(req.params.id);
+  const user = await userModel.getUserById(req.params.id);
   res.json(user);
 };
 
