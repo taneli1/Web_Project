@@ -38,7 +38,7 @@ app.use(express.json());
 
 app.use('/', rootRoute);
 app.use('/auth', authRoute)
-app.use('/user', passport.authenticate('jwt', {session: false}),userRoute);
+app.use('/user', userRoute);
 app.use('/ad', adRoute )
 
 app.use(bodyParser.urlencoded({extended: true}))
