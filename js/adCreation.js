@@ -1,30 +1,33 @@
-const buttonText = document.getElementById("buyOrSell")
-const buttonState = document.querySelector('input[id="buyOrSellButton"]')
 const createNewAd = document.getElementById("createNewAd")
+const adTypeHiddenField = document.getElementById("adType")
 const url = 'http://localhost:3000'
 
 
-buttonState.addEventListener('change', function() {
-  if (this.checked) {
-    buttonText.innerText = "Buy"
-  } else {
-    buttonText.innerText = "Sell"
+const adTypeSwitch = () => {
+  const value = document.querySelector('input[name="ad_typeSelector"]:checked').value
+  console.log(value)
+  if (value === "buy"){
+    adTypeHiddenField.value = "buy"
   }
-});
+  else {
+    adTypeHiddenField.value = "sell"
+  }
+}
 
 createNewAd.addEventListener('submit', async (evt) => {
   evt.preventDefault();
+  adTypeSwitch()
   const token = getCookie("token")
-  const fd = new FormData(createNewAd);
-  console.log(fd)
+  const fd2 = serializeJson(createNewAd)
   const fetchOptions = {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + token,
     },
-    body: fd,
+    body: JSON.stringify(fd2),
   };
-  console.log("fetch options" + fetchOptions.body)
+  console.log(fetchOptions.body)
   const response = await fetch(url + '/ad/', fetchOptions);
   const json = await response.json();
   console.log('add response', json);

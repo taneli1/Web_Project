@@ -43,18 +43,26 @@
                name="city"
                pattern=".{3,}"
                required>
-        <label class="switch">
-            <input type="checkbox"
-                   id="buyOrSellButton" name="ad_type">
-            <span class="slider round"></span>
-        </label>
-        <label id="buyOrSell">
-            Sell
-        </label>
+        <input id="adType"
+               type="hidden"
+               value=""
+               name="ad_type">
+        <label>Pictures:</label>
+        <input class="light-border"
+               type="file"
+               name="type"
+               pattern=".{3,}"
+               required>
+
+    <label>buy
+        <input type="radio" name="ad_typeSelector" value="buy" required />
+    </label>
+    <label>sell
+        <input type="radio" name="ad_typeSelector" value="sell" />
+    </label>
+
     <button class="light-border" type="submit">Save</button>
 </form>
-
-
 </body>
 <script src="../js/serialize.js"></script>
 <script src="../js/adCreation.js"></script>

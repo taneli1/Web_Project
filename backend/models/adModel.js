@@ -37,7 +37,8 @@ const postAd = async (req) => {
         'INSERT INTO bm_ad_' + adType + ' (item_name, price, description, listed_by)' +
         ' VALUES (?, ?, ?, ?);',
         [
-          req.body.item_name, req.body.price,
+          req.body.item_name,
+          req.body.price,
           req.body.description, 2222]);
 
     console.log(TAG + `insert ${rows.insertId}`);

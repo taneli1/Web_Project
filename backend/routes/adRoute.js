@@ -15,7 +15,7 @@ router.get('/:id', adController.ad_get_by_id);
 
 // Route needs user to be logged in
 router.post('/',
-    //passport.authenticate('jwt', {session: false}),
+    passport.authenticate('jwt', {session: false}),
     //adController.resize_image,
     [
         body('item_name', 'min length 3 chars').isLength({min:3}),
@@ -23,7 +23,7 @@ router.post('/',
         body('city','min length 3 chars').isLength({min:3}),
         body('price', 'must be a number').isLength({min: 1}).isNumeric(),
         body('description','min length 3 chars').isLength({min: 3}),
-        //body('type', 'file req').contains('image')
+        body('type', 'file req').contains('png')
     ],
     adController.ad_post);
 

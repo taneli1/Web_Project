@@ -14,6 +14,7 @@ login.addEventListener('submit', async (evt) => {
   };
 
   const response = await fetch(url + '/auth/login/', fetchOptions);
+  console.log(response)
   const json = await response.json();
   console.log('login response', json);
   if (!json.user) {
