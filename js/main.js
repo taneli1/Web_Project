@@ -4,10 +4,10 @@ const url = 'http://localhost:3000';
 
 const search = document.querySelector(".search");
 const new_item = document.querySelector(".new-items");
-const loginButton = document.getElementById('login')
-const logoutButton = document.getElementById('logout')
+const loginButton = document.getElementById('login');
+const logoutButton = document.getElementById('logout');
 
-const getAllAdsTypeSell = async () =>  {
+const getAllAds = async () =>  {
   const response = await fetch(url + '/ad');
   const items = await response.json();
 
@@ -20,14 +20,14 @@ const buttonVisibility = () => {
     loginButton.style.display = "none"
   }
   else logoutButton.style.display = "none"
-}
+};
 
 const logoutAction = () => {
   logoutButton.addEventListener('click', async () => {
-    delete_cookie("token")
+    delete_cookie("token");
     document.location.reload()
   })
-}
+};
 
 function delete_cookie(name) {
   document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -35,9 +35,9 @@ function delete_cookie(name) {
 
 
 
-getAllAdsTypeSell();
-buttonVisibility()
-logoutAction()
+getAllAds();
+buttonVisibility();
+logoutAction();
 
 const createNewItems = async (items) => {
   let item = {
@@ -66,6 +66,7 @@ const createNewItems = async (items) => {
 
     showItems(item);
   }
+
 };
 
 const showItems = (item) => {
@@ -102,4 +103,13 @@ const showItems = (item) => {
   let listed_by = document.createElement('p');
   new_item_slot.appendChild(listed_by);
   listed_by.innerHTML += item.listed_by;
+
+  clickItem(new_item_slot);
+};
+
+const clickItem = (item) => {
+  item.addEventListener('click', function() {
+    document.location.href = '../html/singleAd.html';
+    localStorage.setItem('item', item.innerHTML);
+  });
 };

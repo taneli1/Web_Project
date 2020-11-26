@@ -30,7 +30,7 @@ const getAllAds = async (req) => {
  *  TODO Get poster user id and save it
  */
 const postAd = async (req) => {
-  console.log(req.body)
+  console.log(req.body);
   const adType = getAdType(req);
   try {
     const [rows] = await promisePool.execute(
@@ -86,7 +86,7 @@ const deleteAdById = async (req) => {
   catch (e) {
     console.error(TAG, 'delete:', e.message);
   }
-}
+};
 
 /**
  * Get ad_type from request either buy or sell, this is used in sql query
