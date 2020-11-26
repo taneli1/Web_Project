@@ -15,7 +15,7 @@ router.get('/:id', adController.ad_get_by_id);
 
 // Route needs user to be logged in
 router.post('/',
-    passport.authenticate('jwt', {session: false}),
+    // passport.authenticate('jwt', {session: false}),
     adController.resize_image,
     [
         body('item_name', 'min length 3 chars').isLength({min:3}),

@@ -1,5 +1,6 @@
 'use strict';
 
+const {validationResult} = require('express-validator');
 const TAG = 'adController: ';
 const adModel = require('../models/adModel');
 const {resizeImg} = require('../utils/resize');
@@ -21,6 +22,12 @@ const ad_get_list = async (req, res) => {
  * TODO VALIDATION IN ROUTE
  */
 const ad_post = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log('validation', errors.array());
+    return res.status(400).json({errors: errors.array()});
+  }
+
   const adOk = await adModel.postAd(req);
   res.json(adOk);
 };
