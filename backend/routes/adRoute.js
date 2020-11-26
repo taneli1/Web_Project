@@ -17,6 +17,8 @@ router.get('/:id', adController.ad_get_by_id);
 router.post('/',
     passport.authenticate('jwt', {session: false}),
     //adController.resize_image,
+    // passport.authenticate('jwt', {session: false}),
+    adController.resize_image,
     [
         body('item_name', 'min length 3 chars').isLength({min:3}),
         body('ad_type', 'min length 3 chars').isLength({min:3}),
