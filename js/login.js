@@ -1,5 +1,4 @@
 const login = document.getElementById('login-form')
-const mainMenu = document.getElementById('Main')
 const url = 'http://localhost:3000'
 
 // login
