@@ -34,15 +34,17 @@ const postAd = async (req) => {
   const tokenId = req.user.user_id;
   console.log(TAG, "postAd: ", tokenId)
 
+  const images = await postImages(req)
+
   const adType = getAdType(req);
   try {
     const [rows] = await promisePool.execute(
-        'INSERT INTO bm_ad_' + adType + ' (item_name, price, description, city, listed_by)' +
+        'INSERT INTO bm_ad_' + adType + ' (item_name, price, description, city, images_table, listed_by)' +
         ' VALUES (?, ?, ?, ?, ?);',
         [
           req.body.item_name, req.body.price,
           req.body.description, req.body.city,
-          tokenId]);
+          images, tokenId]);
 
     console.log(TAG + `insert ${rows.insertId}`);
     return rows.insertId;
@@ -52,6 +54,31 @@ const postAd = async (req) => {
     return 0;
   }
 };
+
+const postImages = async (req) => {
+
+  const adType = getAdType(req);
+  try {
+    const [rows] = await promisePool.execute(
+        'INSERT INTO bm_ad_' + adType + '_images (image_1)' +
+        ' VALUES (?);',
+        [
+          req.file
+        ]);
+
+    console.log(TAG + `insert ${rows.insertId}`);
+    return rows.insertId;
+  }
+  catch (e) {
+    console.error(TAG, e);
+    return 0;
+  }
+
+
+}
+
+
+
 
 /**
  * Get a single ad from DB with the id of ad
