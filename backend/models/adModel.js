@@ -32,15 +32,16 @@ const postAd = async (req) => {
 
   // Get user id from token
   const tokenId = req.user.user_id;
-  console.log(TAG, "postAd: ", tokenId)
+  console.log(TAG, 'postAd: ', tokenId);
 
-  const images = await postImages(req)
+  const images = await postImages(req);
 
   const adType = getAdType(req);
   try {
     const [rows] = await promisePool.execute(
-        'INSERT INTO bm_ad_' + adType + ' (item_name, price, description, city, images_table, listed_by)' +
-        ' VALUES (?, ?, ?, ?, ?);',
+        'INSERT INTO bm_ad_' + adType +
+        ' (item_name, price, description, city, images_table, listed_by)' +
+        ' VALUES (?, ?, ?, ?, ?, ?);',
         [
           req.body.item_name, req.body.price,
           req.body.description, req.body.city,
@@ -55,30 +56,33 @@ const postAd = async (req) => {
   }
 };
 
+/**
+ * Save images to db, return the insertId , which is then saved to ad table
+ * with all the other data
+ */
 const postImages = async (req) => {
 
+  const image = req.body.type
+  console.log('postImages');
+  console.log(image);
   const adType = getAdType(req);
+
   try {
     const [rows] = await promisePool.execute(
         'INSERT INTO bm_ad_' + adType + '_images (image_1)' +
         ' VALUES (?);',
         [
-          req.file
+          image,
         ]);
 
-    console.log(TAG + `insert ${rows.insertId}`);
+    console.log(TAG + `Images success: ${rows.insertId}`);
     return rows.insertId;
   }
   catch (e) {
     console.error(TAG, e);
     return 0;
   }
-
-
-}
-
-
-
+};
 
 /**
  * Get a single ad from DB with the id of ad
@@ -109,7 +113,7 @@ const deleteAdById = async (req) => {
 
   const adType = getAdType(req);
   try {
-    console.log(TAG , 'delete');
+    console.log(TAG, 'delete');
     const [rows] = await promisePool.execute(
         'DELETE FROM bm_ad_' + adType + ' WHERE ad_id = ?', [req.params.id]);
     return rows.affectedRows === 1;
@@ -117,7 +121,7 @@ const deleteAdById = async (req) => {
   catch (e) {
     console.error(TAG, 'delete:', e.message);
   }
-}
+};
 
 /**
  * Get ad_type from request either buy or sell, this is used in sql query
@@ -135,5 +139,5 @@ module.exports = {
   getAllAds,
   getAdById,
   postAd,
-  deleteAdById
+  deleteAdById,
 };
