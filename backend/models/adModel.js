@@ -27,19 +27,22 @@ const getAllAds = async (req) => {
 /**
  * Post a single ad into db
  * @param req Needs to have ad_type in body.req
- *  TODO Get poster user id and save it
  */
 const postAd = async (req) => {
-  console.log(req.body)
+
+  // Get user id from token
+  const tokenId = req.user.user_id;
+  console.log(TAG, "postAd: ", tokenId)
+
   const adType = getAdType(req);
   try {
     const [rows] = await promisePool.execute(
-        'INSERT INTO bm_ad_' + adType + ' (item_name, price, description, listed_by)' +
-        ' VALUES (?, ?, ?, ?);',
+        'INSERT INTO bm_ad_' + adType + ' (item_name, price, description, city, listed_by)' +
+        ' VALUES (?, ?, ?, ?, ?);',
         [
-          req.body.item_name,
-          req.body.price,
-          req.body.description, 2222]);
+          req.body.item_name, req.body.price,
+          req.body.description, req.body.city,
+          tokenId]);
 
     console.log(TAG + `insert ${rows.insertId}`);
     return rows.insertId;

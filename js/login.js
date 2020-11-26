@@ -1,4 +1,5 @@
 const login = document.getElementById('login-form')
+const signIn = document.getElementById('add-user-form')
 const url = 'http://localhost:3000'
 
 // login
@@ -25,6 +26,26 @@ login.addEventListener('submit', async (evt) => {
     document.location.href = '../html/main.html'
   }
 });
+
+signIn.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const data = serializeJson(signIn);
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+
+  const RegResponse = await fetch(url + '/auth/register/', fetchOptions);
+  console.log(RegResponse)
+  const json = await RegResponse.json();
+  console.log('sign-in response', json);
+  set_cookie("token", json.token)
+  //document.location.href = '../html/main.html'
+});
+
 
 function set_cookie(name, value) {
   document.cookie = name +'='+ value +'; Path=/;';
