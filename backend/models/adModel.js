@@ -34,11 +34,11 @@ const postAd = async (req) => {
   const tokenId = req.user.user_id;
   console.log(TAG, 'postAd: ', tokenId);
 
-
-
   const images = await postImages(req);
+  const condition = req.body.ad_type
 
-  const adType = getAdType(req);
+  const adType = condition === "buy" ? "buy" : "sell"
+
   try {
     const [rows] = await promisePool.execute(
         'INSERT INTO bm_ad_' + adType +
@@ -64,9 +64,9 @@ const postAd = async (req) => {
  */
 const postImages = async (req) => {
 
-  const image = req.file.filename
+  const image = req.file.filename;
 
-  const filePath = `./uploads/${image}`
+  const filePath = `./uploads/${image}`;
   console.log('postImages');
   console.log(image);
   const adType = getAdType(req);
