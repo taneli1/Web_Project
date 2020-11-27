@@ -14,25 +14,24 @@ const port = 3000;
 const app = express();
 const passport = require('./backend/utils/passport');
 
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 // --- Routes
 const rootRoute = require('./backend/routes/rootRoute');
 const userRoute = require('./backend/routes/userRoute');
 const adRoute = require('./backend/routes/adRoute');
-const authRoute = require('./backend/routes/authRoute')
+const authRoute = require('./backend/routes/authRoute');
 
 // --- Setup
-app.use(bodyParser.urlencoded({limit: '50mb',extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
 app.use(cors());
 
-
-
 app.use('/', rootRoute);
-app.use('/auth', authRoute)
+app.use('/auth', authRoute);
 app.use('/user', userRoute);
-app.use('/ad', adRoute )
+app.use('/ad', adRoute);
 
 // ---
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

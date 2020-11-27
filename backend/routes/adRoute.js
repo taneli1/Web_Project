@@ -8,29 +8,24 @@ const adController = require('../controllers/adController');
 const passport = require('passport');
 const {body} = require('express-validator');
 
-
-
 const fileFilter = (req, file, cb) => {
   if (!file.mimetype.includes('image')) {
     return cb(null, false, new Error('not an image'));
   }
   else cb(null,true)
 };
-
-
-
 const injectFile = (req, res, next) => {
   if (req.file) {
     req.body.type = req.file.mimetype;
   }
   next();
 };
-const upload = multer({dest: '../uploads/', fileFilter});
+
+const upload = multer({dest: './uploads/', fileFilter});
 
 // Both of these requests need a specifying parameter to decide which
 // type of ads we want to fetch = req.body.ad_type
-
-router.get('/', adController.ad_get_list);
+router.get('/:ad_type', adController.ad_get_list);
 router.get('/:id', adController.ad_get_by_id);
 
 // Route needs user to be logged in

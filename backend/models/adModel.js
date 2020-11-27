@@ -34,6 +34,8 @@ const postAd = async (req) => {
   const tokenId = req.user.user_id;
   console.log(TAG, 'postAd: ', tokenId);
 
+
+
   const images = await postImages(req);
 
   const adType = getAdType(req);
@@ -62,7 +64,9 @@ const postAd = async (req) => {
  */
 const postImages = async (req) => {
 
-  const image = req.body.type
+  const image = req.file.filename
+
+  const filePath = `./uploads/${image}`
   console.log('postImages');
   console.log(image);
   const adType = getAdType(req);
@@ -125,11 +129,12 @@ const deleteAdById = async (req) => {
 
 /**
  * Get ad_type from request either buy or sell, this is used in sql query
+ * TODO Is this ok to do?
  * @param req
  */
 const getAdType = (req) => {
 
-  if (req.body.ad_type === 'buy') {
+  if (req.params.ad_type === 'buy') {
     return 'buy';
   }
   else return 'sell';
