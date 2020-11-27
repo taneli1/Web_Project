@@ -6,6 +6,9 @@ const search = document.querySelector(".search");
 const new_item = document.querySelector(".new-items");
 const loginButton = document.getElementById('login');
 const logoutButton = document.getElementById('logout');
+const buyButtonV = document.getElementById('buy').value;
+const buyButton = document.getElementById('buy');
+console.log(buyButtonV);
 
 const getAllAds = async () =>  {
   const response = await fetch(url + '/ad');
@@ -14,6 +17,34 @@ const getAllAds = async () =>  {
 
   createNewItems(items);
 };
+
+
+  const getAllAdsBuy = async () => {
+
+    const buy = serializeJson(buyButtonV);
+    const formData = new FormData();
+
+    formData.append('ad_type', buy);
+
+   /* fetch('https://example.com/profile/avatar', {
+      body: formData
+    })
+
+    */
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+    };
+
+    console.log(fetchOptions.body);
+    const response = await fetch(url + '/ad' + fetchOptions);
+    const itemsB = await response.json();
+
+    console.log(itemsB);
+  };
 
 const buttonVisibility = () => {
   if (document.cookie.includes('token')){
@@ -63,7 +94,6 @@ const createNewItems = async (items) => {
         items[i].description : 'No description';
     item.listed_by = user.name != null ?
         user.name : 'No username';
-
     showItems(item);
   }
 
