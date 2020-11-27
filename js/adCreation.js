@@ -18,20 +18,19 @@ createNewAd.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   adTypeSwitch()
   const token = getCookie("token")
-  const fd2 = serializeJson(createNewAd)
+  const fd2 = new FormData(createNewAd)
   const fetchOptions = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + token,
     },
-    body: JSON.stringify(fd2),
+    body: fd2,
   };
   console.log(fetchOptions.body)
   const response = await fetch(url + '/ad/', fetchOptions);
   const json = await response.json();
   console.log('add response', json);
-  document.location.href = '../html/main.html'
+ // document.location.href = '../html/main.html'
 });
 
 const getCookie = (name) => {

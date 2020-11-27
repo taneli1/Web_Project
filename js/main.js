@@ -11,7 +11,7 @@ const buyButton = document.getElementById('buy');
 console.log(buyButtonV);
 
 const getAllAds = async () =>  {
-  const response = await fetch(url + '/ad');
+  const response = await fetch(url + '/ad/sell');
   const items = await response.json();
 
 
