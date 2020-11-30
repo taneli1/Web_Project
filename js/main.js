@@ -10,9 +10,7 @@ const logoutButton = document.getElementById('logout');
 const getAllAds = async () =>  {
   const response = await fetch(url + '/ad/sell');
   const items = await response.json();
-
-
-  createNewItems(items);
+  await createNewItems(items);
 };
 
 const buttonVisibility = () => {
