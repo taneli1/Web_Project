@@ -83,6 +83,14 @@ const user_delete = async (req, res) => {
   res.json(userDeletion);
 };
 
+/**
+ * Update user
+ */
+const user_update = async (req, res) => {
+  const editOk = await userModel.updateUser(req);
+  res.json('User update: ', editOk);
+};
+
 // Logout
 const logout = (req, res) => {
   req.logout();
@@ -93,5 +101,6 @@ module.exports = {
   login,
   user_create_post,
   logout,
-  user_delete
+  user_delete,
+  user_update
 };

@@ -19,38 +19,44 @@
 
 <form class="light-border"
       id="createNewAd"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data" name="adForm">
+
         <label>Item:</label>
         <input class="light-border"
                name="item_name"
                type="text"
                pattern=".{3,}"
                required>
+
         <label>Description:</label>
         <input class="light-border"
                name="description"
                type="text"
                required>
+
         <label>Price:</label>
         <input class="light-border"
                type="number"
                name="price"
                pattern="^[0-9]+$"
                required>
+
         <label>City:</label>
         <input class="light-border"
                type="text"
                name="city"
                pattern=".{3,}"
                required>
+
         <input id="adType"
                type="hidden"
                value=""
                name="ad_type">
+
         <label>Pictures:</label>
         <input class="light-border"
                type="file"
-               name="type"
+               name="image"
                pattern=".{3,}"
                required>
 

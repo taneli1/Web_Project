@@ -9,8 +9,9 @@ const logoutButton = document.getElementById('logout');
 const profileButton = document.getElementById('profile')
 
 const getAllAds = async () =>  {
-  const response = await fetch(url + '/ad');
+  const response = await fetch(url + '/ad/sell');
   const items = await response.json();
+  await createNewItems(items);
 
   createNewItems(items);
 };
