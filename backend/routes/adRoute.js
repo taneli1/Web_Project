@@ -31,8 +31,9 @@ router.get('/:ad_type/:id', adController.ad_get_by_id);
 // Route needs user to be logged in
 router.post('/:ad_type',
     passport.authenticate('jwt', {session: false}),
-    upload.array('image',5),
     injectFile,
+    upload.single('image'),
+    //upload.array('image',5),
     //adController.resize_image,
     [
       body('item_name', 'min length 3 chars').isLength({min: 3}),
