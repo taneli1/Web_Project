@@ -26,10 +26,15 @@ const upload = multer({dest: './uploads/', fileFilter});
 
 // Get all user's ads from this route
 router.get('/user/:userId', adController.ad_get_user_ads);
+
+// Search for results in database with keyword(s)
+router.get('/search/:keywords', adController.ad_search_keywords);
+
 // Get all ads of specified type
 router.get('/:ad_type', adController.ad_get_list);
 // Get single ad of specified type with its id
 router.get('/:ad_type/:id', adController.ad_get_by_id);
+
 
 // Post an ad, route needs user to be logged in
 router.post('/:ad_type',

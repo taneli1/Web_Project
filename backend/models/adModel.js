@@ -4,7 +4,9 @@ const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
 
-
+// TODO Save thumbnail in ad table, additional images only fetched when
+//  opening up a single ad page
+//  - Validate user input
 // -------------------------------------------------------------------------
 // ---------------------------- Get from db --------------------------------
 // -------------------------------------------------------------------------
@@ -139,18 +141,27 @@ const getAllUserAds = async (req) => {
 };
 
 /**
- * Search with a keyword from Database
- * @param req specifies what kind of ads are targeted
+ * Search with a keyword from database, searches the ad for matching
+ * item names
  */
 const searchAd = async (req) => {
 
-  try {
-    const [result] = await promisePool.execute(
-        'SELECT * FROM bm_ad_buy ' +
-        'WHERE item_name'
-        [req.params.userId]);
+  // TODO Validation
+  const search = '%' + req.params.keywords + '%'
 
-    return result;
+  try {
+
+    const [buy] = await promisePool.execute(
+        'SELECT * FROM bm_ad_buy ' +
+        'WHERE item_name LIKE ?',
+        [search]);
+
+    const [sell] = await promisePool.execute(
+        'SELECT * FROM bm_ad_sell ' +
+        'WHERE item_name LIKE ?',
+        [search]);
+
+    return buy.concat(sell);
   }
   catch (e) {
     console.error(TAG, e.message);

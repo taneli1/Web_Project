@@ -15,7 +15,10 @@ CREATE TABLE `bm_ad_sell` (
   `city` text NOT NULL,
   `price` text NOT NULL,
   `description` text NOT NULL,
-  `listed_by` int(11) NOT NULL
+  `listed_by` int(11) NOT NULL,
+  `images_table` int(11) NOT NULL,
+  `type` varchar(255) DEFAULT 'sell',
+  `creation_date` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `bm_ad_buy` (
@@ -24,32 +27,29 @@ CREATE TABLE `bm_ad_buy` (
   `city` text NOT NULL,
   `price` text NOT NULL,
   `description` text NOT NULL,
-  `listed_by` int(11) NOT NULL
+  `listed_by` int(11) NOT NULL,
+  `images_table` int(11) NOT NULL,
+  `type` varchar(255) DEFAULT 'buy',
+  `creation_date` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `bm_ad_sell_image` (
-  `image_id` int(11) NOT NULL,
-  `ad_id` int(11) NOT NULL,
-  `image_1` mediumblob,
-  `image_2` mediumblob,
-  `image_3` mediumblob,
-  `image_4` mediumblob,
-  `image_5` mediumblob
+CREATE TABLE `bm_ad_sell_images` (
+  `images_id` int(11) NOT NULL,
+  `image_1` text,
+  `image_2` text,
+  `image_3` text,
+  `image_4` text,
+  `image_5` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `bm_ad_buy_image` (
-  `image_id` int(11) NOT NULL,
-  `ad_id` int(11) NOT NULL,
-   `image_1` mediumblob,
-   `image_2` mediumblob,
-   `image_3` mediumblob,
-   `image_4` mediumblob,
-   `image_5` mediumblob
+CREATE TABLE `bm_ad_buy_images` (
+  `images_id` int(11) NOT NULL,
+   `image_1` text,
+   `image_2` text,
+   `image_3` text,
+   `image_4` text,
+   `image_5` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
-
 
 
 INSERT INTO `bm_user` (`user_id`, `name`, `city`, `phone_number`, `password`, `email`) VALUES
@@ -67,28 +67,24 @@ INSERT INTO `bm_ad_buy` (`ad_id`, `item_name`, `city`, `price`, `description`, `
 (2, 'Car', 'Pori', '5000', 'buy car', 1);
 
 
-
-
-
 ALTER TABLE `bm_user`
   ADD PRIMARY KEY (`user_id`);
 
 ALTER TABLE `bm_ad_sell`
     ADD PRIMARY KEY (`ad_id`),
-    ADD FOREIGN KEY (`listed_by`) REFERENCES bm_user(`user_id`);
+    ADD FOREIGN KEY (`listed_by`) REFERENCES bm_user(`user_id`),
+    ADD FOREIGN KEY (`images_table`) REFERENCES bm_ad_sell_images(`images_id`);
 
 ALTER TABLE `bm_ad_buy`
     ADD PRIMARY KEY (`ad_id`),
-    ADD FOREIGN KEY (`listed_by`) REFERENCES bm_user(`user_id`);
+    ADD FOREIGN KEY (`listed_by`) REFERENCES bm_user(`user_id`),
+    ADD FOREIGN KEY (`images_table`) REFERENCES bm_ad_sell_images(`images_id`);
 
-ALTER TABLE `bm_ad_sell_image`
-    ADD PRIMARY KEY (`image_id`),
-    ADD FOREIGN KEY (`ad_id`) REFERENCES bm_ad_sell(`ad_id`);
+ALTER TABLE `bm_ad_sell_images`
+    ADD PRIMARY KEY (`images_id`);
 
-ALTER TABLE `bm_ad_buy_image`
-    ADD PRIMARY KEY (`image_id`),
-    ADD FOREIGN KEY (`ad_id`) REFERENCES bm_ad_buy(`ad_id`);
-
+ALTER TABLE `bm_ad_buy_images`
+    ADD PRIMARY KEY (`images_id`);
 
 
 
@@ -101,11 +97,11 @@ ALTER TABLE `bm_ad_sell`
 ALTER TABLE `bm_ad_buy`
   MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
-ALTER TABLE `bm_ad_sell_image`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `bm_ad_sell_images`
+  MODIFY `images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
-ALTER TABLE `bm_ad_buy_image`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `bm_ad_buy_images`
+  MODIFY `images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 
 

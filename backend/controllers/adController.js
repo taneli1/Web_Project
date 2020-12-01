@@ -40,6 +40,17 @@ const ad_get_by_id = async (req, res) => {
 };
 
 /**
+ * Search for ads in db
+ */
+const ad_search_keywords = async (req,res) => {
+
+  const results = await adModel.searchAd(req);
+  res.json(results);
+}
+
+
+
+/**
  * Get all ads from a user
  */
 const ad_get_user_ads = async (req, res) => {
@@ -81,4 +92,5 @@ module.exports = {
   ad_delete_by_id,
   resize_image,
   ad_get_user_ads,
+  ad_search_keywords
 };
