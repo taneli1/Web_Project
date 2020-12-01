@@ -101,7 +101,7 @@ const updateUser = async (req) => {
           req.body.editEmail,
           req.body.editPhoneNumber,
           req.params.id]);
-    console.log('catModel update:', rows);
+    console.log('user update:', rows);
     return rows.affectedRows === 1;
   }
   catch (e) {

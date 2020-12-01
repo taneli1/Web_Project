@@ -1,0 +1,117 @@
+CREATE TABLE `bm_user` (
+  `user_id` int(11) NOT NULL,
+  `password` text NOT NULL,
+  `name` text NOT NULL,
+  `city` text NOT NULL,
+  `phone_number` text NOT NULL,
+  `email` text NOT NULL,
+  `creation_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `admin_key` varchar(255) DEFAULT 'not'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bm_ad_sell` (
+  `ad_id` int(11) NOT NULL,
+  `item_name` text NOT NULL,
+  `city` text NOT NULL,
+  `price` text NOT NULL,
+  `description` text NOT NULL,
+  `listed_by` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bm_ad_buy` (
+  `ad_id` int(11) NOT NULL,
+  `item_name` text NOT NULL,
+  `city` text NOT NULL,
+  `price` text NOT NULL,
+  `description` text NOT NULL,
+  `listed_by` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bm_ad_sell_image` (
+  `image_id` int(11) NOT NULL,
+  `ad_id` int(11) NOT NULL,
+  `image_1` mediumblob,
+  `image_2` mediumblob,
+  `image_3` mediumblob,
+  `image_4` mediumblob,
+  `image_5` mediumblob
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bm_ad_buy_image` (
+  `image_id` int(11) NOT NULL,
+  `ad_id` int(11) NOT NULL,
+   `image_1` mediumblob,
+   `image_2` mediumblob,
+   `image_3` mediumblob,
+   `image_4` mediumblob,
+   `image_5` mediumblob
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+
+
+
+INSERT INTO `bm_user` (`user_id`, `name`, `city`, `phone_number`, `password`, `email`) VALUES
+(1, 'Testi Testimies', 'Helsinki', '0401231122', '$2a$10$5RzpyimIeuzNqW7G8seBiOzBiWBvrSWroDomxMa0HzU6K2ddSgixS', '1@gmail.com'),
+(2, 'Mikko Mallikas', 'Porvoo', '0451113322', '$2a$10$5RzpyimIeuzNqW7G8seBiOzBiWBvrSWroDomxMa0HzU6K2ddSgixS', '2@gmail.com'),
+(3, 'Maija Mallikas', 'Espoo', '020202', '$2a$10$5RzpyimIeuzNqW7G8seBiOzBiWBvrSWroDomxMa0HzU6K2ddSgixS', '3@gmail.com'),
+(4, 'account', 'Tampere', '020202', '$2a$10$qlUkr2ILBnWkMw77StuUZeqPepsxcuArCOs8Hj8YhAf3NEkq8Ixb6', '222www2saasdd2@gmail.com');
+
+INSERT INTO `bm_ad_sell` (`ad_id`, `item_name`, `city`, `price`, `description`, `listed_by`) VALUES
+(1, 'Computer', 'Helsinki', '1000', 'Good pc', 1),
+(2, 'Better computer', 'Espoo', '1200', 'Better pc', 1);
+
+INSERT INTO `bm_ad_buy` (`ad_id`, `item_name`, `city`, `price`, `description`, `listed_by`) VALUES
+(1, 'Bicycle', 'Tampere', '1000-1200', 'buy bicycle', 1),
+(2, 'Car', 'Pori', '5000', 'buy car', 1);
+
+
+
+
+
+ALTER TABLE `bm_user`
+  ADD PRIMARY KEY (`user_id`);
+
+ALTER TABLE `bm_ad_sell`
+    ADD PRIMARY KEY (`ad_id`),
+    ADD FOREIGN KEY (`listed_by`) REFERENCES bm_user(`user_id`);
+
+ALTER TABLE `bm_ad_buy`
+    ADD PRIMARY KEY (`ad_id`),
+    ADD FOREIGN KEY (`listed_by`) REFERENCES bm_user(`user_id`);
+
+ALTER TABLE `bm_ad_sell_image`
+    ADD PRIMARY KEY (`image_id`),
+    ADD FOREIGN KEY (`ad_id`) REFERENCES bm_ad_sell(`ad_id`);
+
+ALTER TABLE `bm_ad_buy_image`
+    ADD PRIMARY KEY (`image_id`),
+    ADD FOREIGN KEY (`ad_id`) REFERENCES bm_ad_buy(`ad_id`);
+
+
+
+
+ALTER TABLE `bm_user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `bm_ad_sell`
+  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `bm_ad_buy`
+  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `bm_ad_sell_image`
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `bm_ad_buy_image`
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+
+
+
+
+
+
+
+
