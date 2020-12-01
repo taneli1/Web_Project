@@ -87,7 +87,7 @@ const user_delete = async (req, res) => {
  * Update user
  */
 const user_update = async (req, res) => {
-  const editOk = await userModel.updateUser(req);
+  const editOk = userModel.updateUser(req);
   res.json('User update: ', editOk);
 };
 

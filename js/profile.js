@@ -10,7 +10,7 @@ const userInfo = document.getElementById('userInfo');
 
 const editName = document.querySelector("form[id='editProfile'] input[name='editUserName']");
 const editCity = document.querySelector("form[id='editProfile'] input[name='editCity']");
-const editEMail = document.querySelector("form[id='editProfile'] input[name='editEMail']");
+const editEmail = document.querySelector("form[id='editProfile'] input[name='editEmail']");
 const editPhoneNumber = document.querySelector("form[id='editProfile'] input[name='editPhoneNumber']");
 
 
@@ -39,7 +39,7 @@ const getUserInfo = async () => {
     city.innerText = user.city
     editCity.setAttribute('value', user.city)
     eMail.innerText = user.email
-    editEMail.setAttribute('value', user.email)
+    editEmail.setAttribute('value', user.email)
     phoneNumber.innerText = user.phone_number
     editPhoneNumber.setAttribute('value', user.phone_number)
   }
@@ -69,7 +69,6 @@ editField.addEventListener('submit', async (evt) => {
   else {
     userId = tokenFormatter(token)
   }
-
   const fd2 = serializeJson(editField)
   const fetchOptions = {
     method: 'PUT',
@@ -82,6 +81,7 @@ editField.addEventListener('submit', async (evt) => {
   console.log(fetchOptions.body)
   const response = await fetch(url + '/auth/update/' + userId , fetchOptions);
   const json = await response.json();
+  console.log('here is your response', json)
 
   editField.style.display = "none"
   editButton.style.display = "block"
