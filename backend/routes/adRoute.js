@@ -14,6 +14,7 @@ const fileFilter = (req, file, cb) => {
   }
   else cb(null,true)
 };
+
 const injectFile = (req, res, next) => {
   if (req.file) {
     req.body.type = req.file.mimetype;
@@ -23,20 +24,21 @@ const injectFile = (req, res, next) => {
 
 const upload = multer({dest: './uploads/', fileFilter});
 
-// Both of these requests need a specifying parameter to decide which
-// type of ads we want to fetch = req.body.ad_type
+// Get all user's ads from this route
+router.get('/user/:userId', adController.ad_get_user_ads);
+// Get all ads of specified type
 router.get('/:ad_type', adController.ad_get_list);
-router.get('/:id', adController.ad_get_by_id);
+// Get single ad of specified type with its id
+router.get('/:ad_type/:id', adController.ad_get_by_id);
 
-// Route needs user to be logged in
-router.post('/',
+// Post an ad, route needs user to be logged in
+router.post('/:ad_type',
     passport.authenticate('jwt', {session: false}),
     upload.single('image'),
     injectFile,
     //adController.resize_image,
     [
       body('item_name', 'min length 3 chars').isLength({min: 3}),
-      body('ad_type', 'min length 3 chars').isLength({min: 3}),
       body('city', 'min length 3 chars').isLength({min: 3}),
       body('price', 'must be a number').isLength({min: 1}).isNumeric(),
       body('description', 'min length 3 chars').isLength({min: 3}),
@@ -44,6 +46,9 @@ router.post('/',
     ],
     adController.ad_post);
 
-router.delete('/:id', adController.ad_delete_by_id);
+// Delete an ad, route needs user to be logged in
+router.delete('/:ad_type/:id',
+    passport.authenticate('jwt', {session: false}),
+    adController.ad_delete_by_id);
 
 module.exports = router;

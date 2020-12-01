@@ -4,102 +4,134 @@ const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
 
+
+// -------------------------------------------------------------------------
+// ---------------------------- Get from db --------------------------------
+// -------------------------------------------------------------------------
+
 /**
- * Get all ads of type sell from DB
- * @param req Needs to have ad_type in body.req
- * @returns Array of the ads
+ * Get all ads from DB, join with image table, return all
+ * @param req specifies what kind of ads we want to get
  */
 const getAllAds = async (req) => {
 
-  const adType = getAdType(req);
-  try {
-    const [rows] = await promisePool.execute(
-        'SELECT item_name, city, price, description, listed_by FROM bm_ad_' +
-        adType);
-    console.log(rows);
-    return rows;
+  const type = req.params.ad_type;
+
+  if (type === 'buy') {
+    try {
+      const [rows] = await promisePool.execute(
+          'SELECT * FROM bm_ad_buy ' +
+          'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table' +
+          '=bm_ad_buy_images.images_id ' +
+          'LEFT JOIN bm_user ON bm_ad_buy.listed_by=bm_user.user_id');
+
+      // Delete unneeded stuff
+      for (let i = 0; i < rows.length; i++) {
+        delete rows[i].password;
+        delete rows[i].admin_key;
+      }
+      // console.log(rows);
+      return rows;
+    }
+    catch (e) {
+      console.log(TAG + e.message);
+    }
   }
-  catch (e) {
-    console.log(TAG + e.message);
+  else if (type === 'sell') {
+    try {
+      const [rows] = await promisePool.execute(
+          'SELECT * FROM bm_ad_sell ' +
+          'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table' +
+          '=bm_ad_sell_images.images_id ' +
+          'LEFT JOIN bm_user ON bm_ad_sell.listed_by=bm_user.user_id');
+
+      // Delete unneeded stuff
+      for (let i = 0; i < rows.length; i++) {
+        delete rows[i].password;
+        delete rows[i].admin_key;
+      }
+      console.log(rows)
+      // console.log(rows);
+      return rows;
+    }
+    catch (e) {
+      console.log(TAG + e.message);
+    }
   }
-};
-
-/**
- * Post a single ad into db
- * @param req Needs to have ad_type in body.req
- */
-const postAd = async (req) => {
-
-  // Get user id from token
-  const tokenId = req.user.user_id;
-  console.log(TAG, 'postAd: ', tokenId);
-
-  const images = await postImages(req);
-  const condition = req.body.ad_type
-
-  const adType = condition === "buy" ? "buy" : "sell"
-
-  try {
-    const [rows] = await promisePool.execute(
-        'INSERT INTO bm_ad_' + adType +
-        ' (item_name, price, description, city, images_table, listed_by)' +
-        ' VALUES (?, ?, ?, ?, ?, ?);',
-        [
-          req.body.item_name, req.body.price,
-          req.body.description, req.body.city,
-          images, tokenId]);
-
-    console.log(TAG + `insert ${rows.insertId}`);
-    return rows.insertId;
-  }
-  catch (e) {
-    console.error(TAG, e);
-    return 0;
-  }
-};
-
-/**
- * Save images to db, return the insertId , which is then saved to ad table
- * with all the other data
- */
-const postImages = async (req) => {
-
-  const image = req.file.filename;
-
-  const filePath = `./uploads/${image}`;
-  console.log('postImages');
-  console.log(image);
-  const adType = getAdType(req);
-
-  try {
-    const [rows] = await promisePool.execute(
-        'INSERT INTO bm_ad_' + adType + '_images (image_1)' +
-        ' VALUES (?);',
-        [
-          image,
-        ]);
-
-    console.log(TAG + `Images success: ${rows.insertId}`);
-    return rows.insertId;
-  }
-  catch (e) {
-    console.error(TAG, e);
-    return 0;
-  }
+  else return 'Request did not specify an ad type';
 };
 
 /**
  * Get a single ad from DB with the id of ad
- * @param req Needs to have ad_type in body.req
+ * @param req specifies what kind of ads are targeted
  */
 const getAdById = async (req) => {
 
-  const adType = getAdType(req);
+  const type = req.params.ad_type;
+  if (type === 'buy') {
+    try {
+      console.log(TAG + 'getAd :', req.params.id);
+      const [rows] = await promisePool.execute(
+          'SELECT * FROM bm_ad_buy ' +
+          'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table=' +
+          'bm_ad_buy_images.images_id ' +
+          'LEFT JOIN bm_user ON bm_ad_buy.listed_by=bm_user.user_id ' +
+          'WHERE ad_id = ? ',
+          [req.params.id]);
+      delete rows[0].password;
+      delete rows[0].admin_key;
+      return rows[0];
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  else if (type === 'sell') {
+    try {
+      console.log(TAG + 'getAd :', req.params.id);
+      const [rows] = await promisePool.execute(
+          'SELECT * FROM bm_ad_sell ' +
+          'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table=' +
+          'bm_ad_sell_images.images_id ' +
+          'LEFT JOIN bm_user ON bm_ad_sell.listed_by=bm_user.user_id ' +
+          'WHERE ad_id = ?',
+          [req.params.id]);
+      delete rows[0].password;
+      delete rows[0].admin_key;
+      return rows[0];
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  else return 'Request did not specify an ad type';
+
+};
+
+/**
+ * Gets all of the users ads, both sell and buy
+ * @param req specifies what kind of ads are targeted
+ */
+const getAllUserAds = async (req) => {
+
   try {
-    console.log(TAG + 'getAd :', req.params.id);
-    const [rows] = await promisePool.execute(
-        'SELECT * FROM bm_ad_' + adType + ' WHERE ad_id = ?', [req.params.id]);
-    return rows[0];
+    console.log(TAG + 'getAllUserAds :', req.params.userId);
+
+    const [buy] = await promisePool.execute(
+        'SELECT * FROM bm_ad_buy ' +
+        'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table=' +
+        'bm_ad_buy_images.images_id ' +
+        'WHERE listed_by = ? ',
+        [req.params.userId]);
+
+    const [sell] = await promisePool.execute(
+        'SELECT * FROM bm_ad_sell ' +
+        'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table=' +
+        'bm_ad_sell_images.images_id ' +
+        'WHERE listed_by = ? ',
+        [req.params.userId]);
+
+    return buy.concat(sell);
   }
   catch (e) {
     console.error(TAG, e.message);
@@ -107,37 +139,167 @@ const getAdById = async (req) => {
 };
 
 /**
- * Delete a single ad from DB with the id of ad
- * @param req Needs to have ad_type in body.req
- * @return returns a boolean, true if removed, false if not
+ * Search with a keyword from Database
+ * @param req specifies what kind of ads are targeted
  */
-const deleteAdById = async (req) => {
+const searchAd = async (req) => {
 
-  // TODO Check that listed_by == user_id
-
-  const adType = getAdType(req);
   try {
-    console.log(TAG, 'delete');
-    const [rows] = await promisePool.execute(
-        'DELETE FROM bm_ad_' + adType + ' WHERE ad_id = ?', [req.params.id]);
-    return rows.affectedRows === 1;
+    const [result] = await promisePool.execute(
+        'SELECT * FROM bm_ad_buy ' +
+        'WHERE item_name'
+        [req.params.userId]);
+
+    return result;
   }
   catch (e) {
-    console.error(TAG, 'delete:', e.message);
+    console.error(TAG, e.message);
   }
 };
 
-/**
- * Get ad_type from request either buy or sell, this is used in sql query
- * TODO Is this ok to do?
- * @param req
- */
-const getAdType = (req) => {
+// -------------------------------------------------------------------------
+// ---------------------------- Post to db ---------------------------------
+// -------------------------------------------------------------------------
 
-  if (req.params.ad_type === 'buy') {
-    return 'buy';
+/**
+ * Post an ad into db
+ * @param req specifies what kind of ad is saved
+ */
+const postAd = async (req) => {
+
+  const type = req.params.ad_type;
+  // Get user id from token
+  const tokenId = req.user.user_id;
+  const images = await postImages(req);
+
+  if (type === 'buy') {
+
+    try {
+      const [rows] = await promisePool.execute(
+          'INSERT INTO bm_ad_buy' +
+          ' (item_name, price, description, city, images_table, listed_by)' +
+          ' VALUES (?, ?, ?, ?, ?, ?);',
+          [
+            req.body.item_name, req.body.price,
+            req.body.description, req.body.city,
+            images, tokenId]);
+
+      console.log(TAG + `insert ${rows.insertId}`);
+      return rows.insertId;
+    }
+    catch (e) {
+      console.error(TAG, e);
+      return 0;
+    }
   }
-  else return 'sell';
+  else if (type === 'sell') {
+
+    try {
+      const [rows] = await promisePool.execute(
+          'INSERT INTO bm_ad_sell' +
+          ' (item_name, price, description, city, images_table, listed_by)' +
+          ' VALUES (?, ?, ?, ?, ?, ?);',
+          [
+            req.body.item_name, req.body.price,
+            req.body.description, req.body.city,
+            images, tokenId]);
+
+      console.log(TAG + `insert ${rows.insertId}`);
+      return rows.insertId;
+    }
+
+    catch (e) {
+      console.error(TAG, e);
+      return 0;
+    }
+  }
+  else return 'Request did not specify an ad type';
+};
+
+/**
+ * Save images to db, return the insertId , which is then saved to ad table
+ * with all the other data
+ * @param req specifies what kind of ads are targeted
+ */
+const postImages = async (req) => {
+
+  const type = req.params.ad_type;
+  const images = req.file.filename;
+
+  if (type === 'buy') {
+    try {
+      const [rows] = await promisePool.execute(
+          'INSERT INTO bm_ad_buy_images (image_1)' +
+          ' VALUES (?);',
+          [
+            images,
+          ]);
+
+      console.log(TAG + `Images success: ${rows.insertId}`);
+      return rows.insertId;
+    }
+    catch (e) {
+      console.error(TAG, e);
+      return 0;
+    }
+  }
+  else if (type === 'sell') {
+
+    try {
+      const [rows] = await promisePool.execute(
+          'INSERT INTO bm_ad_sell_images (image_1)' +
+          ' VALUES (?);',
+          [
+            images,
+          ]);
+
+      console.log(TAG + `Images success: ${rows.insertId}`);
+      return rows.insertId;
+    }
+    catch (e) {
+      console.error(TAG, e);
+      return 0;
+    }
+  }
+  else return 'Request did not specify an ad type';
+
+};
+
+// -------------------------------------------------------------------------
+// ---------------------------- Delete from db -----------------------------
+// -------------------------------------------------------------------------
+
+// TODO Deletion needs confirmation to not delete anyone else's posts
+/**
+ * Delete a single ad from DB with the id of ad
+ * @param req specifies what kind of ads are targeted
+ */
+const deleteAdById = async (req) => {
+
+  const type = req.params.ad_type;
+  if (type === 'buy') {
+    try {
+      console.log(TAG, 'delete');
+      const [rows] = await promisePool.execute(
+          'DELETE FROM bm_ad_buy WHERE ad_id = ?', [req.params.id]);
+      return rows.affectedRows === 1;
+    }
+    catch (e) {
+      console.error(TAG, 'delete:', e.message);
+    }
+  }
+  else if (type === 'sell') {
+    try {
+      console.log(TAG, 'delete');
+      const [rows] = await promisePool.execute(
+          'DELETE FROM bm_ad_sell WHERE ad_id = ?', [req.params.id]);
+      return rows.affectedRows === 1;
+    }
+    catch (e) {
+      console.error(TAG, 'delete:', e.message);
+    }
+  }
+  else return 'Request did not specify an ad type';
 };
 
 module.exports = {
@@ -145,4 +307,6 @@ module.exports = {
   getAdById,
   postAd,
   deleteAdById,
+  getAllUserAds,
+  searchAd
 };

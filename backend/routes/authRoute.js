@@ -7,6 +7,7 @@ const express = require('express');
 const router = express.Router();
 const {body} = require('express-validator');
 const authController = require('../controllers/authController');
+const passport = require('passport');
 
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
@@ -22,6 +23,19 @@ router.post('/register',
     authController.login
 );
 
-router.delete('/:id', authController.user_delete);
+router.put('/update/:id',
+    passport.authenticate('jwt', {session: false}),
+    [
+      body('editUserName', 'min length 3 chars').isLength({min: 3}),
+      body('editEmail', 'email is not valid').isEmail(),
+      body('editCity', 'minimum 2 characters').isLength({min: 2}),
+      body('editPhoneNumber', 'must be a phone num').isLength({min: 8}).isNumeric(),
+    ],
+    authController.user_update
+)
+
+router.delete('/:id',
+    passport.authenticate('jwt', {session: false}),
+    authController.user_delete);
 
 module.exports = router;
