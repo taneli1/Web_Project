@@ -71,6 +71,7 @@ logoutAction();
 const createNewItems = async (items) => {
   let item = {
     'name': '',
+    'image': '',
     'city': '',
     'price': '',
     'desc': '',
@@ -83,6 +84,8 @@ const createNewItems = async (items) => {
 
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
+    item.image = items[i].image_1 != null ?
+        items[i].image_1 : 'No image';
     item.city = items[i].city != null ?
         items[i].city : 'No city';
     item.price = items[i].price != null ?
@@ -96,7 +99,7 @@ const createNewItems = async (items) => {
 
 };
 
-const showItems = (itemBuy) => {
+const showItems = (item) => {
     let new_item = document.getElementById('new-item');
     let new_item_slot = document.createElement('div');
     new_item.appendChild(new_item_slot);
@@ -104,33 +107,38 @@ const showItems = (itemBuy) => {
 
     let h2E = document.createElement('h2');
     new_item_slot.appendChild(h2E);
-    let item_name = document.createTextNode(itemBuy.name);
+    let item_name = document.createTextNode(item.name);
     h2E.appendChild(item_name);
+
+    let image = document.createElement('figure');
+    new_item_slot.appendChild(image);
+    image.innerHTML += '<img src="' + '../uploads/' + item.image +
+      '" alt="There is no picture">\n';
 
     let cityText = document.createElement('label');
     let city = document.createElement('p');
     new_item_slot.appendChild(cityText);
     new_item_slot.appendChild(city);
     cityText.innerHTML += 'Location: ';
-    city.innerHTML += itemBuy.city;
+    city.innerHTML += item.city;
 
     let priceText = document.createElement('label');
     let price = document.createElement('p');
     new_item_slot.appendChild(priceText);
     new_item_slot.appendChild(price);
     priceText.innerHTML += 'Price: ';
-    price.innerHTML += itemBuy.price + '€';
+    price.innerHTML += item.price + '€';
 
     let descText = document.createElement('label');
     let desc = document.createElement('p');
     new_item_slot.appendChild(descText);
     new_item_slot.appendChild(desc);
     descText.innerHTML += 'Description: ';
-    desc.innerHTML += itemBuy.desc;
+    desc.innerHTML += item.desc;
 
     let listed_by = document.createElement('p');
     new_item_slot.appendChild(listed_by);
-    listed_by.innerHTML += itemBuy.listed_by;
+    listed_by.innerHTML += item.listed_by;
 
     clickItem(new_item_slot);
 };
