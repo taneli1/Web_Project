@@ -28,8 +28,15 @@ const getAllAdsBuy = async (req) => {
     const [rows] = await promisePool.execute(
         'SELECT * FROM bm_ad_buy ' +
         'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table' +
-        '=bm_ad_buy_images.images_id');
-    console.log(rows);
+        '=bm_ad_buy_images.images_id ' +
+        'LEFT JOIN bm_user ON bm_ad_buy.listed_by=bm_user.user_id');
+
+    // Delete unneeded stuff
+    for (let i = 0; i < rows.length; i++) {
+      delete rows[i].password;
+      delete rows[i].admin_key;
+    }
+    // console.log(rows);
     return rows;
   }
   catch (e) {
@@ -45,8 +52,15 @@ const getAllAdsSell = async (req) => {
     const [rows] = await promisePool.execute(
         'SELECT * FROM bm_ad_sell ' +
         'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table' +
-        '=bm_ad_sell_images.images_id');
-    console.log(rows);
+        '=bm_ad_sell_images.images_id ' +
+        'LEFT JOIN bm_user ON bm_ad_sell.listed_by=bm_user.user_id');
+
+    // Delete unneeded stuff
+    for (let i = 0; i < rows.length; i++) {
+      delete rows[i].password;
+      delete rows[i].admin_key;
+    }
+    // console.log(rows);
     return rows;
   }
   catch (e) {
@@ -62,10 +76,14 @@ const getAdByIdBuy = async (req) => {
   try {
     console.log(TAG + 'getAd :', req.params.id);
     const [rows] = await promisePool.execute(
-        'SELECT * FROM bm_ad_buy WHERE ad_id = ?' +
+        'SELECT * FROM bm_ad_buy ' +
         'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table=' +
-        'bm_ad_buy_images.images_id',
+        'bm_ad_buy_images.images_id ' +
+        'LEFT JOIN bm_user ON bm_ad_buy.listed_by=bm_user.user_id ' +
+        'WHERE ad_id = ? ',
         [req.params.id]);
+    delete rows[0].password;
+    delete rows[0].admin_key;
     return rows[0];
   }
   catch (e) {
@@ -80,17 +98,20 @@ const getAdByIdSell = async (req) => {
   try {
     console.log(TAG + 'getAd :', req.params.id);
     const [rows] = await promisePool.execute(
-        'SELECT * FROM bm_ad_sell WHERE ad_id = ?' +
+        'SELECT * FROM bm_ad_sell ' +
         'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table=' +
-        'bm_ad_sell_images.images_id',
+        'bm_ad_sell_images.images_id ' +
+        'LEFT JOIN bm_user ON bm_ad_sell.listed_by=bm_user.user_id ' +
+        'WHERE ad_id = ?',
         [req.params.id]);
+    delete rows[0].password;
+    delete rows[0].admin_key;
     return rows[0];
   }
   catch (e) {
     console.error(TAG, e.message);
   }
 };
-
 
 // -------------------------------------------------------------------------
 // ---------------------------- Post to db ---------------------------------
@@ -180,7 +201,7 @@ const postImagesBuy = async (req) => {
  * Save images to db, return the insertId , which is then saved to ad table
  * with all the other data
  */
-const postImagesSell= async (req) => {
+const postImagesSell = async (req) => {
 
   const images = req.files;
   try {
@@ -204,13 +225,11 @@ const postImagesSell= async (req) => {
 // ---------------------------- Delete from db -----------------------------
 // -------------------------------------------------------------------------
 
+// TODO Deletion needs confirmation to not delete anyone else's posts
 /**
  * Delete a single ad from DB with the id of ad
  */
 const deleteAdByIdBuy = async (req) => {
-
-  // TODO Check that listed_by == user_id
-
   try {
     console.log(TAG, 'delete');
     const [rows] = await promisePool.execute(
@@ -226,9 +245,6 @@ const deleteAdByIdBuy = async (req) => {
  * Delete a single ad from DB with the id of ad
  */
 const deleteAdByIdSell = async (req) => {
-
-  // TODO Check that listed_by == user_id
-
   try {
     console.log(TAG, 'delete');
     const [rows] = await promisePool.execute(
@@ -248,5 +264,5 @@ module.exports = {
   postAdBuy,
   postAdSell,
   deleteAdByIdBuy,
-  deleteAdByIdSell
+  deleteAdByIdSell,
 };

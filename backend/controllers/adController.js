@@ -17,7 +17,7 @@ const ad_get_list = async (req, res) => {
     res.json(ads);
   }
   else if (type === 'sell'){
-    const ads = await adModel.getAllAdsBuy()
+    const ads = await adModel.getAllAdsSell()
     res.json(ads);
   }
   else res.json('Request did not specify an ad type')
