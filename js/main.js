@@ -6,11 +6,11 @@ const search = document.querySelector(".search");
 const new_item = document.querySelector(".new-items");
 const loginButton = document.getElementById('login');
 const logoutButton = document.getElementById('logout');
+const profileButton = document.getElementById('profile')
 
 const getAllAds = async () =>  {
   const response = await fetch(url + '/ad');
   const items = await response.json();
-
 
   createNewItems(items);
 };
@@ -19,13 +19,15 @@ const buttonVisibility = () => {
   if (document.cookie.includes('token')){
     loginButton.style.display = "none"
   }
-  else logoutButton.style.display = "none"
+  else {
+    logoutButton.style.display = "none"
+    profileButton.style.display = "none"
+  }
 };
 
 const logoutAction = () => {
   logoutButton.addEventListener('click', async () => {
     delete_cookie("token");
-    document.location.reload()
   })
 };
 
