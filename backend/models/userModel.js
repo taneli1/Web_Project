@@ -99,8 +99,9 @@ const updateUser = async (req) => {
           req.body.editUserName,
           req.body.editCity,
           req.body.editEmail,
-          req.body.editPhoneNumber]);
-    console.log('catModel update:', rows);
+          req.body.editPhoneNumber,
+          req.params.id]);
+    console.log('user update:', rows);
     return rows.affectedRows === 1;
   }
   catch (e) {

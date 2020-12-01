@@ -79,7 +79,7 @@ const user_create_post = async (req, res, next) => {
  * Delete an user
  */
 const user_delete = async (req, res) => {
-  const userDeletion = userModel.deleteUser(req);
+  const userDeletion = await userModel.deleteUser(req);
   res.json(userDeletion);
 };
 

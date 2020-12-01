@@ -113,6 +113,31 @@ const getAdByIdSell = async (req) => {
   }
 };
 
+/**
+ * Gets all of the users ads, both sell and buy
+ */
+const getAllUserAds = async (req) => {
+
+  try {
+    console.log(TAG + 'getAllUserAds :', req.params.userId);
+    const [buy] = await promisePool.execute(
+        'SELECT * FROM bm_ad_buy ' +
+        'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table=' +
+        'bm_ad_buy_images.images_id ' +
+        'WHERE listed_by = ? ',
+        [req.params.userId]);
+    const [sell] = await promisePool.execute(
+        'SELECT * FROM bm_ad_sell ' +
+        'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table=' +
+        'bm_ad_sell_images.images_id ' +
+        'WHERE listed_by = ? ',
+        [req.params.userId]);
+    return buy.concat(sell)
+  }
+  catch (e) {
+    console.error(TAG, e.message);
+  }
+}
 // -------------------------------------------------------------------------
 // ---------------------------- Post to db ---------------------------------
 // -------------------------------------------------------------------------
@@ -265,4 +290,5 @@ module.exports = {
   postAdSell,
   deleteAdByIdBuy,
   deleteAdByIdSell,
+  getAllUserAds
 };
