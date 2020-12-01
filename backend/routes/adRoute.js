@@ -8,15 +8,16 @@ const adController = require('../controllers/adController');
 const passport = require('passport');
 const {body} = require('express-validator');
 
-const fileFilter = (req, files, cb) => {
-  if (!files.mimetype.includes('image')) {
+const fileFilter = (req, file, cb) => {
+  if (!file.mimetype.includes('image')) {
     return cb(null, false, new Error('not an image'));
   }
   else cb(null,true)
 };
+
 const injectFile = (req, res, next) => {
-  if (req.files) {
-    req.body.type = req.files.mimetype;
+  if (req.file) {
+    req.body.type = req.file.mimetype;
   }
   next();
 };
@@ -31,7 +32,7 @@ router.get('/:ad_type/:id', adController.ad_get_by_id);
 // Route needs user to be logged in
 router.post('/:ad_type',
     passport.authenticate('jwt', {session: false}),
-    upload.array('image',5),
+    upload.single('image'),
     injectFile,
     //adController.resize_image,
     [

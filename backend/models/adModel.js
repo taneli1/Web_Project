@@ -179,13 +179,13 @@ const postAdSell = async (req) => {
  */
 const postImagesBuy = async (req) => {
 
-  const images = req.files;
+  const images = req.file.filename;
   try {
     const [rows] = await promisePool.execute(
         'INSERT INTO bm_ad_buy_images (image_1)' +
         ' VALUES (?);',
         [
-          images[0],
+          images,
         ]);
 
     console.log(TAG + `Images success: ${rows.insertId}`);
@@ -203,13 +203,13 @@ const postImagesBuy = async (req) => {
  */
 const postImagesSell = async (req) => {
 
-  const images = req.files;
+  const images = req.file.filename;
   try {
     const [rows] = await promisePool.execute(
         'INSERT INTO bm_ad_sell_images (image_1)' +
         ' VALUES (?);',
         [
-          images[0],
+          images,
         ]);
 
     console.log(TAG + `Images success: ${rows.insertId}`);
