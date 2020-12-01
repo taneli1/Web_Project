@@ -26,7 +26,6 @@ const upload = multer({dest: './uploads/', fileFilter});
 
 // Get all user's ads from this route
 router.get('/user/:userId', adController.ad_get_user_ads);
-
 // Get all ads of specified type
 router.get('/:ad_type', adController.ad_get_list);
 // Get single ad of specified type with its id
@@ -35,8 +34,8 @@ router.get('/:ad_type/:id', adController.ad_get_by_id);
 // Post an ad, route needs user to be logged in
 router.post('/:ad_type',
     passport.authenticate('jwt', {session: false}),
-    injectFile,
     upload.single('image'),
+    injectFile,
     //adController.resize_image,
     [
       body('item_name', 'min length 3 chars').isLength({min: 3}),
