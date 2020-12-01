@@ -1,5 +1,5 @@
 const createNewAd = document.getElementById("createNewAd")
-const adTypeHiddenField = document.getElementById("adType")
+const adTypeHiddenField = document.getElementById("adType");
 const url = 'http://localhost:3000'
 
 

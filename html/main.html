@@ -30,9 +30,24 @@
         <form>
             <input type="text" id="search" placeholder="Search">
         </form>
+
+        <input id="adType"
+               type="hidden"
+               value=""
+               name="ad_type">
     </div>
+
+        <div id="ad_type">
+            <label for="ad_buy">buy
+            <input type="radio" id="ad_buy" name="ad_typeSelector" value="buy" required />
+        </label>
+            <label for="ad_sell">sell
+                <input type="radio" id="ad_sell" name="ad_typeSelector" value="sell" checked />
+            </label>
+        </div>
+
     <div class="newText">
-        <p><b>New</b></p>
+        <p id="textNew"><b>New</b></p>
     </div>
     <div id="new-item">
 
@@ -41,4 +56,5 @@
 
 </body>
 <script src="../js/main.js"></script>
+<script src="../js/serialize.js"></script>
 </html>
