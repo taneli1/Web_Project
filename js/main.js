@@ -2,8 +2,8 @@
 
 const url = 'http://localhost:3000';
 
-const search = document.querySelector(".search");
-const new_item = document.querySelector(".new-items");
+//const search = document.querySelector(".search");
+//const new_item = document.querySelector(".new-items");
 const loginButton = document.getElementById('login');
 const logoutButton = document.getElementById('logout');
 const profileButton = document.getElementById('profile')

@@ -7,11 +7,11 @@ const phoneNumber = document.getElementById('phoneNumber');
 const editButton = document.getElementById('edit');
 const editField = document.getElementById('editProfile');
 const userInfo = document.getElementById('userInfo');
-
 const editName = document.querySelector("form[id='editProfile'] input[name='editUserName']");
 const editCity = document.querySelector("form[id='editProfile'] input[name='editCity']");
 const editEmail = document.querySelector("form[id='editProfile'] input[name='editEmail']");
 const editPhoneNumber = document.querySelector("form[id='editProfile'] input[name='editPhoneNumber']");
+const ads = document.getElementById('ads')
 
 
 editField.style.display = "none"
@@ -42,6 +42,7 @@ const getUserInfo = async () => {
     editEmail.setAttribute('value', user.email)
     phoneNumber.innerText = user.phone_number
     editPhoneNumber.setAttribute('value', user.phone_number)
+    await getAllAds(userId)
   }
   catch (e) {
     console.log(e.message);
@@ -86,7 +87,6 @@ editField.addEventListener('submit', async (evt) => {
   editField.style.display = "none"
   editButton.style.display = "block"
   userInfo.style.display = "block"
-  console.log("kalaaaaa")
 });
 
 function delete_cookie(name) {
@@ -106,5 +106,18 @@ const getCookie = (name) => {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+const getAllAds = async (id) =>  {
+  const response = await fetch(url + '/ad/user/' + id);
+  const items = await response.json();
+  for (let i = 0; i < items.length; i++) {
+    ads.innerText += items[i].name
+    ads.innerText += items[i].city
+    ads.innerText += items[i].
+    ads.innerText += items[i].name
+  }
+};
+
+
 
 getUserInfo()
