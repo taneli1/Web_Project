@@ -73,7 +73,7 @@ const ad_delete_by_id = async (req, res) => {
 const resize_image = async (req, res, next) => {
   try {
     const ready = await resizeImg({width: 160, height: 160}, req.file.path,
-        './backend/imgcache' + req.file.filename);
+        './ads/thumbnails/' + req.file.filename);
     if (ready) {
       console.log(TAG, 'Resize', ready);
       next();

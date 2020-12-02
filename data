@@ -2,7 +2,7 @@ CREATE TABLE `bm_user` (
   `user_id` int(11) NOT NULL,
   `password` text NOT NULL,
   `name` text NOT NULL,
-  `city` text NOT NULL,
+  `user_city` text NOT NULL,
   `phone_number` text NOT NULL,
   `email` text NOT NULL,
   `creation_date` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -18,7 +18,7 @@ CREATE TABLE `bm_ad_sell` (
   `listed_by` int(11) NOT NULL,
   `images_table` int(11) NOT NULL,
   `type` varchar(255) DEFAULT 'sell',
-  `creation_date` datetime DEFAULT CURRENT_TIMESTAMP
+  `posted_on` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `bm_ad_buy` (
@@ -30,7 +30,7 @@ CREATE TABLE `bm_ad_buy` (
   `listed_by` int(11) NOT NULL,
   `images_table` int(11) NOT NULL,
   `type` varchar(255) DEFAULT 'buy',
-  `creation_date` datetime DEFAULT CURRENT_TIMESTAMP
+  `posted_on` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `bm_ad_sell_images` (
@@ -52,7 +52,7 @@ CREATE TABLE `bm_ad_buy_images` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `bm_user` (`user_id`, `name`, `city`, `phone_number`, `password`, `email`) VALUES
+INSERT INTO `bm_user` (`user_id`, `name`, `user_city`, `phone_number`, `password`, `email`) VALUES
 (1, 'Testi Testimies', 'Helsinki', '0401231122', '$2a$10$5RzpyimIeuzNqW7G8seBiOzBiWBvrSWroDomxMa0HzU6K2ddSgixS', '1@gmail.com'),
 (2, 'Mikko Mallikas', 'Porvoo', '0451113322', '$2a$10$5RzpyimIeuzNqW7G8seBiOzBiWBvrSWroDomxMa0HzU6K2ddSgixS', '2@gmail.com'),
 (3, 'Maija Mallikas', 'Espoo', '020202', '$2a$10$5RzpyimIeuzNqW7G8seBiOzBiWBvrSWroDomxMa0HzU6K2ddSgixS', '3@gmail.com'),

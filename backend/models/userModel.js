@@ -8,7 +8,7 @@ const TAG = 'userModel: ';
  */
 const getAllUsers = async () => {
   try {
-    const [rows] = await promisePool.execute('SELECT name, city FROM bm_user');
+    const [rows] = await promisePool.execute('SELECT name, user_city FROM bm_user');
     return rows;
   }
   catch (e) {
@@ -63,7 +63,7 @@ const createUser = async (req) => {
   if (exists.length === 0) {
     try {
       const [rows] = await promisePool.execute(
-          'INSERT INTO bm_user (name, password, email, phone_number, city)' +
+          'INSERT INTO bm_user (name, password, email, phone_number, user_city)' +
           ' VALUES (?, ?, ?, ?, ?);',
           [
             req.body.name, req.body.password,
@@ -94,7 +94,7 @@ const createUser = async (req) => {
 const updateUser = async (req) => {
   try {
     const [rows] = await promisePool.execute(
-        'UPDATE bm_user SET name = ?, city = ?, email = ?, phone_number = ? WHERE user_id = ?;',
+        'UPDATE bm_user SET name = ?, user_city = ?, email = ?, phone_number = ? WHERE user_id = ?;',
         [
           req.body.editUserName,
           req.body.editCity,
