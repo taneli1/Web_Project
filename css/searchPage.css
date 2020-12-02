@@ -1,0 +1,36 @@
+.flex-container {
+    height: 600px;
+}
+
+#searchItem {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#searchItem div {
+    display: flex;
+    flex-direction: column;
+    font-size: 26px;
+    border: 1px solid black;
+    width: 25%;
+    height: 25%;
+}
+
+#searchDiv {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    font-size: 26px;
+    min-height: 200px;
+}
+
+#searchSort {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 26px;
+}
+

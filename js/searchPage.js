@@ -2,76 +2,18 @@
 
 const url = 'http://localhost:3000';
 
-const searchButton = document.getElementById('searchButton');
-const loginButton = document.getElementById('login');
-const logoutButton = document.getElementById('logout');
-let new_item = document.getElementById('new-item');
-const adTypeHiddenField = document.getElementById('adType');
-const ad_buy = document.getElementById('ad_buy');
-const ad_sell = document.getElementById('ad_sell');
+let searched = localStorage.getItem('searched');
 
-const adTypeSwitch = () => {
-  const value = document.querySelector(
-      'input[name="ad_typeSelector"]:checked').value;
-  if (value === 'buy') {
-    adTypeHiddenField.value = 'buy';
-  } else {
-    adTypeHiddenField.value = 'sell';
-  }
-};
-const profileButton = document.getElementById('profile');
+console.log(searched);
 
-const adFilters = (type) => {
-  type.addEventListener('click', async () => {
-    adTypeSwitch();
-    console.log(adTypeHiddenField.value);
-    new_item.innerHTML = '';
+const getSearchResult = async () => {
+  const response = await fetch(url + '/ad/search/' + searched);
+  const searchR = await response.json();
 
-    if (adTypeHiddenField.value === 'buy') {
-      const response = await fetch(url + '/ad/buy');
-      const items = await response.json();
-
-      createNewItems(items);
-    } else {
-      const response = await fetch(url + '/ad/sell');
-      const items = await response.json();
-
-      createNewItems(items);
-    }
-  });
+  createNewItems(searchR);
 };
 
-adFilters(ad_buy);
-adFilters(ad_sell);
-
-const getAllAdsSell = async () => {
-  const response = await fetch(url + '/ad/sell');
-  const items = await response.json();
-  await createNewItems(items);
-};
-
-const buttonVisibility = () => {
-  if (document.cookie.includes('token')) {
-    loginButton.style.display = 'none';
-  } else {
-    logoutButton.style.display = 'none';
-    profileButton.style.display = 'none';
-  }
-};
-
-const logoutAction = () => {
-  logoutButton.addEventListener('click', async () => {
-    delete_cookie('token');
-  });
-};
-
-function delete_cookie(name) {
-  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-}
-
-getAllAdsSell();
-buttonVisibility();
-logoutAction();
+getSearchResult();
 
 const createNewItems = async (items) => {
   let item = {
@@ -105,9 +47,10 @@ const createNewItems = async (items) => {
 };
 
 const showItems = (item) => {
-  let new_item = document.getElementById('new-item');
+  let new_item = document.getElementById('searchItem');
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
+
 
   let h2E = document.createElement('h2');
   new_item_slot.appendChild(h2E);
@@ -147,19 +90,10 @@ const showItems = (item) => {
   clickItem(new_item_slot);
 };
 
+
 const clickItem = (item) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';
     localStorage.setItem('item', item.innerHTML);
   });
 };
-
-const searchClick = () => {
-  searchButton.addEventListener('click', function() {
-    const searched = document.getElementById('search').value;
-    document.location.href = '../html/searchPage.html';
-    localStorage.setItem('searched', searched);
-  });
-};
-
-searchClick();
