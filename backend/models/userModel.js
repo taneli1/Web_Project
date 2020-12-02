@@ -3,12 +3,18 @@ const pool = require('../database/database');
 const promisePool = pool.promise();
 const TAG = 'userModel: ';
 
+/*
+  Handles all communication with database regarding users.
+ */
+
 /**
- * Gets all users from database
+ * Gets all usernames and cities from database
+ * @return array with the information
  */
 const getAllUsers = async () => {
   try {
-    const [rows] = await promisePool.execute('SELECT name, user_city FROM bm_user');
+    const [rows] = await promisePool.execute(
+        'SELECT name, user_city FROM bm_user');
     return rows;
   }
   catch (e) {
@@ -17,14 +23,18 @@ const getAllUsers = async () => {
 };
 
 /**
- * Returns a single user from db with the req id. (ALL the data under that id)
- * TODO Return only stuff needed? Currently returns everything
+ * Returns a single user from db with the requested id.
+ * @return array, has only one user in it
  */
 const getUserById = async (id) => {
   try {
     console.log(TAG + 'getUser :', id);
     const [rows] = await promisePool.execute(
-        'SELECT * FROM bm_user WHERE user_id = ?', [id]);
+        'SELECT * FROM bm_user WHERE user_id = ?',
+        [id]);
+
+    delete rows[0].password
+    delete rows[0].admin_key
     return rows[0];
   }
   catch (e) {
@@ -33,16 +43,14 @@ const getUserById = async (id) => {
 };
 
 /**
- * Get user from DB
+ * Get user from DB for login purposes only
  * @param [email] of the user
  */
-const getUserLogin = async (params) => {
+const getUserLogin = async (email) => {
   try {
-    console.log(params);
     const [rows] = await promisePool.execute(
         'SELECT * FROM bm_user WHERE email = ?;',
-        params);
-    console.log(TAG, rows);
+        email);
     return rows;
   }
   catch (e) {
@@ -51,8 +59,8 @@ const getUserLogin = async (params) => {
 };
 
 /**
- * Creates an user to database
- * @return Users id in database
+ * Creates an user to the database
+ * @return Int, The user_id of the created user
  */
 const createUser = async (req) => {
 
@@ -89,7 +97,8 @@ const createUser = async (req) => {
 };
 
 /**
- * Updates user fields in database with the values provided, returns true/false
+ * Updates user fields in database with the values provided, returns true/false.
+ * @return Boolean, True if everything went as expected.
  */
 const updateUser = async (req) => {
   try {
@@ -111,7 +120,6 @@ const updateUser = async (req) => {
 
 /**
  * Delete an user
- * @param req
  * @return boolean, true if something was removed, false otherwise
  */
 const deleteUser = async (req) => {
@@ -121,7 +129,8 @@ const deleteUser = async (req) => {
   try {
     console.log(TAG, 'delete user');
     const [rows] = await promisePool.execute(
-        'DELETE FROM bm_user WHERE user_id = ?', [req.params.id]);
+        'DELETE FROM bm_user WHERE user_id = ?',
+        [req.params.id]);
     return rows.affectedRows === 1;
   }
   catch (e) {

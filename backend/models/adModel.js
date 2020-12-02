@@ -4,6 +4,16 @@ const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
 
+
+/*
+  Handles all the communication with db regarding ads. Almost all the methods
+  take req.params.ad_type to differentiate what ads are targeted with the request.
+  This is done since buy- and sell ads are saved in different tables to improve
+  performance.
+ */
+
+
+
 // TODO Save thumbnail in ad table, additional images only fetched when
 //  opening up a single ad page
 //  - Validate user input
@@ -22,7 +32,7 @@ const getAllAds = async (req) => {
   if (type === 'buy') {
     try {
       const [rows] = await promisePool.execute(
-          'SELECT * FROM bm_ad_buy ' +
+          'SELECT bm_ad_buy.*, bm_ad_buy_images.image_1 FROM bm_ad_buy ' +
           'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table' +
           '=bm_ad_buy_images.images_id ' +
           'LEFT JOIN bm_user ON bm_ad_buy.listed_by=bm_user.user_id');
@@ -42,7 +52,7 @@ const getAllAds = async (req) => {
   else if (type === 'sell') {
     try {
       const [rows] = await promisePool.execute(
-          'SELECT * FROM bm_ad_sell ' +
+          'SELECT bm_ad_sell.*, bm_ad_sell_images.image_1 FROM bm_ad_sell ' +
           'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table' +
           '=bm_ad_sell_images.images_id ' +
           'LEFT JOIN bm_user ON bm_ad_sell.listed_by=bm_user.user_id');
@@ -107,7 +117,6 @@ const getAdById = async (req) => {
     }
   }
   else return 'Request did not specify an ad type';
-
 };
 
 /**
