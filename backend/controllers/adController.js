@@ -8,6 +8,10 @@ const {resizeImg} = require('../utils/resize');
   Gets data from adModel to respond to different requests from adRoute.
  */
 
+
+
+// ------------------------ Basic ad stuff --------------------------------
+
 /**
  * Responds with ads of requested type from database
  * TODO Get certain amount of ads (range, first 50, 50-100...)
@@ -38,18 +42,9 @@ const ad_post = async (req, res) => {
  * Get a single ad with ad_id
  */
 const ad_get_by_id = async (req, res) => {
-
   const ad = await adModel.getAdById(req);
   res.json(ad);
 };
-
-/**
- * Search for ads in db
- */
-const ad_search_keywords = async (req,res) => {
-  const results = await adModel.searchAd(req);
-  res.json(results);
-}
 
 /**
  * Get all ads from a user
@@ -67,6 +62,29 @@ const ad_delete_by_id = async (req, res) => {
   res.json(deletion);
 };
 
+
+
+// ------------------- Search features ----------------------------------
+
+/**
+ * Search for ads in db
+ */
+const ad_search_keywords = async (req, res) => {
+  const results = await adModel.searchAd(req);
+  res.json(results);
+};
+
+/**
+ * Get ads by category
+ */
+const ad_get_by_category = async (req, res) => {
+  const adsByCtg = await adModel.getByCategory(req);
+  res.json(adsByCtg);
+};
+
+
+
+// --------------------------- Other --------------------------------------
 /**
  * Resize an image
  */
@@ -92,5 +110,6 @@ module.exports = {
   ad_delete_by_id,
   resize_image,
   ad_get_user_ads,
-  ad_search_keywords
+  ad_search_keywords,
+  ad_get_by_category
 };

@@ -149,6 +149,10 @@ const getAllUserAds = async (req) => {
   }
 };
 
+
+// ------------------------- Search & categories ---------------------------
+// -------------------------------------------------------------------------
+
 /**
  * Search with a keyword from database, searches the ad for matching
  * item names
@@ -157,25 +161,73 @@ const searchAd = async (req) => {
 
   // TODO Validation
   const search = '%' + req.params.keywords + '%'
+  const type = req.params.ad_type;
 
-  try {
-
-    const [buy] = await promisePool.execute(
-        'SELECT * FROM bm_ad_buy ' +
-        'WHERE item_name LIKE ?',
-        [search]);
-
-    const [sell] = await promisePool.execute(
-        'SELECT * FROM bm_ad_sell ' +
-        'WHERE item_name LIKE ?',
-        [search]);
-
-    return buy.concat(sell);
+  if (type === 'buy') {
+    try {
+      const [buy] = await promisePool.execute(
+          'SELECT * FROM bm_ad_buy ' +
+          'WHERE item_name LIKE ?',
+          [search]);
+      return buy;
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
   }
-  catch (e) {
-    console.error(TAG, e.message);
+  else if (type === 'sell') {
+    try {
+      const [sell] = await promisePool.execute(
+          'SELECT * FROM bm_ad_sell ' +
+          'WHERE item_name LIKE ?',
+          [search]);
+      return sell;
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
   }
+  else return 'Request did not specify an ad type';
 };
+
+/**
+ * Get results from database based on the category of the item.
+ * Joins bm_ctg table to get ctg value
+ */
+const getByCategory = async (req) => {
+
+  const type = req.params.ad_type;
+
+  if (type === 'buy') {
+    try {
+      const [buy] = await promisePool.execute(
+          'SELECT * FROM bm_ad_buy ' +
+          'LEFT JOIN bm_ctg ON bm_ad_buy.category=' +
+          'bm_ctg.ctg_id ' +
+          'WHERE bm_ad_buy.category = ?',
+          [req.params.ctg]);
+      return buy;
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  else if (type === 'sell') {
+    try {
+      const [sell] = await promisePool.execute(
+          'SELECT * FROM bm_ad_sell ' +
+          'LEFT JOIN bm_ctg ON bm_ad_sell.category=' +
+          'bm_ctg.ctg_id ' +
+          'WHERE bm_ad_sell.category = ?',
+          [req.params.ctg]);
+      return sell;
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  else return 'Request did not specify an ad type';
+}
 
 // -------------------------------------------------------------------------
 // ---------------------------- Post to db ---------------------------------
@@ -328,5 +380,6 @@ module.exports = {
   postAd,
   deleteAdById,
   getAllUserAds,
-  searchAd
+  searchAd,
+  getByCategory
 };

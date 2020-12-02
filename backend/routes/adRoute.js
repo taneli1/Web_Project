@@ -31,7 +31,10 @@ const upload = multer({dest: './ads/images/', fileFilter});
 router.get('/user/:userId', adController.ad_get_user_ads);
 
 // Search for results in database with keyword(s)
-router.get('/search/:keywords', adController.ad_search_keywords);
+router.get('/search/:ad_type/:keywords', adController.ad_search_keywords);
+
+// Get results with the category of ads
+router.get('/category/:ad_type/:ctg', adController.ad_get_by_category);
 
 // Get all ads of specified type
 router.get('/:ad_type', adController.ad_get_list);
