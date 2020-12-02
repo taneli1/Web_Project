@@ -33,6 +33,8 @@ const ad_post = async (req, res) => {
     return res.status(400).json({errors: errors.array()});
   }
 
+  // TODO REMOVE THIS LINE WHEN FRONTEND SENDS CATEGORY !!
+  req.body.category = 2
   // Return the res from postAd
   const ok = await adModel.postAd(req);
   res.json(ok);
@@ -58,8 +60,21 @@ const ad_get_user_ads = async (req, res) => {
  * Delete an ad
  */
 const ad_delete_by_id = async (req, res) => {
-  const deletion = await adModel.deleteAdById(req);
-  res.json(deletion);
+
+  // Get the original lister of the ad asked to be deleted
+  const adCreator = await adModel.getAdLister(req);
+  // Get the id of the deleting user
+  const tokenId = req.user.user_id;
+
+  console.log("adLister || tokenId", adCreator," || ", tokenId)
+
+  // Check if the two user ids match, continue deletion
+  if (tokenId === adCreator) {
+    const deletion = await adModel.deleteAdById(req);
+    res.json(deletion);
+  }
+  else res.json('You are not authorized to delete this ad, or this ad ' +
+      'does not exist!')
 };
 
 

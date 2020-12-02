@@ -3,7 +3,7 @@
 const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
-
+const fs = require('fs');
 
 /*
   Handles all the communication with db regarding ads. Almost all the methods
@@ -11,8 +11,6 @@ const promisePool = pool.promise();
   This is done since buy- and sell ads are saved in different tables to improve
   performance.
  */
-
-
 
 // TODO Save thumbnail in ad table, additional images only fetched when
 //  opening up a single ad page
@@ -62,7 +60,7 @@ const getAllAds = async (req) => {
         delete rows[i].password;
         delete rows[i].admin_key;
       }
-      console.log(rows)
+      console.log(rows);
       // console.log(rows);
       return rows;
     }
@@ -129,14 +127,14 @@ const getAllUserAds = async (req) => {
     console.log(TAG + 'getAllUserAds :', req.params.userId);
 
     const [buy] = await promisePool.execute(
-        'SELECT * FROM bm_ad_buy ' +
+        'SELECT bm_ad_buy.*, bm_ad_buy_images.image_1 FROM bm_ad_buy ' +
         'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table=' +
         'bm_ad_buy_images.images_id ' +
         'WHERE listed_by = ? ',
         [req.params.userId]);
 
     const [sell] = await promisePool.execute(
-        'SELECT * FROM bm_ad_sell ' +
+        'SELECT bm_ad_sell.*, bm_ad_sell_images.image_1 FROM bm_ad_sell ' +
         'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table=' +
         'bm_ad_sell_images.images_id ' +
         'WHERE listed_by = ? ',
@@ -149,7 +147,6 @@ const getAllUserAds = async (req) => {
   }
 };
 
-
 // ------------------------- Search & categories ---------------------------
 // -------------------------------------------------------------------------
 
@@ -160,7 +157,7 @@ const getAllUserAds = async (req) => {
 const searchAd = async (req) => {
 
   // TODO Validation
-  const search = '%' + req.params.keywords + '%'
+  const search = '%' + req.params.keywords + '%';
   const type = req.params.ad_type;
 
   if (type === 'buy') {
@@ -227,7 +224,40 @@ const getByCategory = async (req) => {
     }
   }
   else return 'Request did not specify an ad type';
-}
+};
+
+/**
+ * Returns the id of the ad lister
+ */
+const getAdLister = async (req) => {
+
+  const type = req.params.ad_type;
+  if (type === 'buy') {
+    try {
+      const [rows] = await promisePool.execute(
+          'SELECT listed_by FROM bm_ad_buy ' +
+          'WHERE ad_id = ?',
+          [req.params.ad_id]);
+      return rows[0].listed_by;
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  else if (type === 'sell') {
+    try {
+      const [rows] = await promisePool.execute(
+          'SELECT listed_by FROM bm_ad_sell ' +
+          'WHERE ad_id = ?',
+          [req.params.ad_id]);
+      return rows[0].listed_by;
+    }
+    catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  else return 'Request did not specify an ad type';
+};
 
 // -------------------------------------------------------------------------
 // ---------------------------- Post to db ---------------------------------
@@ -249,11 +279,12 @@ const postAd = async (req) => {
     try {
       const [rows] = await promisePool.execute(
           'INSERT INTO bm_ad_buy' +
-          ' (item_name, price, description, city, images_table, listed_by)' +
-          ' VALUES (?, ?, ?, ?, ?, ?);',
+          ' (item_name, price, description, city, category, images_table, listed_by)' +
+          ' VALUES (?, ?, ?, ?, ?, ?, ?);',
           [
             req.body.item_name, req.body.price,
             req.body.description, req.body.city,
+            req.body.category,
             images, tokenId]);
 
       console.log(TAG + `insert ${rows.insertId}`);
@@ -269,11 +300,12 @@ const postAd = async (req) => {
     try {
       const [rows] = await promisePool.execute(
           'INSERT INTO bm_ad_sell' +
-          ' (item_name, price, description, city, images_table, listed_by)' +
-          ' VALUES (?, ?, ?, ?, ?, ?);',
+          ' (item_name, price, description, city, category, images_table, listed_by)' +
+          ' VALUES (?, ?, ?, ?, ?, ?, ?);',
           [
             req.body.item_name, req.body.price,
             req.body.description, req.body.city,
+            req.body.category,
             images, tokenId]);
 
       console.log(TAG + `insert ${rows.insertId}`);
@@ -341,20 +373,66 @@ const postImages = async (req) => {
 // ---------------------------- Delete from db -----------------------------
 // -------------------------------------------------------------------------
 
-// TODO Deletion needs confirmation to not delete anyone else's posts
 /**
  * Delete a single ad from DB with the id of ad
  * @param req specifies what kind of ads are targeted
+ * TODO Remove images
+ *  - Get all images, remove from folders all the same names
  */
 const deleteAdById = async (req) => {
 
   const type = req.params.ad_type;
+  const adId = req.params.ad_id;
   if (type === 'buy') {
     try {
-      console.log(TAG, 'delete');
-      const [rows] = await promisePool.execute(
-          'DELETE FROM bm_ad_buy WHERE ad_id = ?', [req.params.id]);
-      return rows.affectedRows === 1;
+
+      // Get the image table corresponding to the table wanted to be removed
+      const [imageTable] = await promisePool.execute(
+          'SELECT bm_ad_buy.images_table, bm_ad_buy_images.* ' +
+          'FROM bm_ad_buy LEFT JOIN bm_ad_buy_images ON ' +
+          'bm_ad_buy.images_table=bm_ad_buy_images.images_id ' +
+          'WHERE bm_ad_buy.ad_id = ?',
+          [adId]);
+
+      // Loop through all the images in the table and remove them from the
+      // folders. We start looping from two, since that is where the image
+      // filenames start from.
+      console.log(imageTable)
+
+      for (let i = 2; i < imageTable.length; i++) {
+        console.log("GOT INTO FOR")
+        // If the image is not null
+        if (imageTable[i] !== null) {
+
+          // Define the paths where the files are to be removed
+          let path = './ads/images/' + imageTable[i];
+          let path2 = './ads/thumbnails/' + imageTable[i];
+          // Try to remove them
+          try {
+            console.log(path)
+            console.log(path2)
+            fs.unlinkSync(path);
+            fs.unlinkSync(path2);
+          }
+          catch (err) {
+            console.error(err);
+          }
+        }
+      }
+
+      const [adTable] = await promisePool.execute(
+          'DELETE FROM bm_ad_buy WHERE ad_id = ?',
+          [adId]);
+
+      const [imagesToDelete] = await promisePool.execute(
+          'DELETE FROM bm_ad_buy_images WHERE images_id = ?',
+          [imageTable[1]]);
+
+      // Return both, true for both if both were removed
+      return {
+        "Table" : adTable.affectedRows === 1,
+        "ImageTable" : imagesToDelete.affectedRows === 1
+      };
     }
     catch (e) {
       console.error(TAG, 'delete:', e.message);
@@ -362,10 +440,10 @@ const deleteAdById = async (req) => {
   }
   else if (type === 'sell') {
     try {
-      console.log(TAG, 'delete');
-      const [rows] = await promisePool.execute(
-          'DELETE FROM bm_ad_sell WHERE ad_id = ?', [req.params.id]);
-      return rows.affectedRows === 1;
+      const [ad] = await promisePool.execute(
+          'DELETE FROM bm_ad_sell WHERE ad_id = ? ',
+          [adId]);
+      return ad.affectedRows === 1;
     }
     catch (e) {
       console.error(TAG, 'delete:', e.message);
@@ -381,5 +459,6 @@ module.exports = {
   deleteAdById,
   getAllUserAds,
   searchAd,
-  getByCategory
+  getByCategory,
+  getAdLister,
 };
