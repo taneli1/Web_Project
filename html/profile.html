@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link href="../css/main.css" rel="stylesheet">
+    <link href="../css/profile.css" rel="stylesheet">
+    <link href="../css/login.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="header">
+    <header class="page-header">
+        <h1>
+            <a href="main.html">BetterMarket</a>
+        </h1>
+        <ul>
+            <li id="logout1">
+                <button>
+                    <a href="../html/main.html">Logout</a>
+                </button>
+            </li>
+            <li id="createAd">
+                <button>
+                    <a href="../html/adCreation.html">Create new ad</a>
+                </button>
+            </li>
+        </ul>
+    </header>
+</div>
+<h2>
+    My information
+</h2>
+<div class="light-border" id="userInfo">
+
+    <label>Name:</label>
+    <div id="userName"></div><br>
+    <label>City:</label>
+    <div id="user_city"></div><br>
+    <label>E-mail:</label>
+    <div id="eMail"></div><br>
+    <label>Phone number:</label>
+    <div id="phoneNumber"></div>
+</div>
+<form class="light-border"
+      id="editProfile"
+      enctype="multipart/form-data">
+    <label>Name:</label>
+    <input class="light-border"
+           type="text"
+           name="editUserName"
+           required>
+    <label>City:</label>
+    <input class="light-border"
+           type="text"
+           name="editCity"
+           required>
+    <label>E-mail:</label>
+    <input class="light-border"
+           type="email"
+           name="editEmail"
+           required>
+    <label>Phone number:</label>
+    <input class="light-border"
+           type="number"
+           name="editPhoneNumber"
+           pattern=".{3,}"
+           required>
+
+    <button class="light-border" type="submit">Save</button>
+</form>
+<button id="edit" class="light-border">
+    Edit
+</button>
+<h2>My ads</h2>
+<div id="ads" class="light-border">
+    <div id="new-item">
+    </div>
+</div>
+
+<script src="../js/profile.js"></script>
+<script src="../js/serialize.js"></script>
+
+</body>
+</html>

@@ -1,5 +1,4 @@
 'use strict';
-// TODO SecretOrPrivateKey into a file, read from there
 
 const TAG = 'authController: ';
 const jwt = require('jsonwebtoken');
@@ -7,6 +6,13 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const userModel = require('../models/userModel');
 const {validationResult} = require('express-validator');
+
+/*
+  Acts as the middleman to authRoute and userModel
+  for more complex user interaction (Login, register...).
+
+  Basic fetches are done via userController.
+ */
 
 /**
  * Login to a user account with req params
@@ -87,8 +93,8 @@ const user_delete = async (req, res) => {
  * Update user
  */
 const user_update = async (req, res) => {
-  const editOk = await userModel.updateUser(req);
-  res.json('User update: ', editOk);
+  const editOk = userModel.updateUser(req);
+  res.json(editOk);
 };
 
 // Logout
@@ -102,5 +108,5 @@ module.exports = {
   user_create_post,
   logout,
   user_delete,
-  user_update
+  user_update,
 };

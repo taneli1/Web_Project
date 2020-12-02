@@ -3,11 +3,14 @@
 const url = 'http://localhost:3000';
 
 const search = document.getElementById('searchB');
+//const search = document.querySelector(".search");
+//const new_item = document.querySelector(".new-items");
 const loginButton = document.getElementById('login');
 const logoutButton = document.getElementById('logout');
 let new_item = document.getElementById('new-item');
-const ad_type = document.getElementById('ad_type');
 const adTypeHiddenField = document.getElementById("adType");
+const ad_buy = document.getElementById('ad_buy')
+const ad_sell = document.getElementById('ad_sell')
 
 const adTypeSwitch = () => {
   const value = document.querySelector('input[name="ad_typeSelector"]:checked').value;
@@ -18,30 +21,36 @@ const adTypeSwitch = () => {
     adTypeHiddenField.value = "sell"
   }
 };
+const profileButton = document.getElementById('profile')
 
-ad_type.addEventListener('click', async () => {
-  adTypeSwitch();
-  console.log(adTypeHiddenField.value);
-  new_item.innerHTML = "";
+const adFilters = (type) => {
+  type.addEventListener('click', async () => {
+    adTypeSwitch();
+    console.log(adTypeHiddenField.value);
+    new_item.innerHTML = "";
 
-  if(adTypeHiddenField.value === 'buy') {
-  const response = await fetch(url + '/ad/buy');
-  const items = await response.json();
+    if(adTypeHiddenField.value === 'buy') {
+      const response = await fetch(url + '/ad/buy');
+      const items = await response.json();
 
-    createNewItems(items);
-  }else {
-    const response = await fetch(url + '/ad/sell');
-    const items = await response.json();
+      createNewItems(items);
+    }else {
+      const response = await fetch(url + '/ad/sell');
+      const items = await response.json();
 
-    createNewItems(items);
-  }
-});
+      createNewItems(items);
+    }
+  });
+}
+
+adFilters(ad_buy)
+adFilters(ad_sell)
+
 
 const getAllAdsSell = async () =>  {
   const response = await fetch(url + '/ad/sell');
   const items = await response.json();
-
-  createNewItems(items);
+  await createNewItems(items);
 };
 
 
@@ -49,13 +58,15 @@ const buttonVisibility = () => {
   if (document.cookie.includes('token')){
     loginButton.style.display = "none"
   }
-  else logoutButton.style.display = "none"
+  else {
+    logoutButton.style.display = "none"
+    profileButton.style.display = "none"
+  }
 };
 
 const logoutAction = () => {
   logoutButton.addEventListener('click', async () => {
     delete_cookie("token");
-    document.location.reload()
   })
 };
 

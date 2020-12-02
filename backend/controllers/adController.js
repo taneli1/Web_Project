@@ -4,6 +4,10 @@ const TAG = 'adController: ';
 const adModel = require('../models/adModel');
 const {resizeImg} = require('../utils/resize');
 
+/*
+  Gets data from adModel to respond to different requests from adRoute.
+ */
+
 /**
  * Responds with ads of requested type from database
  * TODO Get certain amount of ads (range, first 50, 50-100...)
@@ -40,6 +44,14 @@ const ad_get_by_id = async (req, res) => {
 };
 
 /**
+ * Search for ads in db
+ */
+const ad_search_keywords = async (req,res) => {
+  const results = await adModel.searchAd(req);
+  res.json(results);
+}
+
+/**
  * Get all ads from a user
  */
 const ad_get_user_ads = async (req, res) => {
@@ -51,7 +63,6 @@ const ad_get_user_ads = async (req, res) => {
  * Delete an ad
  */
 const ad_delete_by_id = async (req, res) => {
-
   const deletion = await adModel.deleteAdById(req);
   res.json(deletion);
 };
@@ -62,7 +73,7 @@ const ad_delete_by_id = async (req, res) => {
 const resize_image = async (req, res, next) => {
   try {
     const ready = await resizeImg({width: 160, height: 160}, req.file.path,
-        './backend/imgcache' + req.file.filename);
+        './ads/thumbnails/' + req.file.filename);
     if (ready) {
       console.log(TAG, 'Resize', ready);
       next();
@@ -81,4 +92,5 @@ module.exports = {
   ad_delete_by_id,
   resize_image,
   ad_get_user_ads,
+  ad_search_keywords
 };
