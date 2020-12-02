@@ -88,7 +88,7 @@ const user_delete = async (req, res) => {
  */
 const user_update = async (req, res) => {
   const editOk = userModel.updateUser(req);
-  res.json('User update: ', editOk);
+  res.json(editOk);
 };
 
 // Logout

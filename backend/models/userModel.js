@@ -50,7 +50,7 @@ const getUserLogin = async (params) => {
   }
 };
 
-/**
+/**M
  * Creates an user to database
  * @return Users id in database
  */
@@ -101,7 +101,7 @@ const updateUser = async (req) => {
           req.body.editEmail,
           req.body.editPhoneNumber,
           req.params.id]);
-    console.log('user update:', rows);
+    console.log(rows.affectedRows === 1)
     return rows.affectedRows === 1;
   }
   catch (e) {
