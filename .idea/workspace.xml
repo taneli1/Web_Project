@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5faad90e-3718-4bc0-8213-062a5c0b858c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/BetterMarket.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BetterMarket.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/passport.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="taneli1" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="ProjectId" id="1kYNvza3HWmlUmcUL1iE5M2LS2N" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="E:/Downloads/bcwt-example-week5/bcwt-example-week5" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jasuh\WebstormProjects\Web_Project\js" />
+      <recent name="C:\Users\jasuh\WebstormProjects\BetterMarket\html" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5faad90e-3718-4bc0-8213-062a5c0b858c" name="Default Changelist" comment="" />
+      <created>1605873799523</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605873799523</updated>
+      <workItem from="1605873800566" duration="1298000" />
+      <workItem from="1606065859483" duration="1056000" />
+      <workItem from="1606080266844" duration="1047000" />
+      <workItem from="1606131806347" duration="6597000" />
+      <workItem from="1606219946740" duration="13490000" />
+      <workItem from="1606306740693" duration="401000" />
+    </task>
+    <task id="LOCAL−00001" summary="Ads from database to main page added.">
+      <created>1606220472314</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1606220472314</updated>
+    </task>
+    <task id="LOCAL−00002" summary="Merge branch 'taneli1' of https://github.com/taneli1/Web_Project into Teme8">
+      <created>1606224871199</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1606224871199</updated>
+      <workItem from="1606219946740" duration="334000" />
+      <workItem from="1606227680965" duration="8254000" />
+      <workItem from="1606298726398" duration="8390000" />
+      <workItem from="1606307741728" duration="298000" />
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ads from database to main page added." />
+    <MESSAGE value="Merge branch 'taneli1' of https://github.com/taneli1/Web_Project into Teme8" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'taneli1' of https://github.com/taneli1/Web_Project into Teme8" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1606224870543">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="393" y="8" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606220459720" />
+    <state x="640" y="458" key="FileChooserDialogImpl" timestamp="1606226579390">
+    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606224870543" />
+    <state x="640" y="458" key="FileChooserDialogImpl" timestamp="1606145100413">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="640" y="458" key="FileChooserDialogImpl/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606226579390" />
+    <state width="949" height="207" key="GridCell.Tab.0.bottom" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state width="1696" height="282" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662726" />
+    <state width="949" height="207" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state width="949" height="207" key="GridCell.Tab.0.center" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state width="1696" height="282" key="GridCell.Tab.0.center/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662725" />
+    <state width="949" height="207" key="GridCell.Tab.0.center/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state width="949" height="207" key="GridCell.Tab.0.left" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state width="1696" height="282" key="GridCell.Tab.0.left/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662725" />
+    <state width="949" height="207" key="GridCell.Tab.0.left/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state width="949" height="207" key="GridCell.Tab.0.right" timestamp="1606307726345">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state width="1696" height="282" key="GridCell.Tab.0.right/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227662725" />
+    <state width="949" height="207" key="GridCell.Tab.0.right/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307726345" />
+    <state x="3440" y="356" key="MergeDialog" timestamp="1606307706611">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state x="3440" y="356" key="MergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307706611" />
+    <state x="3878" y="695" key="MultipleFileMergeDialog" timestamp="1606307709844">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state x="498" y="464" key="MultipleFileMergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606227718479" />
+    <state x="3878" y="695" key="MultipleFileMergeDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307709844" />
+    <state x="3992" y="608" key="Vcs.Push.Dialog.v2" timestamp="1606307864124">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state x="3992" y="608" key="Vcs.Push.Dialog.v2/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307864124" />
+    <state x="4189" y="588" key="git4idea.branch.GitSmartOperationDialog" timestamp="1606307373868">
+      <screen x="3440" y="356" width="1920" height="1040" />
+    </state>
+    <state x="4189" y="588" key="git4idea.branch.GitSmartOperationDialog/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@3440.356.1920.1040" timestamp="1606307373868" />
+    <state x="495" y="205" key="git4idea.merge.GitPullDialog" timestamp="1606149968349">
+    <state width="1696" height="297" key="GridCell.Tab.0.right/0.0.3440.1400/3440.356.1920.1040/3440.-544.1600.860@0.0.3440.1400" timestamp="1606148940343" />
+    <state x="147" y="71" key="MergeDialog" timestamp="1606225329525">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="147" y="71" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1606225329525" />
+    <state x="481" y="129" key="MultipleFileMergeDialog" timestamp="1606225329545">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="481" y="129" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1606225329545" />
+    <state x="277" y="56" key="SettingsEditor" timestamp="1606225185308">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1606225185308" />
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1606220500192">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606220500192" />
+    <state x="495" y="205" key="git4idea.merge.GitPullDialog" timestamp="1606225319449">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="495" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1606225319449" />
+  </component>
+</project>
