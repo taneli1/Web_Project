@@ -4,13 +4,13 @@ const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
 const fs = require('fs');
-const res = require("express");
 
 /*
   Handles all the communication with db regarding ads. Almost all the methods
   take req.params.ad_type to differentiate what ads are targeted with the request.
-  This is done since buy- and sell ads are saved in different tables to improve
-  performance.
+
+  This leads to the file being very long and painful to modify, would do differently
+  next time. Would have been easier to save everything in the same table...
  */
 
 // TODO Save thumbnail in ad table, additional images only fetched when
@@ -329,15 +329,23 @@ const postAd = async (req) => {
 const postImages = async (req) => {
 
   const type = req.params.ad_type;
-  const images = req.file.filename;
+  const images = req.files
+  // Declare an array with nulls, since sql query needs 5 variables.
+  const names = [null,null,null,null,null]
+
+  // Replace nulls with names of existing images in the array
+  for (let i = 0; i < images.length; i++){
+    names[i] = (images[i].filename)
+  }
+  console.log(names)
 
   if (type === 'buy') {
     try {
       const [rows] = await promisePool.execute(
-          'INSERT INTO bm_ad_buy_images (image_1)' +
-          ' VALUES (?);',
+          'INSERT INTO bm_ad_buy_images (image_1,image_2,image_3,image_4,image_5)' +
+          ' VALUES (?,?,?,?,?);',
           [
-            images,
+            names[0],names[1],names[2],names[3],names[4],
           ]);
 
       console.log(TAG + `Images success: ${rows.insertId}`);
@@ -352,10 +360,10 @@ const postImages = async (req) => {
 
     try {
       const [rows] = await promisePool.execute(
-          'INSERT INTO bm_ad_sell_images (image_1)' +
-          ' VALUES (?);',
+          'INSERT INTO bm_ad_sell_images (image_1,image_2,image_3,image_4,image_5)' +
+          ' VALUES (?,?,?,?,?);',
           [
-            images,
+            names[0],names[1],names[2],names[3],names[4],
           ]);
 
       console.log(TAG + `Images success: ${rows.insertId}`);
