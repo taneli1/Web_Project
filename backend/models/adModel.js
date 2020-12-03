@@ -4,6 +4,7 @@ const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
 const fs = require('fs');
+const res = require("express");
 
 /*
   Handles all the communication with db regarding ads. Almost all the methods
@@ -397,16 +398,18 @@ const deleteAdById = async (req) => {
       // Loop through all the images in the table and remove them from the
       // folders. We start looping from two, since that is where the image
       // filenames start from.
+
       console.log(imageTable)
 
-      for (let i = 2; i < imageTable.length; i++) {
+
+      for (let i = 0; i < imageTable.length; i++) {
         console.log("GOT INTO FOR")
         // If the image is not null
         if (imageTable[i] !== null) {
 
           // Define the paths where the files are to be removed
           let path = './ads/images/' + imageTable[i];
-          let path2 = './ads/thumbnails/' + imageTable[i];
+          let path2 = './ads/thumbnails/' + imageTable[i].image_1;
           // Try to remove them
           try {
             console.log(path)
@@ -420,6 +423,7 @@ const deleteAdById = async (req) => {
         }
       }
 
+/*
       const [adTable] = await promisePool.execute(
           'DELETE FROM bm_ad_buy WHERE ad_id = ?',
           [adId]);
@@ -427,11 +431,12 @@ const deleteAdById = async (req) => {
       const [imagesToDelete] = await promisePool.execute(
           'DELETE FROM bm_ad_buy_images WHERE images_id = ?',
           [imageTable[1]]);
+*/
 
       // Return both, true for both if both were removed
       return {
-        "Table" : adTable.affectedRows === 1,
-        "ImageTable" : imagesToDelete.affectedRows === 1
+        "Table" : 1,//adTable.affectedRows === 1,
+        "ImageTable" : 2// imagesToDelete.affectedRows === 1
       };
     }
     catch (e) {
