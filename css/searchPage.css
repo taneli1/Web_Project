@@ -42,3 +42,7 @@
     display: flex;
     flex-direction: row;
 }
+
+#searchCategories {
+    display: none;
+}

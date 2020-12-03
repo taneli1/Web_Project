@@ -28,9 +28,9 @@ createNewAd.addEventListener('submit', async (evt) => {
   };
   console.log(fetchOptions.body)
   const response = await fetch(url + '/ad/' + adTypeHiddenField.value, fetchOptions);
+  document.location.href = '../html/main.html'
   const json = await response.json();
   console.log('add response', json);
-  document.location.href = '../html/main.html'
 });
 
 const getCookie = (name) => {
