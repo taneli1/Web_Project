@@ -395,21 +395,20 @@ const deleteAdById = async (req) => {
           'WHERE bm_ad_buy.ad_id = ?',
           [adId]);
 
+      // Transform the answer into an array to access the image values
+      const clonedArray = JSON.parse(JSON.stringify(imageTable))
+      const another = JSON.parse((JSON.stringify(clonedArray[0])))
+      // Values saved here
+      const imageValues = Array.from(Object.values(another))
+
       // Loop through all the images in the table and remove them from the
-      // folders. We start looping from two, since that is where the image
-      // filenames start from.
-
-      console.log(imageTable)
-
-
-      for (let i = 0; i < imageTable.length; i++) {
-        console.log("GOT INTO FOR")
-        // If the image is not null
-        if (imageTable[i] !== null) {
-
+      // folders.
+      for (let i = 2; i < imageValues.length; i++) {
+        if (imageValues[i] !== null){
           // Define the paths where the files are to be removed
-          let path = './ads/images/' + imageTable[i];
-          let path2 = './ads/thumbnails/' + imageTable[i].image_1;
+          let path = './ads/images/'+ imageValues[i] ;
+          let path2 = './ads/thumbnails/' + imageValues[i];
+
           // Try to remove them
           try {
             console.log(path)
@@ -421,22 +420,22 @@ const deleteAdById = async (req) => {
             console.error(err);
           }
         }
+        // If image is null, break from loop
+        else break
       }
 
-/*
       const [adTable] = await promisePool.execute(
           'DELETE FROM bm_ad_buy WHERE ad_id = ?',
           [adId]);
 
       const [imagesToDelete] = await promisePool.execute(
           'DELETE FROM bm_ad_buy_images WHERE images_id = ?',
-          [imageTable[1]]);
-*/
+          [imageValues[1]]);
 
       // Return both, true for both if both were removed
       return {
-        "Table" : 1,//adTable.affectedRows === 1,
-        "ImageTable" : 2// imagesToDelete.affectedRows === 1
+        "Table" : adTable.affectedRows === 1,
+        "ImageTable" : imagesToDelete.affectedRows === 1
       };
     }
     catch (e) {
@@ -445,10 +444,57 @@ const deleteAdById = async (req) => {
   }
   else if (type === 'sell') {
     try {
-      const [ad] = await promisePool.execute(
-          'DELETE FROM bm_ad_sell WHERE ad_id = ? ',
+
+      // Get the image table corresponding to the table wanted to be removed
+      const [imageTable] = await promisePool.execute(
+          'SELECT bm_ad_sell.images_table, bm_ad_sell_images.* ' +
+          'FROM bm_ad_sell LEFT JOIN bm_ad_sell_images ON ' +
+          'bm_ad_sell.images_table=bm_ad_sell_images.images_id ' +
+          'WHERE bm_ad_sell.ad_id = ?',
           [adId]);
-      return ad.affectedRows === 1;
+
+      // Transform the answer into an array to access the image values
+      const clonedArray = JSON.parse(JSON.stringify(imageTable))
+      const another = JSON.parse((JSON.stringify(clonedArray[0])))
+      // Values saved here
+      const imageValues = Array.from(Object.values(another))
+
+      // Loop through all the images in the table and remove them from the
+      // folders.
+      for (let i = 2; i < imageValues.length; i++) {
+        if (imageValues[i] !== null){
+          // Define the paths where the files are to be removed
+          let path = './ads/images/'+ imageValues[i] ;
+          let path2 = './ads/thumbnails/' + imageValues[i];
+
+          // Try to remove them
+          try {
+            console.log(path)
+            console.log(path2)
+            fs.unlinkSync(path);
+            fs.unlinkSync(path2);
+          }
+          catch (err) {
+            console.error(err);
+          }
+        }
+        // If image is null, break from loop
+        else break
+      }
+
+      const [adTable] = await promisePool.execute(
+          'DELETE FROM bm_ad_sell WHERE ad_id = ?',
+          [adId]);
+
+      const [imagesToDelete] = await promisePool.execute(
+          'DELETE FROM bm_ad_sell_images WHERE images_id = ?',
+          [imageValues[1]]);
+
+      // Return both, true for both if both were removed
+      return {
+        "Table" : adTable.affectedRows === 1,
+        "ImageTable" : imagesToDelete.affectedRows === 1
+      };
     }
     catch (e) {
       console.error(TAG, 'delete:', e.message);
