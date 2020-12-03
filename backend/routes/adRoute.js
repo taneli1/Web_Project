@@ -10,20 +10,20 @@ const {body} = require('express-validator');
 
 // Image check
 const fileFilter = (req, file, cb) => {
-  if (!file.mimetype.includes('image')) {
-    return cb(null, false, new Error('not an image'));
-  }
-  else cb(null,true)
+    if (!file.mimetype.includes('image')) {
+        return cb(null, false, new Error('not an image'));
+    } else cb(null, true)
 };
 
-// Inject to pass body validation
-const injectFile = (req, res, next) => {
-  if (req.file) {
-    req.body.type = req.file.mimetype;
-  }
-  next();
-};
-
+const resizeImages = async (req, res, next) => {
+    console.log("Resize")
+    console.log(req.files.length)
+    for (let i = 0; i < req.files.length; i++) {
+        await adController.resize_image(req.files[i],res,next)
+        console.log("inside for loop")
+    }
+    next()
+}
 // Where to upload images
 const upload = multer({dest: './ads/images/', fileFilter});
 
@@ -45,15 +45,13 @@ router.get('/:ad_type/:id', adController.ad_get_by_id);
 // Post an ad, route needs user to be logged in, create thumbnails
 router.post('/:ad_type',
     passport.authenticate('jwt', {session: false}),
-    upload.single('image'),
-    injectFile,
-    adController.resize_image,
+    upload.array('image', 5),
+    resizeImages,
     [
-      body('item_name', 'min length 3 chars').isLength({min: 3}),
-      body('city', 'min length 3 chars').isLength({min: 3}),
-      body('price', 'must be a number').isLength({min: 1}).isNumeric(),
-      body('description', 'min length 3 chars').isLength({min: 3}),
-      body('type', 'file req').contains('image'),
+        body('item_name', 'min length 3 chars').isLength({min: 3}),
+        body('city', 'min length 3 chars').isLength({min: 3}),
+        body('price', 'must be a number').isLength({min: 1}).isNumeric(),
+        body('description', 'min length 3 chars').isLength({min: 3}),
     ],
     adController.ad_post);
 
