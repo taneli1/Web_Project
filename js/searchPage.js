@@ -2,13 +2,25 @@
 
 const url = 'http://localhost:3000';
 
-const searchButton = document.getElementById('searchButton');
-const loginButton = document.getElementById('login');
-const logoutButton = document.getElementById('logout');
-let new_item = document.getElementById('new-item');
+let searched = localStorage.getItem('searched');
+let adType = localStorage.getItem('adType');
 const adTypeHiddenField = document.getElementById('adType');
+let search_item = document.getElementById('searchItem');
 const ad_buy = document.getElementById('ad_buy');
 const ad_sell = document.getElementById('ad_sell');
+const category = document.getElementById('categories');
+const sorting = document.getElementById('sorting');
+const searchButton = document.getElementById('searchButtonS');
+
+console.log(searched);
+console.log(adType);
+
+const getSearchResult = async () => {
+  const response = await fetch(url + '/ad/search/' + adType + '/' + searched);
+  const searchR = await response.json();
+
+  createNewItems(searchR);
+};
 
 const adTypeSwitch = () => {
   const value = document.querySelector(
@@ -19,13 +31,12 @@ const adTypeSwitch = () => {
     adTypeHiddenField.value = 'sell';
   }
 };
-const profileButton = document.getElementById('profile');
 
 const adFilters = (type) => {
   type.addEventListener('click', async () => {
     adTypeSwitch();
     console.log(adTypeHiddenField.value);
-    new_item.innerHTML = '';
+    search_item.innerHTML = '';
 
     if (adTypeHiddenField.value === 'buy') {
       const response = await fetch(url + '/ad/buy');
@@ -41,37 +52,62 @@ const adFilters = (type) => {
   });
 };
 
-adFilters(ad_buy);
-adFilters(ad_sell);
+const categorySearch = () => {
+  category.addEventListener('click', async () => {
+    adTypeSwitch();
+    search_item.innerHTML = '';
+    console.log(category.value);
+    if (adTypeHiddenField.value === 'buy') {
+      const response = await fetch(url + '/ad/category/buy/' + category.value);
+      const items = await response.json();
 
-const getAllAdsSell = async () => {
-  const response = await fetch(url + '/ad/sell');
-  const items = await response.json();
-  await createNewItems(items);
-};
+      createNewItems(items);
+    } else {
+      const response = await fetch(url + '/ad/category/sell/' + category.value);
+      const items = await response.json();
 
-const buttonVisibility = () => {
-  if (document.cookie.includes('token')) {
-    loginButton.style.display = 'none';
-  } else {
-    logoutButton.style.display = 'none';
-    profileButton.style.display = 'none';
-  }
-};
+      createNewItems(items);
+    }
 
-const logoutAction = () => {
-  logoutButton.addEventListener('click', async () => {
-    delete_cookie('token');
   });
 };
 
-function delete_cookie(name) {
-  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-}
+const sortingSearch = (item) => {
+  sorting.addEventListener('click', function() {
+  });
+};
 
-getAllAdsSell();
-buttonVisibility();
-logoutAction();
+const search = () => {
+  searchButton.addEventListener('click', async () => {
+    adTypeSwitch();
+    search_item.innerHTML = '';
+    const searched = document.getElementById('searchPageS').value;
+    let searchForm = document.getElementsByName('search-form')[0];
+    console.log(searched);
+
+    if (adTypeHiddenField.value === 'buy') {
+      const response = await fetch(url + '/ad/search/buy/' + searched);
+      const searchResult = await response.json();
+
+      searchForm.reset();
+
+      createNewItems(searchResult);
+    } else {
+      const response = await fetch(url + '/ad/search/sell/' + searched);
+      const searchResult = await response.json();
+
+      searchForm.reset();
+
+      createNewItems(searchResult);
+    }
+  });
+};
+
+adFilters(ad_buy);
+adFilters(ad_sell);
+getSearchResult();
+categorySearch();
+search();
 
 const createNewItems = async (items) => {
   let item = {
@@ -80,15 +116,12 @@ const createNewItems = async (items) => {
     'city': '',
     'price': '',
     'desc': '',
+    'listed_by': '',
   };
 
   for (let i = 0; i < items.length; i++) {
     const response = await fetch(url + '/user' + '/' + items[i].listed_by);
     const user = await response.json();
-    let itemId = items[i].ad_id
-    let itemType = items[i].type
-    console.log(itemType)
-
 
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
@@ -100,23 +133,26 @@ const createNewItems = async (items) => {
         items[i].price : 'No price';
     item.desc = items[i].description != null ?
         items[i].description : 'No description';
-    showItems(item, user, itemId, itemType);
+    item.listed_by = user.name != null ?
+        user.name : 'No username';
+    showItems(item);
   }
+
 };
 
-const showItems = (item, user, itemId, itemType) => {
-    let new_item = document.getElementById('new-item');
-    let new_item_slot = document.createElement('div');
-    new_item.appendChild(new_item_slot);
+const showItems = (item) => {
+  let new_item = document.getElementById('searchItem');
+  let new_item_slot = document.createElement('div');
+  new_item.appendChild(new_item_slot);
 
   let h2E = document.createElement('h2');
   new_item_slot.appendChild(h2E);
   let item_name = document.createTextNode(item.name);
   h2E.appendChild(item_name);
 
-    let image = document.createElement('figure');
-    new_item_slot.appendChild(image);
-    image.innerHTML += '<img src="' + '../ads/thumbnails/' + item.image +
+  let image = document.createElement('figure');
+  new_item_slot.appendChild(image);
+  image.innerHTML += '<img src="' + '../ads/thumbnails/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
@@ -140,29 +176,18 @@ const showItems = (item, user, itemId, itemType) => {
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
-    clickItem(new_item_slot, user, itemId, itemType);
+  let listed_by = document.createElement('p');
+  new_item_slot.appendChild(listed_by);
+  listed_by.innerHTML += item.listed_by;
+
+  clickItem(new_item_slot);
+  sortingSearch(item);
 };
 
-
-const clickItem = (item, user, itemId, itemType) => {
+const clickItem = (item) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';
     localStorage.setItem('item', item.innerHTML);
-    localStorage.setItem('listedBy', user.user_id)
-    localStorage.setItem('itemId', itemId);
-    localStorage.setItem('itemType', itemType);
   });
 };
 
-const searchClick = () => {
-  searchButton.addEventListener('click', function() {
-    const searched = document.getElementById('search').value;
-    adTypeSwitch();
-    const value = adTypeHiddenField.value;
-    document.location.href = '../html/searchPage.html';
-    localStorage.setItem('searched', searched);
-    localStorage.setItem('adType', value);
-  });
-};
-
-searchClick();
