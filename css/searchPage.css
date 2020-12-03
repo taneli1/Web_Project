@@ -20,17 +20,25 @@
 
 #searchDiv {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-bottom: 20px;
-    font-size: 26px;
-    min-height: 200px;
-}
-
-#searchSort {
-    display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
+    min-height: 300px;
     font-size: 26px;
 }
 
+#searchPageS {
+    background-color: white;
+    background-image: url("../searchicon.png");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    border-radius: 12px;
+    font-size: 26px;
+    padding: 12px 30px 12px 40px;
+}
+
+.search-boxS {
+    display: flex;
+    flex-direction: row;
+}

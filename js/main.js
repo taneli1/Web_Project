@@ -157,8 +157,11 @@ const clickItem = (item) => {
 const searchClick = () => {
   searchButton.addEventListener('click', function() {
     const searched = document.getElementById('search').value;
+    adTypeSwitch();
+    const value = adTypeHiddenField.value;
     document.location.href = '../html/searchPage.html';
     localStorage.setItem('searched', searched);
+    localStorage.setItem('adType', value);
   });
 };
 

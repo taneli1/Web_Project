@@ -3,17 +3,111 @@
 const url = 'http://localhost:3000';
 
 let searched = localStorage.getItem('searched');
+let adType = localStorage.getItem('adType');
+const adTypeHiddenField = document.getElementById('adType');
+let search_item = document.getElementById('searchItem');
+const ad_buy = document.getElementById('ad_buy');
+const ad_sell = document.getElementById('ad_sell');
+const category = document.getElementById('categories');
+const sorting = document.getElementById('sorting');
+const searchButton = document.getElementById('searchButtonS');
 
 console.log(searched);
+console.log(adType);
 
 const getSearchResult = async () => {
-  const response = await fetch(url + '/ad/search/' + searched);
+  const response = await fetch(url + '/ad/search/' + adType + '/' + searched);
   const searchR = await response.json();
 
   createNewItems(searchR);
 };
 
+const adTypeSwitch = () => {
+  const value = document.querySelector(
+      'input[name="ad_typeSelector"]:checked').value;
+  if (value === 'buy') {
+    adTypeHiddenField.value = 'buy';
+  } else {
+    adTypeHiddenField.value = 'sell';
+  }
+};
+
+const adFilters = (type) => {
+  type.addEventListener('click', async () => {
+    adTypeSwitch();
+    console.log(adTypeHiddenField.value);
+    search_item.innerHTML = '';
+
+    if (adTypeHiddenField.value === 'buy') {
+      const response = await fetch(url + '/ad/buy');
+      const items = await response.json();
+
+      createNewItems(items);
+    } else {
+      const response = await fetch(url + '/ad/sell');
+      const items = await response.json();
+
+      createNewItems(items);
+    }
+  });
+};
+
+const categorySearch = () => {
+  category.addEventListener('click', async () => {
+    adTypeSwitch();
+    search_item.innerHTML = '';
+    console.log(category.value);
+    if (adTypeHiddenField.value === 'buy') {
+      const response = await fetch(url + '/ad/category/buy/' + category.value);
+      const items = await response.json();
+
+      createNewItems(items);
+    } else {
+      const response = await fetch(url + '/ad/category/sell/' + category.value);
+      const items = await response.json();
+
+      createNewItems(items);
+    }
+
+  });
+};
+
+const sortingSearch = (item) => {
+  sorting.addEventListener('click', function() {
+  });
+};
+
+const search = () => {
+  searchButton.addEventListener('click', async () => {
+    adTypeSwitch();
+    search_item.innerHTML = '';
+    const searched = document.getElementById('searchPageS').value;
+    let searchForm = document.getElementsByName('search-form')[0];
+    console.log(searched);
+
+    if (adTypeHiddenField.value === 'buy') {
+      const response = await fetch(url + '/ad/search/buy/' + searched);
+      const searchResult = await response.json();
+
+      searchForm.reset();
+
+      createNewItems(searchResult);
+    } else {
+      const response = await fetch(url + '/ad/search/sell/' + searched);
+      const searchResult = await response.json();
+
+      searchForm.reset();
+
+      createNewItems(searchResult);
+    }
+  });
+};
+
+adFilters(ad_buy);
+adFilters(ad_sell);
 getSearchResult();
+categorySearch();
+search();
 
 const createNewItems = async (items) => {
   let item = {
@@ -51,7 +145,6 @@ const showItems = (item) => {
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
 
-
   let h2E = document.createElement('h2');
   new_item_slot.appendChild(h2E);
   let item_name = document.createTextNode(item.name);
@@ -88,8 +181,8 @@ const showItems = (item) => {
   listed_by.innerHTML += item.listed_by;
 
   clickItem(new_item_slot);
+  sortingSearch(item);
 };
-
 
 const clickItem = (item) => {
   item.addEventListener('click', function() {
@@ -97,3 +190,4 @@ const clickItem = (item) => {
     localStorage.setItem('item', item.innerHTML);
   });
 };
+
