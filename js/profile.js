@@ -11,7 +11,6 @@ const editName = document.querySelector("form[id='editProfile'] input[name='edit
 const editCity = document.querySelector("form[id='editProfile'] input[name='editCity']");
 const editEmail = document.querySelector("form[id='editProfile'] input[name='editEmail']");
 const editPhoneNumber = document.querySelector("form[id='editProfile'] input[name='editPhoneNumber']");
-const ads = document.getElementById('ads')
 
 
 editField.style.display = "none"
@@ -110,20 +109,27 @@ const getCookie = (name) => {
 const getAllAds = async (id) =>  {
   const response = await fetch(url + '/ad/user/' + id);
   const items = await response.json();
-  console.log(items)
+  console.log("hello", items)
   await createNewItems(items);
 };
 
 const createNewItems = async (items) => {
+  console.log(items)
   let item = {
     'name': '',
     'image': '',
     'city': '',
     'price': '',
     'desc': '',
+    'type': '',
   };
 
   for (let i = 0; i < items.length; i++) {
+    const response = await fetch(url + '/user' + '/' + items[i].listed_by);
+    const user = await response.json();
+    let itemId = items[i].ad_id
+    let itemType = items[i].type
+
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
     item.image = items[i].image_1 != null ?
@@ -134,12 +140,11 @@ const createNewItems = async (items) => {
         items[i].price : 'No price';
     item.desc = items[i].description != null ?
         items[i].description : 'No description';
-    showItems(item);
+    showItems(item, user, itemId, itemType);
   }
-
 };
 
-const showItems = (item) => {
+const showItems = (item, user, itemId, itemType) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
@@ -152,7 +157,7 @@ const showItems = (item) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../uploads/' + item.image +
+  image.innerHTML += '<img src="' + '../ads/thumbnails/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
@@ -176,21 +181,18 @@ const showItems = (item) => {
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
-  clickItem(new_item_slot);
+  clickItem(new_item_slot, user, itemId, itemType);
 };
 
-
-const clickItem = (item) => {
+const clickItem = (item, user, itemId, itemType) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';
     localStorage.setItem('item', item.innerHTML);
+    localStorage.setItem('listedBy', user.user_id);
+    localStorage.setItem('itemId', itemId);
+    localStorage.setItem('itemType', itemType);
   });
 };
 
 
-
-
 getUserInfo()
-createNewItems()
-
-

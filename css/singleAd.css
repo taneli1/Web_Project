@@ -2,11 +2,11 @@
     height: 600px;
 }
 
+
 #singleItem {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    min-height: 700px;
 }
 
 #singleItem div {
