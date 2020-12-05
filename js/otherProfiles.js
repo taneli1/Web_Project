@@ -1,10 +1,12 @@
-const url = 'http://10.114.32.43';
+const url = 'http://localhost:3000';
 const logoutButton1 = document.getElementById('logout1');
 const name = document.getElementById('userName');
 const city = document.getElementById('user_city');
 const eMail = document.getElementById('eMail');
 const phoneNumber = document.getElementById('phoneNumber');
 
+
+// Here we get the ad owner's information by making a fetch with it's ID
 const getUserInfo = async () => {
   let get_owner = localStorage.getItem('listedBy');
   try {
@@ -22,14 +24,21 @@ const getUserInfo = async () => {
   }
 }
 
-
+// Function for getting all the ads of passed user
 const getAllAds = async (id) =>  {
-  const response = await fetch(url + '/ad/user/' + id);
-  const items = await response.json();
-  console.log(items)
-  await createNewItems(items);
+  try {
+    const response = await fetch(url + '/ad/user/' + id);
+    const items = await response.json();
+    console.log(items)
+    await createNewItems(items);
+  }
+  catch (e) {
+    console.log(e.message);
+  }
+
 };
 
+//  Create all the items of this user by looping through them 1 by 1
 const createNewItems = async (items) => {
   let item = {
     'name': '',
@@ -60,6 +69,9 @@ const createNewItems = async (items) => {
 
 };
 
+// After getting all the info from 1 item, the values are
+// passed to this function, which
+// transforms it into a div (box) of it's own
 const showItems = (item) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
@@ -104,7 +116,8 @@ const showItems = (item) => {
   clickItem(new_item_slot);
 };
 
-
+// after item and a div for it are created, we set an click listener to it
+// that redirects to the clicked individual div
 const clickItem = (item) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';

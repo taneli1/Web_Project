@@ -1,4 +1,4 @@
-const url = 'http://10.114.32.43';
+const url = 'http://localhost:3000';
 const logoutButton1 = document.getElementById('logout1');
 const name = document.getElementById('userName');
 const city = document.getElementById('user_city');
@@ -14,7 +14,7 @@ const editPhoneNumber = document.querySelector("form[id='editProfile'] input[nam
 
 
 editField.style.display = "none"
-
+// Here we get the ad owner's information by making a fetch with it's ID
 const getUserInfo = async () => {
   let userId
   const token = getCookie("token")
@@ -48,17 +48,19 @@ const getUserInfo = async () => {
   }
 }
 
-
+// Button for logging out
 logoutButton1.addEventListener('click', async () => {
   delete_cookie("token");
   })
 
+// Button for editing profile
 editButton.addEventListener('click', async () => {
   editField.style.display = "block"
   editButton.style.display = "none"
   userInfo.style.display = "none"
 })
 
+// Event listener for form which is sent to database with the included information
 editField.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   let userId
@@ -88,10 +90,13 @@ editField.addEventListener('submit', async (evt) => {
   document.location.reload();
 });
 
+// deletes the cookie which keeps user logged in
 function delete_cookie(name) {
   document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+// Formats login token so it's body can be accessed in the javascript
+// aka access the currently logged in user's information
 const tokenFormatter = (token) => {
   const id1 = token.substring(token.indexOf(".") + 1);
   const id2 = id1.substring(0, id1.indexOf('.'));
@@ -99,13 +104,13 @@ const tokenFormatter = (token) => {
   const jsonData = JSON.parse(data)
   return jsonData.user_id
 }
-
+// Function for getting a cookie by it's name
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
-
+// Function for getting all the ads of passed user
 const getAllAds = async (id) =>  {
   const response = await fetch(url + '/ad/user/' + id);
   const items = await response.json();
@@ -113,6 +118,7 @@ const getAllAds = async (id) =>  {
   await createNewItems(items);
 };
 
+//  Create all the items of this user by looping through them 1 by 1
 const createNewItems = async (items) => {
   console.log(items)
   let item = {
@@ -144,6 +150,9 @@ const createNewItems = async (items) => {
   }
 };
 
+// After getting all the info from 1 item, the values are
+// passed to this function, which
+// transforms it into a div (box) of it's own
 const showItems = (item, user, itemId, itemType) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
@@ -184,6 +193,10 @@ const showItems = (item, user, itemId, itemType) => {
   clickItem(new_item_slot, user, itemId, itemType);
 };
 
+// after item and a div for it are created, we set an click listener to it
+// that redirects to the clicked individual div
+// also set some key information about the ad to local storage so on other sites
+// know which item to access
 const clickItem = (item, user, itemId, itemType) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';

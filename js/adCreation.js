@@ -1,6 +1,6 @@
 const createNewAd = document.getElementById("createNewAd")
 const adTypeHiddenField = document.getElementById("adType");
-const url = 'http://10.114.32.43'
+const url = 'http://localhost:3000'
 
 
 const adTypeSwitch = () => {
@@ -18,19 +18,24 @@ createNewAd.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   adTypeSwitch()
   const token = getCookie("token")
-  const fd2 = new FormData(createNewAd)
-  const fetchOptions = {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + token,
-    },
-    body: fd2,
-  };
-  console.log(fetchOptions.body)
-  const response = await fetch(url + '/ad/' + adTypeHiddenField.value, fetchOptions);
-  document.location.href = '../html/main.html'
-  const json = await response.json();
-  console.log('add response', json);
+  try {
+    const fd2 = new FormData(createNewAd)
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+      },
+      body: fd2,
+    };
+    //Error checking! try catch
+    console.log(fetchOptions.body)
+    await fetch(url + '/ad/' + adTypeHiddenField.value, fetchOptions);
+    document.location.href = '../html/main.html'
+  }
+  catch (e) {
+    document.location.href = '../html/main.html'
+  }
+
 });
 
 const getCookie = (name) => {

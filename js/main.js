@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'http://10.114.32.43';
+const url = 'http://localhost:3000';
 
 const searchButton = document.getElementById('searchButton');
 const loginButton = document.getElementById('login');
@@ -9,7 +9,13 @@ let new_item = document.getElementById('new-item');
 const adTypeHiddenField = document.getElementById('adType');
 const ad_buy = document.getElementById('ad_buy');
 const ad_sell = document.getElementById('ad_sell');
+const createAd = document.getElementById('createAd')
+const loginNote = document.getElementById('note')
 
+// Invisible hidden field, gets it's value from the radiogroup
+// All actions regarding this radiogroup/switch come from this hidden field actually
+// This is done so clicking one of the buttons triggers event handler instantly
+// instead of waiting for additional "submit" click
 const adTypeSwitch = () => {
   const value = document.querySelector(
       'input[name="ad_typeSelector"]:checked').value;
@@ -21,6 +27,8 @@ const adTypeSwitch = () => {
 };
 const profileButton = document.getElementById('profile');
 
+// Selects which type of ads are shown to the user on main page
+
 const adFilters = (type) => {
   type.addEventListener('click', async () => {
     adTypeSwitch();
@@ -31,40 +39,49 @@ const adFilters = (type) => {
       const response = await fetch(url + '/ad/buy');
       const items = await response.json();
 
-      createNewItems(items);
+      await createNewItems(items);
     } else {
       const response = await fetch(url + '/ad/sell');
       const items = await response.json();
 
-      createNewItems(items);
+      await createNewItems(items);
     }
   });
 };
 
+// but since both the buttons need click listeners we need
+// to call this function 2 times
 adFilters(ad_buy);
 adFilters(ad_sell);
 
 const getAllAdsSell = async () => {
+  // Default type for shown ads on the main page is sell
   const response = await fetch(url + '/ad/sell');
   const items = await response.json();
   await createNewItems(items);
 };
 
+// Shows the buttons accordingly when user is or is not logged in
 const buttonVisibility = () => {
   if (document.cookie.includes('token')) {
     loginButton.style.display = 'none';
+    loginNote.style.display = 'none';
+
   } else {
     logoutButton.style.display = 'none';
     profileButton.style.display = 'none';
+    createAd.style.display = 'none';
   }
 };
 
+// Button for logging out
 const logoutAction = () => {
   logoutButton.addEventListener('click', async () => {
     delete_cookie('token');
   });
 };
 
+// deletes the cookie which keeps user logged in
 function delete_cookie(name) {
   document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
@@ -73,6 +90,7 @@ getAllAdsSell();
 buttonVisibility();
 logoutAction();
 
+//  Create all the items of this user by looping through them 1 by 1
 const createNewItems = async (items) => {
   let item = {
     'name': '',
@@ -103,7 +121,9 @@ const createNewItems = async (items) => {
     showItems(item, user, itemId, itemType);
   }
 };
-
+// After getting all the info from 1 item, the values are
+// passed to this function, which
+// transforms it into a div (box) of it's own
 const showItems = (item, user, itemId, itemType) => {
     let new_item = document.getElementById('new-item');
     let new_item_slot = document.createElement('div');
@@ -144,6 +164,10 @@ const showItems = (item, user, itemId, itemType) => {
 };
 
 
+// after item and a div for it are created, we set an click listener to it
+// that redirects to the clicked individual div
+// also set some key information about the ad to local storage so on other sites
+// know which item to access
 const clickItem = (item, user, itemId, itemType) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';
@@ -154,6 +178,7 @@ const clickItem = (item, user, itemId, itemType) => {
   });
 };
 
+// Listener for search button which also redirects user to search page
 const searchClick = () => {
   searchButton.addEventListener('click', function() {
     const searched = document.getElementById('search').value;
