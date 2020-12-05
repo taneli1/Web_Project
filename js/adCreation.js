@@ -29,7 +29,7 @@ createNewAd.addEventListener('submit', async (evt) => {
     };
     //Error checking! try catch
     console.log(fetchOptions.body)
-    await fetch(url + '/ad/' + adTypeHiddenField.value, fetchOptions);
+    await fetch(url + '/ad/', fetchOptions);
     document.location.href = '../html/main.html'
   }
   catch (e) {
