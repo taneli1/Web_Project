@@ -4,13 +4,13 @@
 const url = 'http://localhost:3000';
 
 let getItemId = localStorage.getItem('itemId');
-let getItemType = localStorage.getItem('itemType');
 const deleteButton = document.getElementById('deleteButton')
 
 deleteButton.style.display = "none"
 
 const createDeleteButton = (listedBy) => {
   let userId
+  console.log("here are the ids", listedBy)
   const token = getCookie("token")
   if (token === undefined){
     console.log("voi voi")
@@ -19,7 +19,7 @@ const createDeleteButton = (listedBy) => {
     userId = tokenFormatter(token).toString()
   }
   console.log("here are the ids", listedBy, userId)
-  if (listedBy === userId){
+  if (listedBy.toString() === userId){
     deleteButton.style.display = "block"
     deleteAd(token)
   }
@@ -34,18 +34,19 @@ const deleteAd = async (token) => {
         'Authorization': 'Bearer ' + token,
       },
     };
-    const response = await fetch(url + '/ad/' + getItemType + '/' + getItemId, fetchOptions);
+    const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
     const json = await response.json();
     console.log(json);
     window.alert("delete successful");
   })
 }
-
+// Formatter for json parse
 const tokenFormatter = (token) => {
   const id1 = token.substring(token.indexOf(".") + 1);
   const id2 = id1.substring(0, id1.indexOf('.'));
   const data = atob(id2)
   const jsonData = JSON.parse(data)
+  console.log("here is your user id", jsonData.user_id)
   return jsonData.user_id
 }
 
@@ -63,14 +64,14 @@ const putItemsToBoxes = async () => {
       'Content-Type': 'application/json',
     },
   };
-  const response = await fetch(url + '/ad/' + getItemType + '/' + getItemId, fetchOptions);
+  const response = await fetch(url + '/ad/id/' + getItemId, fetchOptions);
   const json = await response.json();
-  console.log(json)
-  createDeleteButton(json.user_id.toString())
+  const user_id = json.user_id
+  console.log("here should ne your uad ", user_id)
+  createDeleteButton(user_id)
   await createNewItems(json)
 }
 putItemsToBoxes()
-
 
 const createNewItems = async (items) => {
   console.log("items: ", items)
@@ -83,7 +84,7 @@ const createNewItems = async (items) => {
     'listed_by': '',
   };
 
-  const response = await fetch(url + '/user' + '/' + items.listed_by);
+  const response = await fetch(url + '/user' + '/' + items.user_id);
   const user = await response.json();
   console.log(user)
 
@@ -97,7 +98,7 @@ const createNewItems = async (items) => {
       items.price : 'No price';
   item.desc = items.description != null ?
       items.description : 'No description';
-  item.listed_by = user.name != null ?
+  item.user_id = user.name != null ?
       user.name : 'No username';
   showItems(item);
 };
@@ -141,9 +142,9 @@ const showItems = (item) => {
   desc.innerHTML += item.desc;
 
   let listedText = document.createElement('label')
-  let listed_by = document.createElement('p');
+  let user_id = document.createElement('p');
   new_item_slot.appendChild(listedText);
-  new_item_slot.appendChild(listed_by)
+  new_item_slot.appendChild(user_id)
   listedText.innerHTML += 'Listed by: ';
-  listed_by.innerHTML += item.listed_by;
+  user_id.innerHTML += item.user_id;
 };

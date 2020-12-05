@@ -21,6 +21,7 @@ const adTypeSwitch = () => {
       'input[name="ad_typeSelector"]:checked').value;
   if (value === 'buy') {
     adTypeHiddenField.value = 'buy';
+    console.log("adTypeHiddenField", adTypeHiddenField.value)
   } else {
     adTypeHiddenField.value = 'sell';
   }
@@ -34,21 +35,17 @@ const adFilters = (type) => {
     adTypeSwitch();
     console.log(adTypeHiddenField.value);
     new_item.innerHTML = '';
-    try {
-      if (adTypeHiddenField.value === 'buy') {
-        const response = await fetch(url + '/ad/buy');
-        const items = await response.json();
+    if (adTypeHiddenField.value === 'buy') {
+      const response = await fetch(url + '/ad/buy');
+      const items = await response.json();
+      console.log("here are the items", items)
 
-        await createNewItems(items);
-      } else {
-        const response = await fetch(url + '/ad/sell');
-        const items = await response.json();
+      await createNewItems(items);
+    } else {
+      const response = await fetch(url + '/ad/sell');
+      const items = await response.json();
 
-        await createNewItems(items);
-      }
-    }
-    catch (e) {
-      console.log(e.message)
+      await createNewItems(items);
     }
   });
 };
@@ -60,15 +57,9 @@ adFilters(ad_sell);
 
 const getAllAdsSell = async () => {
   // Default type for shown ads on the main page is sell
-  try {
     const response = await fetch(url + '/ad/sell');
     const items = await response.json();
     await createNewItems(items);
-  }
-  catch (e) {
-    console.log(e.message)
-  }
-
 };
 
 // Shows the buttons accordingly when user is or is not logged in
@@ -112,8 +103,7 @@ const createNewItems = async (items) => {
   };
 
   for (let i = 0; i < items.length; i++) {
-    try {
-      const response = await fetch(url + '/user' + '/' + items[i].listed_by);
+      const response = await fetch(url + '/user' + '/' + items[i].user_id);
       const user = await response.json();
       let itemId = items[i].ad_id
       let itemType = items[i].type
@@ -128,20 +118,19 @@ const createNewItems = async (items) => {
           items[i].price : 'No price';
       item.desc = items[i].description != null ?
           items[i].description : 'No description';
-      item.category = items[i].description != null ?
+      item.category = items[i].category != null ?
           items[i].category : 'No category';
       showItems(item, user, itemId, itemType);
-    }
-    catch (e) {
-      e.message
-    }
   }
 };
 // After getting all the info from 1 item, the values are
 // passed to this function, which
 // transforms it into a div (box) of it's own
 const showItems = (item, user, itemId, itemType) => {
-    let new_item = document.getElementById('new-item');
+  console.log("here are the items 3.0", item)
+
+
+  let new_item = document.getElementById('new-item');
     let new_item_slot = document.createElement('div');
     new_item.appendChild(new_item_slot);
 
@@ -180,8 +169,8 @@ const showItems = (item, user, itemId, itemType) => {
   let cat = document.createElement('p');
   new_item_slot.appendChild(catText);
   new_item_slot.appendChild(cat);
-  descText.innerHTML += 'Category: ';
-  desc.innerHTML += item.category;
+  catText.innerHTML += 'Category: ';
+  cat.innerHTML += item.category;
 
     clickItem(new_item_slot, user, itemId, itemType);
 };
@@ -193,7 +182,7 @@ const showItems = (item, user, itemId, itemType) => {
 // know which item to access
 const clickItem = (item, user, itemId, itemType) => {
   item.addEventListener('click', function() {
-    document.location.href = '../../html/singleAd.html';
+    document.location.href = '../html/singleAd.html';
     localStorage.setItem('item', item.innerHTML);
     localStorage.setItem('listedBy', user.user_id)
     // Passing of item ID can be deleted in the future since all the ads are in same table

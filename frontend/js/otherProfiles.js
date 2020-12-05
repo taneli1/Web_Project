@@ -9,7 +9,6 @@ const phoneNumber = document.getElementById('phoneNumber');
 // Here we get the ad owner's information by making a fetch with it's ID
 const getUserInfo = async () => {
   let get_owner = localStorage.getItem('listedBy');
-  try {
     const response = await fetch(url + '/user/' + get_owner);
     const user = await response.json();
     console.log("KÄYTTÄJÄ", user)
@@ -18,24 +17,14 @@ const getUserInfo = async () => {
     eMail.innerText = user.email
     phoneNumber.innerText = user.phone_number
     await getAllAds(get_owner)
-  }
-  catch (e) {
-    console.log(e.message);
-  }
 }
 
 // Function for getting all the ads of passed user
 const getAllAds = async (id) =>  {
-  try {
     const response = await fetch(url + '/ad/user/' + id);
     const items = await response.json();
     console.log(items)
     await createNewItems(items);
-  }
-  catch (e) {
-    console.log(e.message);
-  }
-
 };
 
 //  Create all the items of this user by looping through them 1 by 1
@@ -46,12 +35,10 @@ const createNewItems = async (items) => {
     'city': '',
     'price': '',
     'desc': '',
+    'category': '',
   };
 
   for (let i = 0; i < items.length; i++) {
-    const response = await fetch(url + '/user' + '/' + items[i].listed_by);
-    const user = await response.json();
-
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
     item.image = items[i].image_1 != null ?
@@ -62,11 +49,10 @@ const createNewItems = async (items) => {
         items[i].price : 'No price';
     item.desc = items[i].description != null ?
         items[i].description : 'No description';
-    item.listed_by = user.name != null ?
-        user.name : 'No username';
+    item.category = items[i].category != null ?
+        items[i].category : 'No category';
     showItems(item);
   }
-
 };
 
 // After getting all the info from 1 item, the values are
@@ -109,9 +95,12 @@ const showItems = (item) => {
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
-  let listed_by = document.createElement('p');
-  new_item_slot.appendChild(listed_by);
-  listed_by.innerHTML += item.listed_by;
+  let catText = document.createElement('label');
+  let cat = document.createElement('p');
+  new_item_slot.appendChild(catText);
+  new_item_slot.appendChild(cat);
+  catText.innerHTML += 'Category: ';
+  cat.innerHTML += item.category;
 
   clickItem(new_item_slot);
 };

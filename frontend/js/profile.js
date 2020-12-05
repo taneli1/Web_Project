@@ -142,37 +142,29 @@ const createNewItems = async (items) => {
   };
 
   for (let i = 0; i < items.length; i++) {
-    try {
-      const response = await fetch(url + '/user' + '/' + items[i].listed_by);
-      const user = await response.json();
-      let itemId = items[i].ad_id
-      let itemType = items[i].type
+    let itemId = items[i].ad_id
+    let itemType = items[i].type
 
-      item.name = items[i].item_name != null ?
-          items[i].item_name : 'No name';
-      item.image = items[i].image_1 != null ?
-          items[i].image_1 : 'No image';
-      item.city = items[i].city != null ?
-          items[i].city : 'No city';
-      item.price = items[i].price != null ?
-          items[i].price : 'No price';
-      item.desc = items[i].description != null ?
-          items[i].description : 'No description';
-      item.category = items[i].description != null ?
-          items[i].category : 'No category';
-      showItems(item, user, itemId, itemType);
-    }
-    catch (e) {
-      console.log(e.message)
-    }
-
+    item.name = items[i].item_name != null ?
+        items[i].item_name : 'No name';
+    item.image = items[i].image_1 != null ?
+        items[i].image_1 : 'No image';
+    item.city = items[i].city != null ?
+        items[i].city : 'No city';
+    item.price = items[i].price != null ?
+        items[i].price : 'No price';
+    item.desc = items[i].description != null ?
+        items[i].description : 'No description';
+    item.category = items[i].description != null ?
+        items[i].category : 'No category';
+    showItems(item, itemId, itemType);
   }
 };
 
 // After getting all the info from 1 item, the values are
 // passed to this function, which
 // transforms it into a div (box) of it's own
-const showItems = (item, user, itemId, itemType) => {
+const showItems = (item, itemId, itemType) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
@@ -216,18 +208,17 @@ const showItems = (item, user, itemId, itemType) => {
   descText.innerHTML += 'Category: ';
   desc.innerHTML += item.category;
 
-  clickItem(new_item_slot, user, itemId, itemType);
+  clickItem(new_item_slot, itemId, itemType);
 };
 
 // after item and a div for it are created, we set an click listener to it
 // that redirects to the clicked individual div
 // also set some key information about the ad to local storage so on other sites
 // know which item to access
-const clickItem = (item, user, itemId, itemType) => {
+const clickItem = (item, itemId, itemType) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';
     localStorage.setItem('item', item.innerHTML);
-    localStorage.setItem('listedBy', user.user_id);
     localStorage.setItem('itemId', itemId);
     localStorage.setItem('itemType', itemType);
   });
