@@ -6,9 +6,10 @@
 
 .light-border {
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #a4a4a4;
     padding: 1em;
     box-sizing: border-box;
+    margin: 1px;
 }
 
 
@@ -31,6 +32,5 @@ input, button, select {
 
 button{
     background-color: #ccc;
-    color: #fff;
 }
 

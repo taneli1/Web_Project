@@ -80,9 +80,12 @@ editField.addEventListener('submit', async (evt) => {
     },
     body: JSON.stringify(fd2),
   };
-  const response = await fetch(url + '/auth/update/' + userId , fetchOptions);
-  const json = await response.json();
-  console.log('here is your response', json)
+  try {
+    await fetch(url + '/auth/update/' + userId , fetchOptions);
+  }
+  catch (e) {
+    console.log(e.message)
+  }
 
   editField.style.display = "none"
   editButton.style.display = "block"
@@ -112,10 +115,16 @@ const getCookie = (name) => {
 }
 // Function for getting all the ads of passed user
 const getAllAds = async (id) =>  {
-  const response = await fetch(url + '/ad/user/' + id);
-  const items = await response.json();
-  console.log("hello", items)
-  await createNewItems(items);
+  try {
+    const response = await fetch(url + '/ad/user/' + id);
+    const items = await response.json();
+    console.log("hello", items);
+    await createNewItems(items);
+  }
+  catch (e) {
+    console.log(e.message)
+  }
+
 };
 
 //  Create all the items of this user by looping through them 1 by 1
@@ -128,25 +137,35 @@ const createNewItems = async (items) => {
     'price': '',
     'desc': '',
     'type': '',
+    'category': '',
+
   };
 
   for (let i = 0; i < items.length; i++) {
-    const response = await fetch(url + '/user' + '/' + items[i].listed_by);
-    const user = await response.json();
-    let itemId = items[i].ad_id
-    let itemType = items[i].type
+    try {
+      const response = await fetch(url + '/user' + '/' + items[i].listed_by);
+      const user = await response.json();
+      let itemId = items[i].ad_id
+      let itemType = items[i].type
 
-    item.name = items[i].item_name != null ?
-        items[i].item_name : 'No name';
-    item.image = items[i].image_1 != null ?
-        items[i].image_1 : 'No image';
-    item.city = items[i].city != null ?
-        items[i].city : 'No city';
-    item.price = items[i].price != null ?
-        items[i].price : 'No price';
-    item.desc = items[i].description != null ?
-        items[i].description : 'No description';
-    showItems(item, user, itemId, itemType);
+      item.name = items[i].item_name != null ?
+          items[i].item_name : 'No name';
+      item.image = items[i].image_1 != null ?
+          items[i].image_1 : 'No image';
+      item.city = items[i].city != null ?
+          items[i].city : 'No city';
+      item.price = items[i].price != null ?
+          items[i].price : 'No price';
+      item.desc = items[i].description != null ?
+          items[i].description : 'No description';
+      item.category = items[i].description != null ?
+          items[i].category : 'No category';
+      showItems(item, user, itemId, itemType);
+    }
+    catch (e) {
+      console.log(e.message)
+    }
+
   }
 };
 
@@ -166,7 +185,7 @@ const showItems = (item, user, itemId, itemType) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../ads/thumbnails/' + item.image +
+  image.innerHTML += '<img src="' + '../../ads/thumbnails/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
@@ -189,6 +208,13 @@ const showItems = (item, user, itemId, itemType) => {
   new_item_slot.appendChild(desc);
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
+
+  let catText = document.createElement('label');
+  let cat = document.createElement('p');
+  new_item_slot.appendChild(catText);
+  new_item_slot.appendChild(cat);
+  descText.innerHTML += 'Category: ';
+  desc.innerHTML += item.category;
 
   clickItem(new_item_slot, user, itemId, itemType);
 };
