@@ -8,8 +8,6 @@ const {resizeImg} = require('../utils/resize');
   Gets data from adModel to respond to different requests from adRoute.
  */
 
-
-
 // ------------------------ Basic ad stuff --------------------------------
 
 /**
@@ -33,8 +31,10 @@ const ad_post = async (req, res) => {
     return res.status(400).json({errors: errors.array()});
   }
 
-  // TODO REMOVE THIS LINE WHEN FRONTEND SENDS CATEGORY !!
-  req.body.category = 2
+  // TODO REMOVE THIS LINE WHEN FRONTEND SENDS !!
+  req.body.category = 2;
+  req.body.type = 'sell'
+
   // Return the res from postAd
   const ok = await adModel.postAd(req);
   res.json(ok);
@@ -66,18 +66,15 @@ const ad_delete_by_id = async (req, res) => {
   // Get the id of the deleting user
   const tokenId = req.user.user_id;
 
-  console.log("adLister || tokenId", adCreator," || ", tokenId)
+  console.log('adLister || tokenId', adCreator, ' || ', tokenId);
 
   // Check if the two user ids match, continue deletion
   if (tokenId === adCreator) {
     const deletion = await adModel.deleteAdById(req);
     res.json(deletion);
-  }
-  else res.json('You are not authorized to delete this ad, or this ad ' +
-      'does not exist!')
+  } else res.json('You are not authorized to delete this ad, or this ad ' +
+      'does not exist!');
 };
-
-
 
 // ------------------- Search features ----------------------------------
 
@@ -97,8 +94,6 @@ const ad_get_by_category = async (req, res) => {
   res.json(adsByCtg);
 };
 
-
-
 // --------------------------- Other --------------------------------------
 /**
  * Resize an image
@@ -111,11 +106,16 @@ const resize_image = async (file, res, next) => {
       console.log(TAG, 'Resize', ready);
       next();
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.log(TAG, e);
     next();
   }
+};
+
+// Fetches all categories available for frontend
+const ad_get_categories = async (req, res, next) => {
+  const getAllCategories = await adModel.getAllCategories(req);
+  res.json(getAllCategories);
 };
 
 module.exports = {
@@ -126,5 +126,6 @@ module.exports = {
   resize_image,
   ad_get_user_ads,
   ad_search_keywords,
-  ad_get_by_category
+  ad_get_by_category,
+  ad_get_categories,
 };

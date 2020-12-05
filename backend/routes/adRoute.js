@@ -27,23 +27,27 @@ const resizeImages = async (req, res, next) => {
 // Where to upload images
 const upload = multer({dest: './ads/images/', fileFilter});
 
-// Get all of user's ads from this route
-router.get('/user/:userId', adController.ad_get_user_ads);
+
+// Get all ads of specified type
+router.get('/:ad_type', adController.ad_get_list);
+
+// Get single ad with its id
+router.get('/id/:id', adController.ad_get_by_id);
+
+// Get all of user's ads
+router.get('/user/:user_id', adController.ad_get_user_ads);
+
+// Get all categories for frontend
+router.get('/category/get', adController.ad_get_categories)
+// Get results with the category of ads
+router.get('/category/:ad_type/:ctg', adController.ad_get_by_category);
 
 // Search for results in database with keyword(s)
 router.get('/search/:ad_type/:keywords', adController.ad_search_keywords);
 
-// Get results with the category of ads
-router.get('/category/:ad_type/:ctg', adController.ad_get_by_category);
-
-// Get all ads of specified type
-router.get('/:ad_type', adController.ad_get_list);
-// Get single ad of specified type with its id
-router.get('/:ad_type/:id', adController.ad_get_by_id);
-
 
 // Post an ad, route needs user to be logged in, create thumbnails
-router.post('/:ad_type',
+router.post('/',
     passport.authenticate('jwt', {session: false}),
     upload.array('image', 5),
     resizeImages,
@@ -56,7 +60,7 @@ router.post('/:ad_type',
     adController.ad_post);
 
 // Delete an ad, route needs user to be logged in
-router.delete('/:ad_type/:ad_id',
+router.delete('/:ad_id',
     passport.authenticate('jwt', {session: false}),
     adController.ad_delete_by_id);
 
