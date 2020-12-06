@@ -34,7 +34,6 @@ const getUserById = async (id) => {
         [id]);
 
     delete rows[0].password
-    delete rows[0].admin_key
     return rows[0];
   }
   catch (e) {

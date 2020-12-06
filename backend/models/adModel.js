@@ -61,6 +61,7 @@ const getAllAds = async (req) => {
 /**
  * Get a single ad from DB with the id of ad,
  * get all images and user info too
+ * TODO Return and clean up index 0
  */
 const getAdById = async (req) => {
 

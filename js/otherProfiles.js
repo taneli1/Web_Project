@@ -5,34 +5,31 @@ const city = document.getElementById('user_city');
 const eMail = document.getElementById('eMail');
 const phoneNumber = document.getElementById('phoneNumber');
 
-
 // Here we get the ad owner's information by making a fetch with it's ID
 const getUserInfo = async () => {
   let get_owner = localStorage.getItem('listedBy');
   try {
     const response = await fetch(url + '/user/' + get_owner);
     const user = await response.json();
-    console.log("KÄYTTÄJÄ", user)
-    name.innerText = user.name
-    city.innerText = user.user_city
-    eMail.innerText = user.email
-    phoneNumber.innerText = user.phone_number
-    await getAllAds(get_owner)
-  }
-  catch (e) {
+    console.log('KÄYTTÄJÄ', user);
+    name.innerText = user.name;
+    city.innerText = user.user_city;
+    eMail.innerText = user.email;
+    phoneNumber.innerText = user.phone_number;
+    await getAllAds(get_owner);
+  } catch (e) {
     console.log(e.message);
   }
-}
+};
 
 // Function for getting all the ads of passed user
-const getAllAds = async (id) =>  {
+const getAllAds = async (id) => {
   try {
     const response = await fetch(url + '/ad/user/' + id);
     const items = await response.json();
-    console.log(items)
+    console.log(items);
     await createNewItems(items);
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e.message);
   }
 
@@ -76,7 +73,6 @@ const showItems = (item) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
-
 
   let h2E = document.createElement('h2');
   new_item_slot.appendChild(h2E);
@@ -125,5 +121,4 @@ const clickItem = (item) => {
   });
 };
 
-
-getUserInfo()
+getUserInfo();
