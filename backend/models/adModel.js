@@ -49,7 +49,8 @@ const getAllAds = async (req) => {
         'ON bm_ad.listed_by=bm_user.user_id ' +
         'LEFT JOIN bm_ctg ' +
         'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE type = ? ',
+        'WHERE type = ? ' +
+        'ORDER BY posted_on DESC ',
         [type]);
     console.log(cleanUpResponse(rows));
     return cleanUpResponse(rows);
@@ -87,7 +88,6 @@ const getAdById = async (req) => {
 
 /**
  * Gets all of the users ads, both sell and buy
- * @param req specifies what kind of ads are targeted
  */
 const getAllUserAds = async (req) => {
 
@@ -100,7 +100,8 @@ const getAllUserAds = async (req) => {
         'ON bm_ad.ad_id=bm_images.ad_ref ' +
         'LEFT JOIN bm_ctg ' +
         'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE listed_by = ?',
+        'WHERE listed_by = ? ' +
+        'ORDER BY posted_on DESC',
         [userId]);
     console.log(cleanUpResponse(rows));
     return cleanUpResponse(rows);
@@ -119,7 +120,32 @@ const getAllUserAds = async (req) => {
 const searchAd = async (req) => {
   const search = '%' + req.params.keywords + '%';
   const adType = req.params.ad_type;
-  try {
+  const ctgId = '4'
+
+  // If category id was provided, could not get if/cases to work
+  if (ctgId){
+    try {
+      const [rows] = await promisePool.execute(
+          'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+          'FROM bm_ad ' +
+          'LEFT JOIN bm_images ' +
+          'ON bm_ad.ad_id=bm_images.ad_ref ' +
+          'LEFT JOIN bm_user ' +
+          'ON bm_ad.listed_by=bm_user.user_id ' +
+          'LEFT JOIN bm_ctg ' +
+          'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+          'WHERE item_name LIKE ? AND type = ? AND ctg_id = ? ' +
+          'ORDER BY posted_on DESC',
+          [search, adType, ctgId]);
+      console.log(cleanUpResponse(rows));
+      return cleanUpResponse(rows);
+    } catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  // If not
+  else {
+    try {
     const [rows] = await promisePool.execute(
         'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
         'FROM bm_ad ' +
@@ -129,13 +155,17 @@ const searchAd = async (req) => {
         'ON bm_ad.listed_by=bm_user.user_id ' +
         'LEFT JOIN bm_ctg ' +
         'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE item_name LIKE ? AND type = ? ',
+        'WHERE item_name LIKE ? AND type = ? ' +
+        'ORDER BY posted_on DESC',
         [search, adType]);
     console.log(cleanUpResponse(rows));
     return cleanUpResponse(rows);
-  } catch (e) {
-    console.error(TAG, e.message);
   }
+    catch (e) {
+    console.error(TAG, e.message);
+    }
+  }
+
 };
 
 /**
@@ -156,7 +186,8 @@ const getByCategory = async (req) => {
         'ON bm_ad.listed_by=bm_user.user_id ' +
         'LEFT JOIN bm_ctg ' +
         'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE type = ? AND ctg_id = ? ',
+        'WHERE type = ? AND ctg_id = ? ' +
+        'ORDER BY posted_on DESC',
         [adType, category]);
     console.log(cleanUpResponse(rows));
     return cleanUpResponse(rows);
@@ -192,6 +223,7 @@ const postAd = async (req) => {
           req.body.category, req.body.ad_type,
           tokenId]);
 
+    // Inject the insert id of the ad to pass on to image uploading
     req.body.insertId = rows.insertId;
     await postImages(req);
     return rows.insertId;
@@ -213,8 +245,8 @@ const postImages = async (req) => {
   for (let i = 0; i < images.length; i++) {
     try {
       const [rows] = await promisePool.execute(
-          'INSERT INTO bm_images (image, ad_ref)' +
-          ' VALUES (?,?);',
+          'INSERT INTO bm_images (image, ad_ref) ' +
+          'VALUES (?,?);',
           [
             images[i].filename, req.body.insertId,
           ]);
@@ -282,7 +314,6 @@ const getAllCategories = async (req) => {
 
 /**
  * Returns the id of the ad lister, used for checking deletion
- * TODO Check if needed
  */
 const getAdLister = async (req) => {
 
