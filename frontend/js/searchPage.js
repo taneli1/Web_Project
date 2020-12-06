@@ -57,17 +57,10 @@ const categorySearch = () => {
     adTypeSwitch();
     search_item.innerHTML = '';
     console.log(category.value);
-    if (adTypeHiddenField.value === 'buy') {
-      const response = await fetch(url + '/ad/category/buy/' + category.value);
-      const items = await response.json();
+    const response = await fetch(url + '/ad/category/' + adTypeHiddenField.value + '/' + category.value);
+    const items = await response.json();
 
-      createNewItems(items);
-    } else {
-      const response = await fetch(url + '/ad/category/sell/' + category.value);
-      const items = await response.json();
-
-      createNewItems(items);
-    }
+    createNewItems(items);
 
   });
 };

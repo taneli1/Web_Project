@@ -1,5 +1,7 @@
 const createNewAd = document.getElementById("createNewAd")
 const adTypeHiddenField = document.getElementById("adType");
+const category = document.getElementById("category");
+
 const url = 'http://localhost:3000'
 
 
@@ -13,6 +15,26 @@ const adTypeSwitch = () => {
     adTypeHiddenField.value = "sell"
   }
 }
+
+const putCategoriesToForm = async () => {
+  const fetchOptions = {
+    method: 'GET',
+  };
+  const response = await fetch(url + '/ad/category/get', fetchOptions);
+  const categories = await response.json();
+  for (let i = 0; i < categories.length; i++){
+    let option = document.createElement("option")
+    option.value = categories[i].ctg_id
+    option.text = categories[i].category
+    category.appendChild(option)
+  }
+}
+
+putCategoriesToForm()
+
+
+
+
 // Event listener for the form of creating new ad
 createNewAd.addEventListener('submit', async (evt) => {
   evt.preventDefault();
