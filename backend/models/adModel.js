@@ -79,7 +79,7 @@ const getAdById = async (req) => {
         'WHERE ad_id = ? ',
         [adId]);
     console.log(cleanUpResponse(rows));
-    return cleanUpResponse(rows);
+    return rows[0];
   } catch (e) {
     console.error(TAG, e.message);
   }

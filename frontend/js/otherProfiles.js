@@ -5,34 +5,26 @@ const city = document.getElementById('user_city');
 const eMail = document.getElementById('eMail');
 const phoneNumber = document.getElementById('phoneNumber');
 
+
 // Here we get the ad owner's information by making a fetch with it's ID
 const getUserInfo = async () => {
   let get_owner = localStorage.getItem('listedBy');
-  try {
     const response = await fetch(url + '/user/' + get_owner);
     const user = await response.json();
-    console.log('KÄYTTÄJÄ', user);
-    name.innerText = user.name;
-    city.innerText = user.user_city;
-    eMail.innerText = user.email;
-    phoneNumber.innerText = user.phone_number;
-    await getAllAds(get_owner);
-  } catch (e) {
-    console.log(e.message);
-  }
-};
+    console.log("KÄYTTÄJÄ", user)
+    name.innerText = user.name
+    city.innerText = user.user_city
+    eMail.innerText = user.email
+    phoneNumber.innerText = user.phone_number
+    await getAllAds(get_owner)
+}
 
 // Function for getting all the ads of passed user
-const getAllAds = async (id) => {
-  try {
+const getAllAds = async (id) =>  {
     const response = await fetch(url + '/ad/user/' + id);
     const items = await response.json();
-    console.log(items);
+    console.log(items)
     await createNewItems(items);
-  } catch (e) {
-    console.log(e.message);
-  }
-
 };
 
 //  Create all the items of this user by looping through them 1 by 1
@@ -43,12 +35,10 @@ const createNewItems = async (items) => {
     'city': '',
     'price': '',
     'desc': '',
+    'category': '',
   };
 
   for (let i = 0; i < items.length; i++) {
-    const response = await fetch(url + '/user' + '/' + items[i].listed_by);
-    const user = await response.json();
-
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
     item.image = items[i].image_1 != null ?
@@ -59,11 +49,10 @@ const createNewItems = async (items) => {
         items[i].price : 'No price';
     item.desc = items[i].description != null ?
         items[i].description : 'No description';
-    item.listed_by = user.name != null ?
-        user.name : 'No username';
+    item.category = items[i].category != null ?
+        items[i].category : 'No category';
     showItems(item);
   }
-
 };
 
 // After getting all the info from 1 item, the values are
@@ -74,6 +63,7 @@ const showItems = (item) => {
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
 
+
   let h2E = document.createElement('h2');
   new_item_slot.appendChild(h2E);
   let item_name = document.createTextNode(item.name);
@@ -81,7 +71,7 @@ const showItems = (item) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../ads/thumbnails/' + item.image +
+  image.innerHTML += '<img src="' + '../../ads/thumbnails/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
@@ -105,9 +95,12 @@ const showItems = (item) => {
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
-  let listed_by = document.createElement('p');
-  new_item_slot.appendChild(listed_by);
-  listed_by.innerHTML += item.listed_by;
+  let catText = document.createElement('label');
+  let cat = document.createElement('p');
+  new_item_slot.appendChild(catText);
+  new_item_slot.appendChild(cat);
+  catText.innerHTML += 'Category: ';
+  cat.innerHTML += item.category;
 
   clickItem(new_item_slot);
 };
@@ -121,4 +114,5 @@ const clickItem = (item) => {
   });
 };
 
-getUserInfo();
+
+getUserInfo()

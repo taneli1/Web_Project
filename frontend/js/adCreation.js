@@ -16,10 +16,11 @@ const adTypeSwitch = () => {
 
 createNewAd.addEventListener('submit', async (evt) => {
   evt.preventDefault();
-  adTypeSwitch()
+  adTypeSwitch();
   const token = getCookie("token")
   try {
     const fd2 = new FormData(createNewAd)
+    console.log("here is the stuff", createNewAd)
     const fetchOptions = {
       method: 'POST',
       headers: {
@@ -33,6 +34,7 @@ createNewAd.addEventListener('submit', async (evt) => {
     document.location.href = '../html/main.html'
   }
   catch (e) {
+    console.log(e)
     document.location.href = '../html/main.html'
   }
 

@@ -9,9 +9,20 @@
     min-height: 300px;
 }
 
+.light-border {
+    border-radius: 8px;
+    border: 1px solid #a4a4a4;
+    padding: 1em;
+    box-sizing: border-box;
+    margin: 1px;
+}
+input {
+    width: 100%;
+}
+
 #search {
     background-color: white;
-    background-image: url("../searchicon.png");
+    background-image: url("../../searchicon.png");
     background-position: 10px 10px;
     background-repeat: no-repeat;
     border: 1px solid black;

@@ -23,6 +23,7 @@ const ad_get_list = async (req, res) => {
  * Save an ad into database
  */
 const ad_post = async (req, res) => {
+  console.log("here is the body", req.body)
 
   // Check for validation errors.
   const errors = validationResult(req);
@@ -30,11 +31,6 @@ const ad_post = async (req, res) => {
     console.log('validation', errors.array());
     return res.status(400).json({errors: errors.array()});
   }
-
-  // TODO REMOVE THIS LINE WHEN FRONTEND SENDS !!
-  req.body.category = 2;
-  req.body.type = 'sell'
-
   // Return the res from postAd
   const ok = await adModel.postAd(req);
   res.json(ok);
