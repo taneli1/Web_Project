@@ -70,12 +70,12 @@ const getAdById = async (req) => {
     const [rows] = await promisePool.execute(
         'SELECT bm_ad.*, bm_images.image, bm_user.*, bm_ctg.category ' +
         'FROM bm_ad ' +
-        'LEFT JOIN bm_images ' +
-        'ON bm_ad.ad_id=bm_images.ad_ref ' +
         'LEFT JOIN bm_user ' +
         'ON bm_ad.listed_by=bm_user.user_id ' +
         'LEFT JOIN bm_ctg ' +
         'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+        'LEFT JOIN bm_images ' +
+        'ON bm_ad.ad_id=bm_images.ad_ref ' +
         'WHERE ad_id = ? ',
         [adId]);
     console.log(cleanUpResponse(rows));
@@ -118,6 +118,7 @@ const getAllUserAds = async (req) => {
  */
 const searchAd = async (req) => {
   const search = '%' + req.params.keywords + '%';
+  const adType = req.params.ad_type;
   try {
     const [rows] = await promisePool.execute(
         'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
@@ -128,8 +129,8 @@ const searchAd = async (req) => {
         'ON bm_ad.listed_by=bm_user.user_id ' +
         'LEFT JOIN bm_ctg ' +
         'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE item_name LIKE ? ',
-        [search]);
+        'WHERE item_name LIKE ? AND type = ? ',
+        [search, adType]);
     console.log(cleanUpResponse(rows));
     return cleanUpResponse(rows);
   } catch (e) {
@@ -164,6 +165,10 @@ const getByCategory = async (req) => {
   }
 };
 
+/**
+ *
+ */
+
 // -------------------------------------------------------------------------
 // ---------------------------- Post to db ---------------------------------
 // -------------------------------------------------------------------------
@@ -179,12 +184,12 @@ const postAd = async (req) => {
   try {
     const [rows] = await promisePool.execute(
         'INSERT INTO bm_ad ' +
-        '(item_name, price, description, city, category, type, listed_by) ' +
+        '(item_name, price, description, city, ctg_ref, type, listed_by) ' +
         'VALUES (?, ?, ?, ?, ?, ?, ?);',
         [
           req.body.item_name, req.body.price,
           req.body.description, req.body.city,
-          req.body.category, req.body.type,
+          req.body.category, req.body.ad_type,
           tokenId]);
 
     req.body.insertId = rows.insertId;
@@ -211,7 +216,7 @@ const postImages = async (req) => {
           'INSERT INTO bm_images (image, ad_ref)' +
           ' VALUES (?,?);',
           [
-            images[i], req.body.insertId,
+            images[i].filename, req.body.insertId,
           ]);
       console.log('Uploaded image: ', rows.insertId);
     } catch (e) {
@@ -284,7 +289,7 @@ const getAdLister = async (req) => {
   const deleteId = req.params.ad_id;
   try {
     const [rows] = await promisePool.execute(
-        'SELECT listed_by FROM bm_ad_buy ' +
+        'SELECT listed_by FROM bm_ad ' +
         'WHERE ad_id = ?',
         [deleteId]);
     return rows[0].listed_by;
