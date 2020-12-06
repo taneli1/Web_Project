@@ -34,6 +34,7 @@ const deleteAd = async (token) => {
         'Authorization': 'Bearer ' + token,
       },
     };
+    console.log(getItemId)
     const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
     const json = await response.json();
     console.log(json);
