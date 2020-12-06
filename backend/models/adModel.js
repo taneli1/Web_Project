@@ -94,12 +94,14 @@ const getAllUserAds = async (req) => {
   const userId = req.params.user_id;
   try {
     const [rows] = await promisePool.execute(
-        'SELECT bm_ad.*, bm_images.image, bm_ctg.category ' +
+        'SELECT bm_ad.*, bm_images.image, bm_ctg.category, bm_user.user_id ' +
         'FROM bm_ad ' +
         'LEFT JOIN bm_images ' +
         'ON bm_ad.ad_id=bm_images.ad_ref ' +
         'LEFT JOIN bm_ctg ' +
         'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+        'LEFT JOIN bm_user ' +
+        'ON bm_ad.listed_by=bm_user.user_id ' +
         'WHERE listed_by = ? ' +
         'ORDER BY posted_on DESC',
         [userId]);
@@ -195,10 +197,6 @@ const getByCategory = async (req) => {
     console.error(TAG, e.message);
   }
 };
-
-/**
- *
- */
 
 // -------------------------------------------------------------------------
 // ---------------------------- Post to db ---------------------------------
