@@ -38,6 +38,7 @@ const deleteAd = async (token) => {
     const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
     const json = await response.json();
     console.log(json);
+    document
     window.alert("delete successful");
   })
 }
@@ -118,7 +119,7 @@ const showItems = (item) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../../ads/thumbnails/' + item.image +
+  image.innerHTML += '<img src="' + '../../ads/thumbnails' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
