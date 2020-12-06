@@ -9,7 +9,6 @@ deleteButton.style.display = "none"
 
 const createDeleteButton = (listedBy) => {
   let userId
-  console.log("here are the ids", listedBy)
   const token = getCookie("token")
   if (token === undefined){
     console.log("voi voi")
@@ -37,7 +36,6 @@ const deleteAd = async (token) => {
     const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
     const json = await response.json();
     console.log(json);
-    document
     window.alert("delete successful");
   })
 }
@@ -47,7 +45,6 @@ const tokenFormatter = (token) => {
   const id2 = id1.substring(0, id1.indexOf('.'));
   const data = atob(id2)
   const jsonData = JSON.parse(data)
-  console.log("here is your user id", jsonData.user_id)
   return jsonData.user_id
 }
 
@@ -68,7 +65,6 @@ const putItemsToBoxes = async () => {
   const response = await fetch(url + '/ad/id/' + getItemId, fetchOptions);
   const json = await response.json();
   const user_id = json.user_id
-  console.log("here should ne your uad ", user_id)
   createDeleteButton(user_id)
   await createNewItems(json)
 }

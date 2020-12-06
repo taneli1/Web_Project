@@ -132,7 +132,9 @@ const createNewItems = async (items) => {
   }
 
 };
-
+// After getting all the info from 1 item, the values are
+// passed to this function, which
+// transforms it into a div (box) of it's own
 const showItems = (item) => {
   let new_item = document.getElementById('searchItem');
   let new_item_slot = document.createElement('div');
@@ -169,9 +171,12 @@ const showItems = (item) => {
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
-  let user_id = document.createElement('p');
-  new_item_slot.appendChild(user_id);
-  user_id.innerHTML += item.user_id;
+  let catText = document.createElement('label');
+  let cat = document.createElement('p');
+  new_item_slot.appendChild(catText);
+  new_item_slot.appendChild(cat);
+  catText.innerHTML += 'Category: ';
+  cat.innerHTML += item.category;
 
   clickItem(new_item_slot);
   sortingSearch(item);
