@@ -13,7 +13,7 @@ const adTypeSwitch = () => {
     adTypeHiddenField.value = "sell"
   }
 }
-
+// Event listener for the form of creating new ad
 createNewAd.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   adTypeSwitch();
@@ -28,10 +28,10 @@ createNewAd.addEventListener('submit', async (evt) => {
       },
       body: fd2,
     };
-    //Error checking! try catch
     console.log(fetchOptions.body)
     await fetch(url + '/ad/', fetchOptions);
     document.location.href = '../html/main.html'
+    window.alert("CREATEd")
   }
   catch (e) {
     console.log(e)
@@ -40,6 +40,7 @@ createNewAd.addEventListener('submit', async (evt) => {
 
 });
 
+// get value of the cookie by it's name
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
