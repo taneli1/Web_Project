@@ -27,7 +27,6 @@ const resizeImages = async (req, res, next) => {
 // Where to upload images
 const upload = multer({dest: './ads/images/', fileFilter});
 
-
 // Get all ads of specified type
 router.get('/:ad_type', adController.ad_get_list);
 
@@ -49,7 +48,7 @@ router.get('/search/:ad_type/:keywords', adController.ad_search_keywords);
 // Post an ad, route needs user to be logged in, create thumbnails
 router.post('/',
     passport.authenticate('jwt', {session: false}),
-    upload.array('image', 5),
+    upload.array('image', 1),
     resizeImages,
     [
         body('item_name', 'min length 3 chars').isLength({min: 3}),

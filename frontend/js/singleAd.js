@@ -2,7 +2,6 @@
 
 //const item = document.location.href = '../html/main.html';
 const url = 'http://localhost:3000';
-
 let getItemId = localStorage.getItem('itemId');
 const deleteButton = document.getElementById('deleteButton')
 
