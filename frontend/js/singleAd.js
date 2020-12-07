@@ -2,45 +2,44 @@
 
 //const item = document.location.href = '../html/main.html';
 const url = 'http://localhost:3000';
+
+
 let getItemId = localStorage.getItem('itemId');
 let listedBy = localStorage.getItem('listedBy');
-const deleteButton = document.getElementById('deleteButton')
-const profileButton = document.getElementById('profileButton')
+const deleteButton = document.getElementById('deleteButton');
+const profileButton = document.getElementById('profileButton');
 
-deleteButton.style.display = "none"
+deleteButton.style.display = 'none';
 
 profileButton.addEventListener('click', async () => {
-  let myId
-  const token = getCookie("token")
-  if (token === undefined){
+  let myId;
+  const token = getCookie('token');
+  if (token === undefined) {
     document.location.href = '../html/otherProfiles.html';
+  } else {
+    myId = tokenFormatter(token).toString();
   }
-  else {
-    myId = tokenFormatter(token).toString()
-  }
-  if (listedBy === myId){
+  if (listedBy === myId) {
     document.location.href = '../html/profile.html';
-  }
-  else {
+  } else {
     document.location.href = '../html/otherProfiles.html';
   }
-})
+});
 
 const createDeleteButton = (listedBy) => {
-  let userId
-  const token = getCookie("token")
-  if (token === undefined){
-    console.log("voi voi")
+  let userId;
+  const token = getCookie('token');
+  if (token === undefined) {
+    console.log('voi voi');
+  } else {
+    userId = tokenFormatter(token).toString();
   }
-  else {
-    userId = tokenFormatter(token).toString()
+  console.log('here are the ids', listedBy, userId);
+  if (listedBy.toString() === userId) {
+    deleteButton.style.display = 'block';
+    deleteAd(token);
   }
-  console.log("here are the ids", listedBy, userId)
-  if (listedBy.toString() === userId){
-    deleteButton.style.display = "block"
-    deleteAd(token)
-  }
-}
+};
 
 const deleteAd = async (token) => {
   deleteButton.addEventListener('click', async () => {
@@ -51,28 +50,27 @@ const deleteAd = async (token) => {
         'Authorization': 'Bearer ' + token,
       },
     };
-    console.log(getItemId)
+    console.log(getItemId);
     const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
     const json = await response.json();
     console.log(json);
-    window.alert("delete successful");
-  })
-}
+    window.alert('delete successful');
+  });
+};
 // Formatter for json parse
 const tokenFormatter = (token) => {
-  const id1 = token.substring(token.indexOf(".") + 1);
+  const id1 = token.substring(token.indexOf('.') + 1);
   const id2 = id1.substring(0, id1.indexOf('.'));
-  const data = atob(id2)
-  const jsonData = JSON.parse(data)
-  return jsonData.user_id
-}
+  const data = atob(id2);
+  const jsonData = JSON.parse(data);
+  return jsonData.user_id;
+};
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
+};
 
 const putItemsToBoxes = async () => {
   const fetchOptions = {
@@ -83,14 +81,14 @@ const putItemsToBoxes = async () => {
   };
   const response = await fetch(url + '/ad/id/' + getItemId, fetchOptions);
   const json = await response.json();
-  const user_id = json.user_id
-  createDeleteButton(user_id)
-  await createNewItems(json)
-}
-putItemsToBoxes()
+  const user_id = json.user_id;
+  createDeleteButton(user_id);
+  await createNewItems(json);
+};
+putItemsToBoxes();
 
 const createNewItems = async (items) => {
-  console.log("items: ", items)
+  console.log('items: ', items);
   let item = {
     'name': '',
     'image': '',
@@ -102,7 +100,7 @@ const createNewItems = async (items) => {
 
   const response = await fetch(url + '/user' + '/' + items.user_id);
   const user = await response.json();
-  console.log(user)
+  console.log(user);
 
   item.name = items.item_name != null ?
       items.item_name : 'No name';
@@ -119,12 +117,10 @@ const createNewItems = async (items) => {
   showItems(item);
 };
 
-
 const showItems = (item) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
-
 
   let h2E = document.createElement('h2');
   new_item_slot.appendChild(h2E);
@@ -157,10 +153,10 @@ const showItems = (item) => {
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
-  let listedText = document.createElement('label')
+  let listedText = document.createElement('label');
   let user_id = document.createElement('p');
   new_item_slot.appendChild(listedText);
-  new_item_slot.appendChild(user_id)
+  new_item_slot.appendChild(user_id);
   listedText.innerHTML += 'Listed by: ';
   user_id.innerHTML += item.user_id;
 };

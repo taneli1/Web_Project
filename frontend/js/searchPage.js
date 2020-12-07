@@ -2,6 +2,7 @@
 
 const url = 'http://localhost:3000';
 
+
 let searched = localStorage.getItem('searched');
 let adType = localStorage.getItem('adType');
 const adTypeHiddenField = document.getElementById('adType');

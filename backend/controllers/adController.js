@@ -23,6 +23,7 @@ const ad_get_list = async (req, res) => {
  * Save an ad into database
  */
 const ad_post = async (req, res) => {
+
   console.log("here is the body", req.body)
 
   // Check for validation errors.
@@ -32,8 +33,14 @@ const ad_post = async (req, res) => {
     return res.status(400).json({errors: errors.array()});
   }
   // Return the res from postAd
-  const ok = await adModel.postAd(req);
-  res.json(ok);
+  try {
+    const ok = await adModel.postAd(req);
+    // res.json(ok);
+    console.log(ok)
+  } catch(e) {
+    console.log(e)
+  }
+
 };
 
 /**
