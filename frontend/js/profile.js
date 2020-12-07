@@ -1,4 +1,4 @@
-const url = 'http://10.114.32.43/app'
+const url = 'https://10.114.32.43/app'
 
 const logoutButton1 = document.getElementById('logout1');
 const name = document.getElementById('userName');

@@ -1,5 +1,5 @@
 
-const url = 'http://10.114.32.43/app'
+const url = 'https://10.114.32.43/app'
 
 const createNewAd = document.getElementById("createNewAd")
 const adTypeHiddenField = document.getElementById("adType");

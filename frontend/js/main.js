@@ -1,6 +1,7 @@
 'use strict';
 
-const url = 'http://10.114.32.43/app'
+const url = 'https://10.114.32.43/app'
+
 
 const searchButton = document.getElementById('searchButton');
 const loginButton = document.getElementById('login');
