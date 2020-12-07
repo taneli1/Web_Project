@@ -38,7 +38,6 @@ const cleanUpResponse = async (arr) => {
 const getAllAds = async (req) => {
 
   const type = req.params.ad_type;
-
   try {
     const [rows] = await promisePool.execute(
         'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
