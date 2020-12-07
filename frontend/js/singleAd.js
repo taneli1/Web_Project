@@ -1,7 +1,8 @@
 'use strict';
 
 //const item = document.location.href = '../html/main.html';
-const url = 'http://localhost:3000';
+const url = 'http://10.114.32.43'
+
 let getItemId = localStorage.getItem('itemId');
 let listedBy = localStorage.getItem('listedBy');
 const deleteButton = document.getElementById('deleteButton')

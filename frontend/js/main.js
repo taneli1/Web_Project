@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'http://localhost:3000';
+const url = 'http://10.114.32.43'
 
 const searchButton = document.getElementById('searchButton');
 const loginButton = document.getElementById('login');

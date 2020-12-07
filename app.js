@@ -10,12 +10,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const port = 3000;
 const app = express();
-const passport = require('./backend/utils/passport');
-
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
 
 // --- Routes
 const rootRoute = require('./backend/routes/rootRoute');
@@ -28,10 +23,20 @@ app.use(cors());
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
 
+
+// --- Server
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'production') {
+  require('../../Web_Project/Web_Project/production')(app, process.env.PORT);
+} else {
+  require('../../Web_Project/Web_Project/localhost')(app, process.env.HTTPS_PORT, process.env.HTTP_PORT);
+}
+
+
+// --- Routes
 app.use('/', rootRoute);
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/ad', adRoute);
-
-// ---
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
