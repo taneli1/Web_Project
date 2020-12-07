@@ -10,7 +10,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
 const app = express();
+const passport = require('./backend/utils/passport');
+
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 // --- Routes
 const rootRoute = require('./backend/routes/rootRoute');
@@ -22,7 +27,6 @@ const authRoute = require('./backend/routes/authRoute');
 app.use(cors());
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
-
 
 // --- Server
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
