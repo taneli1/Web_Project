@@ -19,9 +19,9 @@ console.log(adType);
 const selectedType = () => {
   if (adType === 'buy') {
     ad_buy.checked = true;
-  }else {
+  } else {
     ad_sell.checked = true;
-    
+
   }
 };
 
@@ -46,7 +46,8 @@ putCategoriesToForm();
 /*Gets the search result from main page*/
 const getSearchResult = async () => {
   searchPageS.value = searched;
-  const response = await fetch(url + '/ad/search/' + adType + '/' + searched + '/empty');
+  const response = await fetch(
+      url + '/ad/search/' + adType + '/' + searched + '/empty');
   const searchR = await response.json();
 
   await window.createNewItems(searchR);
@@ -71,12 +72,14 @@ const adFilters = (type) => {
     const cateG = document.getElementById('category').value;
 
     if (adTypeHiddenField.value === 'buy' && searched !== '') {
-      const response = await fetch(url + '/ad/search/buy/' + searched + '/' + cateG);
+      const response = await fetch(
+          url + '/ad/search/buy/' + searched + '/' + cateG);
       const items = await response.json();
 
       await window.createNewItems(items);
-    } else if (adTypeHiddenField.value === 'sell' && searched !== ''){
-      const response = await fetch(url + '/ad/search/sell/' + searched + '/' + cateG);
+    } else if (adTypeHiddenField.value === 'sell' && searched !== '') {
+      const response = await fetch(
+          url + '/ad/search/sell/' + searched + '/' + cateG);
       const items = await response.json();
 
       await window.createNewItems(items);
@@ -87,11 +90,15 @@ const adFilters = (type) => {
       const searchResult = await response.json();
 
       await window.createNewItems(searchResult);
-    }else if (adTypeHiddenField.value === 'sell' && searched === '') {
+    } else if (adTypeHiddenField.value === 'sell' && searched === '') {
       const response = await fetch(url + '/ad/category/sell/' + cateG);
       const searchResult = await response.json();
 
       await window.createNewItems(searchResult);
+    }
+
+    if (search_item.children.length <= 0) {
+      search_item.innerHTML = 'No results';
     }
   });
 };
@@ -101,41 +108,47 @@ searchPageS.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
     event.preventDefault();
 
-   searchButton.click();
+    searchButton.click();
   }
 });
 
 /*Search with search button*/
 const search = async () => {
-    adTypeSwitch();
-    search_item.innerHTML = '';
-    const searched = document.getElementById('searchPageS').value;
-    const cateG = document.getElementById('category').value;
-    console.log(searched);
-    console.log(cateG);
+  adTypeSwitch();
+  search_item.innerHTML = '';
+  const searched = document.getElementById('searchPageS').value;
+  const cateG = document.getElementById('category').value;
+  console.log(searched);
+  console.log(cateG);
 
-    if (adTypeHiddenField.value === 'buy' && searched !== '') {
-      const response = await fetch(url + '/ad/search/buy/' + searched + '/' + cateG);
-      const searchResult = await response.json();
+  if (adTypeHiddenField.value === 'buy' && searched !== '') {
+    const response = await fetch(
+        url + '/ad/search/buy/' + searched + '/' + cateG);
+    const searchResult = await response.json();
 
-      await window.createNewItems(searchResult);
-    } else if (adTypeHiddenField.value === 'sell' && searched !== ''){
-      const response = await fetch(url + '/ad/search/sell/' + searched + '/' + cateG);
-      const searchResult = await response.json();
+    await window.createNewItems(searchResult);
+  } else if (adTypeHiddenField.value === 'sell' && searched !== '') {
+    const response = await fetch(
+        url + '/ad/search/sell/' + searched + '/' + cateG);
+    const searchResult = await response.json();
 
-      await window.createNewItems(searchResult);
-    }
+    await window.createNewItems(searchResult);
+  }
 
   if (adTypeHiddenField.value === 'buy' && searched === '') {
     const response = await fetch(url + '/ad/category/buy/' + cateG);
     const searchResult = await response.json();
 
     await window.createNewItems(searchResult);
-  }else if (adTypeHiddenField.value === 'sell' && searched === '') {
+  } else if (adTypeHiddenField.value === 'sell' && searched === '') {
     const response = await fetch(url + '/ad/category/sell/' + cateG);
     const searchResult = await response.json();
 
     await window.createNewItems(searchResult);
+  }
+
+  if (search_item.children.length <= 0) {
+    search_item.innerHTML = 'No results';
   }
 };
 

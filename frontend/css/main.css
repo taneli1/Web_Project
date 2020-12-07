@@ -55,6 +55,7 @@ input {
 #ad_type {
     display: flex;
     justify-content: flex-start;
+    flex-direction: row;
 }
 
 p {
@@ -62,4 +63,8 @@ p {
     width: 100%;
     overflow: auto;
     word-wrap: break-word;
+}
+
+#ad_buy, #ad_sell {
+    width: 30px;
 }
