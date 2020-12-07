@@ -42,16 +42,19 @@
 
         <label>Item:</label>
         <input class="light-border"
+               placeholder="5 to 50 characters"
                name="item_name"
                type="text"
-               pattern=".{3,}"
+               pattern=".{5,50}"
+               maxlength="50"
+               minlength="5"
                required>
 
-        <label>Description:</label>
-        <input class="light-border"
+        <label>Description:</label><br>
+        <textarea class="light-border"
                name="description"
-               type="text"
-               required>
+               maxlength="1000"
+               required></textarea><br>
 
         <label>Price:</label>
         <input class="light-border"
@@ -77,7 +80,6 @@
                accept="image/*"
                type="file"
                name="image"
-               multiple
                required>
 
         <label>Choose a category:</label>

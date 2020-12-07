@@ -2,44 +2,45 @@
 
 //const item = document.location.href = '../html/main.html';
 const url = 'http://localhost:3000';
-
-
 let getItemId = localStorage.getItem('itemId');
 let listedBy = localStorage.getItem('listedBy');
-const deleteButton = document.getElementById('deleteButton');
-const profileButton = document.getElementById('profileButton');
+const deleteButton = document.getElementById('deleteButton')
+const profileButton = document.getElementById('profileButton')
 
-deleteButton.style.display = 'none';
+deleteButton.style.display = "none"
 
 profileButton.addEventListener('click', async () => {
-  let myId;
-  const token = getCookie('token');
-  if (token === undefined) {
+  let myId
+  const token = getCookie("token")
+  if (token === undefined){
     document.location.href = '../html/otherProfiles.html';
-  } else {
-    myId = tokenFormatter(token).toString();
   }
-  if (listedBy === myId) {
+  else {
+    myId = tokenFormatter(token).toString()
+  }
+  if (listedBy === myId){
     document.location.href = '../html/profile.html';
-  } else {
+  }
+  else {
     document.location.href = '../html/otherProfiles.html';
   }
-});
+})
 
 const createDeleteButton = (listedBy) => {
-  let userId;
-  const token = getCookie('token');
-  if (token === undefined) {
-    console.log('voi voi');
-  } else {
-    userId = tokenFormatter(token).toString();
+  let userId
+  const token = getCookie("token")
+  if (token === undefined){
+    console.log("voi voi")
   }
-  console.log('here are the ids', listedBy, userId);
-  if (listedBy.toString() === userId) {
-    deleteButton.style.display = 'block';
-    deleteAd(token);
+  else {
+    userId = tokenFormatter(token).toString()
   }
-};
+  console.log("here are the ids", listedBy, userId)
+  if (listedBy.toString() === userId){
+    deleteButton.style.display = "block"
+    deleteAd(token)
+  }
+}
 
 const deleteAd = async (token) => {
   deleteButton.addEventListener('click', async () => {
@@ -50,27 +51,28 @@ const deleteAd = async (token) => {
         'Authorization': 'Bearer ' + token,
       },
     };
-    console.log(getItemId);
+    console.log(getItemId)
     const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
     const json = await response.json();
     console.log(json);
-    window.alert('delete successful');
-  });
-};
+    window.alert("delete successful");
+  })
+}
 // Formatter for json parse
 const tokenFormatter = (token) => {
-  const id1 = token.substring(token.indexOf('.') + 1);
+  const id1 = token.substring(token.indexOf(".") + 1);
   const id2 = id1.substring(0, id1.indexOf('.'));
-  const data = atob(id2);
-  const jsonData = JSON.parse(data);
-  return jsonData.user_id;
-};
+  const data = atob(id2)
+  const jsonData = JSON.parse(data)
+  return jsonData.user_id
+}
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
-};
+}
+
 
 const putItemsToBoxes = async () => {
   const fetchOptions = {
@@ -81,41 +83,45 @@ const putItemsToBoxes = async () => {
   };
   const response = await fetch(url + '/ad/id/' + getItemId, fetchOptions);
   const json = await response.json();
-  const user_id = json.user_id;
-  createDeleteButton(user_id);
-  await createNewItems(json);
-};
-putItemsToBoxes();
+  const user_id = json.user_id
+  createDeleteButton(user_id)
+  await createNewItems(json)
+}
+putItemsToBoxes()
 
 const createNewItems = async (items) => {
-  console.log('items: ', items);
+  console.log("items: ", items)
   let item = {
     'name': '',
     'image': '',
     'city': '',
     'price': '',
     'desc': '',
+    'category': '',
     'listed_by': '',
   };
 
   const response = await fetch(url + '/user' + '/' + items.user_id);
   const user = await response.json();
-  console.log(user);
+  console.log(user)
 
   item.name = items.item_name != null ?
       items.item_name : 'No name';
-  item.image = items.image_1 != null ?
-      items.image_1 : 'No image';
+  item.image = items.image != null ?
+      items.image : 'No image';
   item.city = items.city != null ?
       items.city : 'No city';
   item.price = items.price != null ?
       items.price : 'No price';
   item.desc = items.description != null ?
       items.description : 'No description';
+  item.category = items.category != null ?
+      items.category : 'No category';
   item.user_id = user.name != null ?
       user.name : 'No username';
   showItems(item);
 };
+
 
 const showItems = (item) => {
   let new_item = document.getElementById('new-item');
@@ -129,34 +135,41 @@ const showItems = (item) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../../ads/thumbnails' + item.image +
+  image.innerHTML += '<img src="' + '../../ads/images/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
-  let city = document.createElement('p');
+  let city = document.createElement('a');
   new_item_slot.appendChild(cityText);
   new_item_slot.appendChild(city);
   cityText.innerHTML += 'Location: ';
   city.innerHTML += item.city;
 
   let priceText = document.createElement('label');
-  let price = document.createElement('p');
+  let price = document.createElement('a');
   new_item_slot.appendChild(priceText);
   new_item_slot.appendChild(price);
   priceText.innerHTML += 'Price: ';
   price.innerHTML += item.price + '€';
 
   let descText = document.createElement('label');
-  let desc = document.createElement('p');
+  let desc = document.createElement('a');
   new_item_slot.appendChild(descText);
   new_item_slot.appendChild(desc);
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
-  let listedText = document.createElement('label');
-  let user_id = document.createElement('p');
+  let catText = document.createElement('label');
+  let cat = document.createElement('a');
+  new_item_slot.appendChild(catText);
+  new_item_slot.appendChild(cat);
+  catText.innerHTML += 'Category: ';
+  cat.innerHTML += item.category;
+
+  let listedText = document.createElement('label')
+  let user_id = document.createElement('a');
   new_item_slot.appendChild(listedText);
-  new_item_slot.appendChild(user_id);
+  new_item_slot.appendChild(user_id)
   listedText.innerHTML += 'Listed by: ';
   user_id.innerHTML += item.user_id;
 };

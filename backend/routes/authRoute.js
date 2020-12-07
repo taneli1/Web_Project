@@ -19,7 +19,8 @@ router.post('/register',
       body('password', 'at least one upper case letter').
           matches('(?=.*[A-Z]).{8,}'),
     ],
-    authController.user_create_post
+    authController.user_create_post,
+    authController.login
 );
 
 router.put('/update/:id',
