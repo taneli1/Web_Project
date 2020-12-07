@@ -29,9 +29,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'production') {
-  require('production')(app, process.env.PORT);
+  require('./production')(app, process.env.PORT);
 } else {
-  require('localhost')(app, process.env.HTTPS_PORT, process.env.HTTP_PORT);
+  require('./localhost')(app, process.env.HTTPS_PORT, process.env.HTTP_PORT);
 }
 
 
