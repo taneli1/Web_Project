@@ -179,20 +179,41 @@ const getByCategory = async (req) => {
   const category = req.params.ctg;
 
   try {
-    const [rows] = await promisePool.execute(
-        'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
-        'FROM bm_ad ' +
-        'LEFT JOIN bm_images ' +
-        'ON bm_ad.ad_id=bm_images.ad_ref ' +
-        'LEFT JOIN bm_user ' +
-        'ON bm_ad.listed_by=bm_user.user_id ' +
-        'LEFT JOIN bm_ctg ' +
-        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE type = ? AND ctg_id = ? ' +
-        'ORDER BY posted_on DESC',
-        [adType, category]);
-    console.log(cleanUpResponse(rows));
-    return cleanUpResponse(rows);
+    if (!isNaN(category)){
+      console.log("isnan")
+      const [rows] = await promisePool.execute(
+          'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+          'FROM bm_ad ' +
+          'LEFT JOIN bm_images ' +
+          'ON bm_ad.ad_id=bm_images.ad_ref ' +
+          'LEFT JOIN bm_user ' +
+          'ON bm_ad.listed_by=bm_user.user_id ' +
+          'LEFT JOIN bm_ctg ' +
+          'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+          'WHERE type = ? AND ctg_id = ? ' +
+          'ORDER BY posted_on DESC',
+          [adType, category]);
+      console.log(cleanUpResponse(rows));
+      return cleanUpResponse(rows);
+    }
+    else{
+      console.log("other")
+      const [rows] = await promisePool.execute(
+          'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+          'FROM bm_ad ' +
+          'LEFT JOIN bm_images ' +
+          'ON bm_ad.ad_id=bm_images.ad_ref ' +
+          'LEFT JOIN bm_user ' +
+          'ON bm_ad.listed_by=bm_user.user_id ' +
+          'LEFT JOIN bm_ctg ' +
+          'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+          'WHERE type = ? ' +
+          'ORDER BY posted_on DESC',
+          [adType]);
+      console.log(cleanUpResponse(rows));
+      return cleanUpResponse(rows);
+    }
+
   } catch (e) {
     console.error(TAG, e.message);
   }
