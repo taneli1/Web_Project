@@ -24,9 +24,9 @@ const adRoute = require('./backend/routes/adRoute');
 const authRoute = require('./backend/routes/authRoute');
 
 // --- Setup
+app.use(cors());
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
-app.use(cors());
 
 app.use('/', rootRoute);
 app.use('/auth', authRoute);

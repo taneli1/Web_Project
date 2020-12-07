@@ -120,12 +120,34 @@ const getAllUserAds = async (req) => {
  * item names
  */
 const searchAd = async (req) => {
+
   const search = '%' + req.params.keywords + '%';
   const adType = req.params.ad_type;
-  const ctgId = '4'
+  const ctgId = req.params.category;
 
-  // If category id was provided, could not get if/cases to work
-  if (ctgId){
+  // If category sent from frontend is not a number, search the db without it
+  if (isNaN(ctgId)) {
+    try {
+      const [rows] = await promisePool.execute(
+          'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+          'FROM bm_ad ' +
+          'LEFT JOIN bm_images ' +
+          'ON bm_ad.ad_id=bm_images.ad_ref ' +
+          'LEFT JOIN bm_user ' +
+          'ON bm_ad.listed_by=bm_user.user_id ' +
+          'LEFT JOIN bm_ctg ' +
+          'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+          'WHERE item_name LIKE ? AND type = ? ' +
+          'ORDER BY posted_on DESC',
+          [search, adType]);
+      console.log(cleanUpResponse(rows));
+      return cleanUpResponse(rows);
+    } catch (e) {
+      console.error(TAG, e.message);
+    }
+  }
+  // If frontend sent a category id, search with it
+  else {
     try {
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
@@ -145,28 +167,6 @@ const searchAd = async (req) => {
       console.error(TAG, e.message);
     }
   }
-  // If not
-  else {
-    try {
-    const [rows] = await promisePool.execute(
-        'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
-        'FROM bm_ad ' +
-        'LEFT JOIN bm_images ' +
-        'ON bm_ad.ad_id=bm_images.ad_ref ' +
-        'LEFT JOIN bm_user ' +
-        'ON bm_ad.listed_by=bm_user.user_id ' +
-        'LEFT JOIN bm_ctg ' +
-        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE item_name LIKE ? AND type = ? ' +
-        'ORDER BY posted_on DESC',
-        [search, adType]);
-    console.log(cleanUpResponse(rows));
-    return cleanUpResponse(rows);
-  }
-    catch (e) {
-    console.error(TAG, e.message);
-    }
-  }
 
 };
 
@@ -179,20 +179,41 @@ const getByCategory = async (req) => {
   const category = req.params.ctg;
 
   try {
-    const [rows] = await promisePool.execute(
-        'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
-        'FROM bm_ad ' +
-        'LEFT JOIN bm_images ' +
-        'ON bm_ad.ad_id=bm_images.ad_ref ' +
-        'LEFT JOIN bm_user ' +
-        'ON bm_ad.listed_by=bm_user.user_id ' +
-        'LEFT JOIN bm_ctg ' +
-        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
-        'WHERE type = ? AND ctg_id = ? ' +
-        'ORDER BY posted_on DESC',
-        [adType, category]);
-    console.log(cleanUpResponse(rows));
-    return cleanUpResponse(rows);
+    if (!isNaN(category)){
+      console.log("isnan")
+      const [rows] = await promisePool.execute(
+          'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+          'FROM bm_ad ' +
+          'LEFT JOIN bm_images ' +
+          'ON bm_ad.ad_id=bm_images.ad_ref ' +
+          'LEFT JOIN bm_user ' +
+          'ON bm_ad.listed_by=bm_user.user_id ' +
+          'LEFT JOIN bm_ctg ' +
+          'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+          'WHERE type = ? AND ctg_id = ? ' +
+          'ORDER BY posted_on DESC',
+          [adType, category]);
+      console.log(cleanUpResponse(rows));
+      return cleanUpResponse(rows);
+    }
+    else{ // Pretty redundant, could just use basic getAllAds
+      console.log("other")
+      const [rows] = await promisePool.execute(
+          'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+          'FROM bm_ad ' +
+          'LEFT JOIN bm_images ' +
+          'ON bm_ad.ad_id=bm_images.ad_ref ' +
+          'LEFT JOIN bm_user ' +
+          'ON bm_ad.listed_by=bm_user.user_id ' +
+          'LEFT JOIN bm_ctg ' +
+          'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+          'WHERE type = ? ' +
+          'ORDER BY posted_on DESC',
+          [adType]);
+      console.log(cleanUpResponse(rows));
+      return cleanUpResponse(rows);
+    }
+
   } catch (e) {
     console.error(TAG, e.message);
   }
@@ -239,7 +260,6 @@ const postAd = async (req) => {
 const postImages = async (req) => {
 
   const images = req.files;
-
   for (let i = 0; i < images.length; i++) {
     try {
       const [rows] = await promisePool.execute(
@@ -287,9 +307,9 @@ const deleteAdById = async (req) => {
             console.error(err);
           }*/
     return {
-      "Ad" : ad,
-      "Images" : images
-    }
+      'Ad': ad,
+      'Images': images,
+    };
   } catch (e) {
     console.error(TAG, 'delete:', e.message);
   }

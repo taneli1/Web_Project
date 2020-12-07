@@ -16,15 +16,18 @@ const fileFilter = (req, file, cb) => {
 };
 
 const resizeImages = async (req, res, next) => {
-    console.log("Resize")
-    console.log(req.files.length)
+  try {
     for (let i = 0; i < req.files.length; i++) {
-        await adController.resize_image(req.files[i],res,next)
-        console.log("inside for loop")
+      await adController.resize_image(req.files[i],res,next)
+      console.log("inside for loop")
     }
-    next()
+  }
+  catch (e) {
+    console.log(e)
+  }
 }
-// Where to upload images
+
+// Where to upload image(s)
 const upload = multer({dest: './ads/images/', fileFilter});
 
 // Get all ads of specified type
@@ -42,10 +45,10 @@ router.get('/category/get', adController.ad_get_categories)
 router.get('/category/:ad_type/:ctg', adController.ad_get_by_category);
 
 // Search for results in database with keyword(s)
-router.get('/search/:ad_type/:keywords', adController.ad_search_keywords);
+router.get('/search/:ad_type/:keywords/:category', adController.ad_search_keywords);
 
 
-// Post an ad, route needs user to be logged in, create thumbnails
+// Post an ad, route needs user to be logged in, create thumbnail(s)
 router.post('/',
     passport.authenticate('jwt', {session: false}),
     upload.array('image', 1),

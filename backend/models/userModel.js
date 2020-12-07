@@ -73,7 +73,7 @@ const createUser = async (req) => {
           'INSERT INTO bm_user (name, password, email, phone_number, user_city)' +
           ' VALUES (?, ?, ?, ?, ?);',
           [
-            req.body.name, req.body.password,
+            req.body.name, req.body.passwordHash,
             req.body.email, req.body.phone_number,
             req.body.city]);
 
@@ -86,9 +86,6 @@ const createUser = async (req) => {
     }
   }
   else {
-    // TODO response to account existing to frontend, cant return anything here
-    //  Since authController.user_create_post currently thinks reg is complete
-    //  if something comes back
     console.log(TAG,
         `Account with email address ${req.body.email} already exists!`);
     return `Account with email address ${req.body.email} already exists!`;
