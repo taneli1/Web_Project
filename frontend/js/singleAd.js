@@ -3,9 +3,28 @@
 //const item = document.location.href = '../html/main.html';
 const url = 'http://localhost:3000';
 let getItemId = localStorage.getItem('itemId');
+let listedBy = localStorage.getItem('listedBy');
 const deleteButton = document.getElementById('deleteButton')
+const profileButton = document.getElementById('profileButton')
 
 deleteButton.style.display = "none"
+
+profileButton.addEventListener('click', async () => {
+  let myId
+  const token = getCookie("token")
+  if (token === undefined){
+    document.location.href = '../html/otherProfiles.html';
+  }
+  else {
+    myId = tokenFormatter(token).toString()
+  }
+  if (listedBy === myId){
+    document.location.href = '../html/profile.html';
+  }
+  else {
+    document.location.href = '../html/otherProfiles.html';
+  }
+})
 
 const createDeleteButton = (listedBy) => {
   let userId
