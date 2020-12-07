@@ -30,13 +30,12 @@ const putCategoriesToForm = async () => {
   }
 };
 
-
-
 putCategoriesToForm();
+
 
 const getSearchResult = async () => {
   searchPageS.value = searched;
-  const response = await fetch(url + '/ad/search/' + adType + '/' + searched);
+  const response = await fetch(url + '/ad/search/' + adType + '/' + searched + '/empty');
   const searchR = await response.json();
 
   await window.createNewItems(searchR);
@@ -57,38 +56,20 @@ const adFilters = (type) => {
     adTypeSwitch();
     console.log(adTypeHiddenField.value);
     search_item.innerHTML = '';
+    const searched = document.getElementById('searchPageS').value;
+    const cateG = document.getElementById('category').value;
 
     if (adTypeHiddenField.value === 'buy') {
-      const response = await fetch(url + '/ad/buy');
+      const response = await fetch(url + '/ad/search/buy/' + searched + '/' + cateG);
       const items = await response.json();
 
       await window.createNewItems(items);
     } else {
-      const response = await fetch(url + '/ad/sell');
+      const response = await fetch(url + '/ad/search/sell/' + searched + '/' + cateG);
       const items = await response.json();
 
       await window.createNewItems(items);
     }
-  });
-};
-/*
-const categorySearch = () => {
-  category.addEventListener('click', async () => {
-    adTypeSwitch();
-    search_item.innerHTML = '';
-    console.log(category.value);
-    const response = await fetch(
-        url + '/ad/category/' + adTypeHiddenField.value + '/' + category.value);
-    const items = await response.json();
-
-    await window.createNewItems(items);
-
-  });
-};
-
- */
-const sortingSearch = (item) => {
-  sorting.addEventListener('click', function() {
   });
 };
 
@@ -104,15 +85,17 @@ const search = async () => {
     adTypeSwitch();
     search_item.innerHTML = '';
     const searched = document.getElementById('searchPageS').value;
+    const cateG = document.getElementById('category').value;
     console.log(searched);
+    console.log(cateG);
 
     if (adTypeHiddenField.value === 'buy') {
-      const response = await fetch(url + '/ad/search/buy/' + searched);
+      const response = await fetch(url + '/ad/search/buy/' + searched + '/' + cateG);
       const searchResult = await response.json();
 
       await window.createNewItems(searchResult);
     } else {
-      const response = await fetch(url + '/ad/search/sell/' + searched);
+      const response = await fetch(url + '/ad/search/sell/' + searched + '/' + cateG);
       const searchResult = await response.json();
 
       await window.createNewItems(searchResult);
