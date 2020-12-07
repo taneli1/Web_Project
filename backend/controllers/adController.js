@@ -12,7 +12,6 @@ const {resizeImg} = require('../utils/resize');
 
 /**
  * Responds with ads of requested type from database
- * TODO Get certain amount of ads (range, first 50, 50-100...)
  */
 const ad_get_list = async (req, res) => {
   const ads = await adModel.getAllAds(req);
@@ -24,23 +23,21 @@ const ad_get_list = async (req, res) => {
  */
 const ad_post = async (req, res) => {
 
-  console.log("here is the body", req.body)
-
   // Check for validation errors.
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log('validation', errors.array());
     return res.status(400).json({errors: errors.array()});
   }
+
   // Return the res from postAd
   try {
     const ok = await adModel.postAd(req);
-    // res.json(ok);
-    console.log(ok)
-  } catch(e) {
+    res.json(ok);
+  }
+  catch (e) {
     console.log(e)
   }
-
 };
 
 /**

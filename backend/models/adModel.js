@@ -196,7 +196,7 @@ const getByCategory = async (req) => {
       console.log(cleanUpResponse(rows));
       return cleanUpResponse(rows);
     }
-    else{
+    else{ // Pretty redundant, could just use basic getAllAds
       console.log("other")
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
@@ -260,7 +260,6 @@ const postAd = async (req) => {
 const postImages = async (req) => {
 
   const images = req.files;
-
   for (let i = 0; i < images.length; i++) {
     try {
       const [rows] = await promisePool.execute(

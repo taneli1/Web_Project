@@ -56,13 +56,13 @@ const user_create_post = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     console.log(TAG, 'user create error', errors);
-    res.send(errors.array());
+    return res.send(errors.array());
   }
   else {
 
     // Password Hashing
     const salt = bcrypt.genSaltSync(10);
-    req.body.password = bcrypt.hashSync(req.body.password, salt);
+    req.body.passwordHash = bcrypt.hashSync(req.body.password, salt);
 
     /*
     Since createUser returns the insertID of the account created,
@@ -76,7 +76,7 @@ const user_create_post = async (req, res, next) => {
       next();
     }
     else {
-      res.status(400).json({error: ok});
+      return res.status(400).json({error: ok});
     }
   }
 };

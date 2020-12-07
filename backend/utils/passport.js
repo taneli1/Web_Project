@@ -23,7 +23,7 @@ passport.use(new LocalStrategy(
             }
 
             const check = await bcrypt.compareSync(password, user.password)
-            // Compare passwords, wait to get both params first
+            // Compare passwords, wait for it
             if (!check) {
                 console.log(`.${password}.`, "||" , `.${user.password}.` )
                 console.log(TAG , "PW err, most likely don't match");
