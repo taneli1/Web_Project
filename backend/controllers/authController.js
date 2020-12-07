@@ -17,7 +17,7 @@ const {validationResult} = require('express-validator');
 /**
  * Login to a user account with req params
  */
-const login = (req, res) => {
+const login = (req, res, next) => {
 
   // Need to save email as username to make authentication work in passport
   req.body.username = req.body.email;
@@ -42,7 +42,7 @@ const login = (req, res) => {
       return res.json({user, token});
     });
   })
-  (req, res);
+  (req, res, next);
 };
 
 /**
