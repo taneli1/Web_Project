@@ -2,11 +2,11 @@
     height: 600px;
 }
 
+
 #singleItem {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    min-height: 850px;
 }
 
 #singleItem div {
@@ -17,4 +17,8 @@
     border: 1px solid black;
     width: 25%;
     height: 25%;
+}
+
+#new-item {
+
 }

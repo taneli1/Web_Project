@@ -3,152 +3,114 @@
 const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
+const fs = require('fs');
 
+// Delete unneeded things from a response
+const cleanUpResponse = async (arr) => {
+  // Delete unneeded stuff
+  for (let i = 0; i < arr.length; i++) {
+    delete arr[i].password;
+    delete arr[i].listed_by;
+    delete arr[i].ctg_ref;
+  }
+  return arr;
+};
 
 /*
   Handles all the communication with db regarding ads. Almost all the methods
   take req.params.ad_type to differentiate what ads are targeted with the request.
-  This is done since buy- and sell ads are saved in different tables to improve
-  performance.
+
+  This leads to the file being very long and painful to modify, would do differently
+  next time. Would have been easier to save everything in the same table...
  */
-
-
 
 // TODO Save thumbnail in ad table, additional images only fetched when
 //  opening up a single ad page
-//  - Validate user input
+//  - Validate user input (ad_type)
 // -------------------------------------------------------------------------
 // ---------------------------- Get from db --------------------------------
 // -------------------------------------------------------------------------
 
 /**
- * Get all ads from DB, join with image table, return all
+ * Get all ads of specified type from DB, join with image table, return all
  * @param req specifies what kind of ads we want to get
  */
 const getAllAds = async (req) => {
 
   const type = req.params.ad_type;
 
-  if (type === 'buy') {
-    try {
-      const [rows] = await promisePool.execute(
-          'SELECT bm_ad_buy.*, bm_ad_buy_images.image_1 FROM bm_ad_buy ' +
-          'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table' +
-          '=bm_ad_buy_images.images_id ' +
-          'LEFT JOIN bm_user ON bm_ad_buy.listed_by=bm_user.user_id');
-
-      // Delete unneeded stuff
-      for (let i = 0; i < rows.length; i++) {
-        delete rows[i].password;
-        delete rows[i].admin_key;
-      }
-      // console.log(rows);
-      return rows;
-    }
-    catch (e) {
-      console.log(TAG + e.message);
-    }
+  try {
+    const [rows] = await promisePool.execute(
+        'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+        'FROM bm_ad ' +
+        'LEFT JOIN bm_images ' +
+        'ON bm_ad.ad_id=bm_images.ad_ref ' +
+        'LEFT JOIN bm_user ' +
+        'ON bm_ad.listed_by=bm_user.user_id ' +
+        'LEFT JOIN bm_ctg ' +
+        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+        'WHERE type = ? ' +
+        'ORDER BY posted_on DESC ',
+        [type]);
+    console.log(cleanUpResponse(rows));
+    return cleanUpResponse(rows);
+  } catch (e) {
+    console.log(TAG + e.message);
   }
-  else if (type === 'sell') {
-    try {
-      const [rows] = await promisePool.execute(
-          'SELECT bm_ad_sell.*, bm_ad_sell_images.image_1 FROM bm_ad_sell ' +
-          'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table' +
-          '=bm_ad_sell_images.images_id ' +
-          'LEFT JOIN bm_user ON bm_ad_sell.listed_by=bm_user.user_id');
-
-      // Delete unneeded stuff
-      for (let i = 0; i < rows.length; i++) {
-        delete rows[i].password;
-        delete rows[i].admin_key;
-      }
-      console.log(rows)
-      // console.log(rows);
-      return rows;
-    }
-    catch (e) {
-      console.log(TAG + e.message);
-    }
-  }
-  else return 'Request did not specify an ad type';
 };
 
 /**
- * Get a single ad from DB with the id of ad
- * @param req specifies what kind of ads are targeted
+ * Get a single ad from DB with the id of ad,
+ * get all images and user info too
+ * TODO Return and clean up index 0
  */
 const getAdById = async (req) => {
 
-  const type = req.params.ad_type;
-  if (type === 'buy') {
-    try {
-      console.log(TAG + 'getAd :', req.params.id);
-      const [rows] = await promisePool.execute(
-          'SELECT * FROM bm_ad_buy ' +
-          'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table=' +
-          'bm_ad_buy_images.images_id ' +
-          'LEFT JOIN bm_user ON bm_ad_buy.listed_by=bm_user.user_id ' +
-          'WHERE ad_id = ? ',
-          [req.params.id]);
-      delete rows[0].password;
-      delete rows[0].admin_key;
-      return rows[0];
-    }
-    catch (e) {
-      console.error(TAG, e.message);
-    }
-  }
-  else if (type === 'sell') {
-    try {
-      console.log(TAG + 'getAd :', req.params.id);
-      const [rows] = await promisePool.execute(
-          'SELECT * FROM bm_ad_sell ' +
-          'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table=' +
-          'bm_ad_sell_images.images_id ' +
-          'LEFT JOIN bm_user ON bm_ad_sell.listed_by=bm_user.user_id ' +
-          'WHERE ad_id = ?',
-          [req.params.id]);
-      delete rows[0].password;
-      delete rows[0].admin_key;
-      return rows[0];
-    }
-    catch (e) {
-      console.error(TAG, e.message);
-    }
-  }
-  else return 'Request did not specify an ad type';
-};
-
-/**
- * Gets all of the users ads, both sell and buy
- * @param req specifies what kind of ads are targeted
- */
-const getAllUserAds = async (req) => {
-
+  const adId = req.params.id;
   try {
-    console.log(TAG + 'getAllUserAds :', req.params.userId);
-
-    const [buy] = await promisePool.execute(
-        'SELECT * FROM bm_ad_buy ' +
-        'LEFT JOIN bm_ad_buy_images ON bm_ad_buy.images_table=' +
-        'bm_ad_buy_images.images_id ' +
-        'WHERE listed_by = ? ',
-        [req.params.userId]);
-
-    const [sell] = await promisePool.execute(
-        'SELECT * FROM bm_ad_sell ' +
-        'LEFT JOIN bm_ad_sell_images ON bm_ad_sell.images_table=' +
-        'bm_ad_sell_images.images_id ' +
-        'WHERE listed_by = ? ',
-        [req.params.userId]);
-
-    return buy.concat(sell);
-  }
-  catch (e) {
+    const [rows] = await promisePool.execute(
+        'SELECT bm_ad.*, bm_images.image, bm_user.*, bm_ctg.category ' +
+        'FROM bm_ad ' +
+        'LEFT JOIN bm_user ' +
+        'ON bm_ad.listed_by=bm_user.user_id ' +
+        'LEFT JOIN bm_ctg ' +
+        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+        'LEFT JOIN bm_images ' +
+        'ON bm_ad.ad_id=bm_images.ad_ref ' +
+        'WHERE ad_id = ? ',
+        [adId]);
+    console.log(cleanUpResponse(rows));
+    return rows[0];
+  } catch (e) {
     console.error(TAG, e.message);
   }
 };
 
+/**
+ * Gets all of the users ads, both sell and buy
+ */
+const getAllUserAds = async (req) => {
+
+  const userId = req.params.user_id;
+  try {
+    const [rows] = await promisePool.execute(
+        'SELECT bm_ad.*, bm_images.image, bm_ctg.category, bm_user.user_id ' +
+        'FROM bm_ad ' +
+        'LEFT JOIN bm_images ' +
+        'ON bm_ad.ad_id=bm_images.ad_ref ' +
+        'LEFT JOIN bm_ctg ' +
+        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+        'LEFT JOIN bm_user ' +
+        'ON bm_ad.listed_by=bm_user.user_id ' +
+        'WHERE listed_by = ? ' +
+        'ORDER BY posted_on DESC',
+        [userId]);
+    console.log(cleanUpResponse(rows));
+    return cleanUpResponse(rows);
+  } catch (e) {
+    console.error(TAG, e.message);
+  }
+};
 
 // ------------------------- Search & categories ---------------------------
 // -------------------------------------------------------------------------
@@ -158,76 +120,83 @@ const getAllUserAds = async (req) => {
  * item names
  */
 const searchAd = async (req) => {
+  const search = '%' + req.params.keywords + '%';
+  const adType = req.params.ad_type;
+  const ctgId = '4'
 
-  // TODO Validation
-  const search = '%' + req.params.keywords + '%'
-  const type = req.params.ad_type;
-
-  if (type === 'buy') {
+  // If category id was provided, could not get if/cases to work
+  if (ctgId){
     try {
-      const [buy] = await promisePool.execute(
-          'SELECT * FROM bm_ad_buy ' +
-          'WHERE item_name LIKE ?',
-          [search]);
-      return buy;
-    }
-    catch (e) {
+      const [rows] = await promisePool.execute(
+          'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+          'FROM bm_ad ' +
+          'LEFT JOIN bm_images ' +
+          'ON bm_ad.ad_id=bm_images.ad_ref ' +
+          'LEFT JOIN bm_user ' +
+          'ON bm_ad.listed_by=bm_user.user_id ' +
+          'LEFT JOIN bm_ctg ' +
+          'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+          'WHERE item_name LIKE ? AND type = ? AND ctg_id = ? ' +
+          'ORDER BY posted_on DESC',
+          [search, adType, ctgId]);
+      console.log(cleanUpResponse(rows));
+      return cleanUpResponse(rows);
+    } catch (e) {
       console.error(TAG, e.message);
     }
   }
-  else if (type === 'sell') {
+  // If not
+  else {
     try {
-      const [sell] = await promisePool.execute(
-          'SELECT * FROM bm_ad_sell ' +
-          'WHERE item_name LIKE ?',
-          [search]);
-      return sell;
-    }
+    const [rows] = await promisePool.execute(
+        'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+        'FROM bm_ad ' +
+        'LEFT JOIN bm_images ' +
+        'ON bm_ad.ad_id=bm_images.ad_ref ' +
+        'LEFT JOIN bm_user ' +
+        'ON bm_ad.listed_by=bm_user.user_id ' +
+        'LEFT JOIN bm_ctg ' +
+        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+        'WHERE item_name LIKE ? AND type = ? ' +
+        'ORDER BY posted_on DESC',
+        [search, adType]);
+    console.log(cleanUpResponse(rows));
+    return cleanUpResponse(rows);
+  }
     catch (e) {
-      console.error(TAG, e.message);
+    console.error(TAG, e.message);
     }
   }
-  else return 'Request did not specify an ad type';
+
 };
 
 /**
  * Get results from database based on the category of the item.
- * Joins bm_ctg table to get ctg value
  */
 const getByCategory = async (req) => {
 
-  const type = req.params.ad_type;
+  const adType = req.params.ad_type;
+  const category = req.params.ctg;
 
-  if (type === 'buy') {
-    try {
-      const [buy] = await promisePool.execute(
-          'SELECT * FROM bm_ad_buy ' +
-          'LEFT JOIN bm_ctg ON bm_ad_buy.category=' +
-          'bm_ctg.ctg_id ' +
-          'WHERE bm_ad_buy.category = ?',
-          [req.params.ctg]);
-      return buy;
-    }
-    catch (e) {
-      console.error(TAG, e.message);
-    }
+  try {
+    const [rows] = await promisePool.execute(
+        'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
+        'FROM bm_ad ' +
+        'LEFT JOIN bm_images ' +
+        'ON bm_ad.ad_id=bm_images.ad_ref ' +
+        'LEFT JOIN bm_user ' +
+        'ON bm_ad.listed_by=bm_user.user_id ' +
+        'LEFT JOIN bm_ctg ' +
+        'ON bm_ad.ctg_ref=bm_ctg.ctg_id ' +
+        'WHERE type = ? AND ctg_id = ? ' +
+        'ORDER BY posted_on DESC',
+        [adType, category]);
+    console.log(cleanUpResponse(rows));
+    return cleanUpResponse(rows);
+  } catch (e) {
+    console.error(TAG, e.message);
   }
-  else if (type === 'sell') {
-    try {
-      const [sell] = await promisePool.execute(
-          'SELECT * FROM bm_ad_sell ' +
-          'LEFT JOIN bm_ctg ON bm_ad_sell.category=' +
-          'bm_ctg.ctg_id ' +
-          'WHERE bm_ad_sell.category = ?',
-          [req.params.ctg]);
-      return sell;
-    }
-    catch (e) {
-      console.error(TAG, e.message);
-    }
-  }
-  else return 'Request did not specify an ad type';
-}
+};
 
 // -------------------------------------------------------------------------
 // ---------------------------- Post to db ---------------------------------
@@ -235,105 +204,56 @@ const getByCategory = async (req) => {
 
 /**
  * Post an ad into db
- * @param req specifies what kind of ad is saved
  */
 const postAd = async (req) => {
 
-  const type = req.params.ad_type;
   // Get user id from token
   const tokenId = req.user.user_id;
-  const images = await postImages(req);
 
-  if (type === 'buy') {
+  try {
+    const [rows] = await promisePool.execute(
+        'INSERT INTO bm_ad ' +
+        '(item_name, price, description, city, ctg_ref, type, listed_by) ' +
+        'VALUES (?, ?, ?, ?, ?, ?, ?);',
+        [
+          req.body.item_name, req.body.price,
+          req.body.description, req.body.city,
+          req.body.category, req.body.ad_type,
+          tokenId]);
 
-    try {
-      const [rows] = await promisePool.execute(
-          'INSERT INTO bm_ad_buy' +
-          ' (item_name, price, description, city, images_table, listed_by)' +
-          ' VALUES (?, ?, ?, ?, ?, ?);',
-          [
-            req.body.item_name, req.body.price,
-            req.body.description, req.body.city,
-            images, tokenId]);
-
-      console.log(TAG + `insert ${rows.insertId}`);
-      return rows.insertId;
-    }
-    catch (e) {
-      console.error(TAG, e);
-      return 0;
-    }
+    // Inject the insert id of the ad to pass on to image uploading
+    req.body.insertId = rows.insertId;
+    await postImages(req);
+    return rows.insertId;
+  } catch (e) {
+    console.error(TAG, e);
+    return 0;
   }
-  else if (type === 'sell') {
 
-    try {
-      const [rows] = await promisePool.execute(
-          'INSERT INTO bm_ad_sell' +
-          ' (item_name, price, description, city, images_table, listed_by)' +
-          ' VALUES (?, ?, ?, ?, ?, ?);',
-          [
-            req.body.item_name, req.body.price,
-            req.body.description, req.body.city,
-            images, tokenId]);
-
-      console.log(TAG + `insert ${rows.insertId}`);
-      return rows.insertId;
-    }
-
-    catch (e) {
-      console.error(TAG, e);
-      return 0;
-    }
-  }
-  else return 'Request did not specify an ad type';
 };
 
 /**
  * Save images to db, return the insertId , which is then saved to ad table
  * with all the other data
- * @param req specifies what kind of ads are targeted
  */
 const postImages = async (req) => {
 
-  const type = req.params.ad_type;
-  const images = req.file.filename;
+  const images = req.files;
 
-  if (type === 'buy') {
+  for (let i = 0; i < images.length; i++) {
     try {
       const [rows] = await promisePool.execute(
-          'INSERT INTO bm_ad_buy_images (image_1)' +
-          ' VALUES (?);',
+          'INSERT INTO bm_images (image, ad_ref) ' +
+          'VALUES (?,?);',
           [
-            images,
+            images[i].filename, req.body.insertId,
           ]);
-
-      console.log(TAG + `Images success: ${rows.insertId}`);
-      return rows.insertId;
-    }
-    catch (e) {
+      console.log('Uploaded image: ', rows.insertId);
+    } catch (e) {
       console.error(TAG, e);
       return 0;
     }
   }
-  else if (type === 'sell') {
-
-    try {
-      const [rows] = await promisePool.execute(
-          'INSERT INTO bm_ad_sell_images (image_1)' +
-          ' VALUES (?);',
-          [
-            images,
-          ]);
-
-      console.log(TAG + `Images success: ${rows.insertId}`);
-      return rows.insertId;
-    }
-    catch (e) {
-      console.error(TAG, e);
-      return 0;
-    }
-  }
-  else return 'Request did not specify an ad type';
 
 };
 
@@ -341,37 +261,70 @@ const postImages = async (req) => {
 // ---------------------------- Delete from db -----------------------------
 // -------------------------------------------------------------------------
 
-// TODO Deletion needs confirmation to not delete anyone else's posts
 /**
  * Delete a single ad from DB with the id of ad
- * @param req specifies what kind of ads are targeted
+ * TODO Remove images locally
  */
 const deleteAdById = async (req) => {
 
-  const type = req.params.ad_type;
-  if (type === 'buy') {
-    try {
-      console.log(TAG, 'delete');
-      const [rows] = await promisePool.execute(
-          'DELETE FROM bm_ad_buy WHERE ad_id = ?', [req.params.id]);
-      return rows.affectedRows === 1;
+  const adId = req.params.ad_id;
+  try {
+    const [ad] = await promisePool.execute(
+        'DELETE FROM bm_ad ' +
+        'WHERE ad_id = ?',
+        [adId]);
+
+    const [images] = await promisePool.execute(
+        'DELETE FROM bm_images ' +
+        'WHERE ad_ref = ?',
+        [adId]);
+
+    // Remove the files from local
+    /*      try {
+            fs.unlinkSync(path);
+            fs.unlinkSync(path2);
+          } catch (err) {
+            console.error(err);
+          }*/
+    return {
+      "Ad" : ad,
+      "Images" : images
     }
-    catch (e) {
-      console.error(TAG, 'delete:', e.message);
-    }
+  } catch (e) {
+    console.error(TAG, 'delete:', e.message);
   }
-  else if (type === 'sell') {
-    try {
-      console.log(TAG, 'delete');
-      const [rows] = await promisePool.execute(
-          'DELETE FROM bm_ad_sell WHERE ad_id = ?', [req.params.id]);
-      return rows.affectedRows === 1;
-    }
-    catch (e) {
-      console.error(TAG, 'delete:', e.message);
-    }
+};
+
+// -------------------------------------------------------------------------
+// ---------------------------- Other --------------------------------------
+// -------------------------------------------------------------------------
+
+// Get all categories
+const getAllCategories = async (req) => {
+  try {
+    const [rows] = await promisePool.execute(
+        'SELECT * FROM bm_ctg');
+    return rows;
+  } catch (e) {
+    console.error(TAG, e.message);
   }
-  else return 'Request did not specify an ad type';
+};
+
+/**
+ * Returns the id of the ad lister, used for checking deletion
+ */
+const getAdLister = async (req) => {
+
+  const deleteId = req.params.ad_id;
+  try {
+    const [rows] = await promisePool.execute(
+        'SELECT listed_by FROM bm_ad ' +
+        'WHERE ad_id = ?',
+        [deleteId]);
+    return rows[0].listed_by;
+  } catch (e) {
+    console.error(TAG, e.message);
+  }
 };
 
 module.exports = {
@@ -381,5 +334,7 @@ module.exports = {
   deleteAdById,
   getAllUserAds,
   searchAd,
-  getByCategory
+  getByCategory,
+  getAdLister,
+  getAllCategories,
 };

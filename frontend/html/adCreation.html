@@ -55,11 +55,16 @@
 
         <label>Pictures:</label>
         <input class="light-border"
+               accept="image/*"
                type="file"
                name="image"
-               pattern=".{3,}"
                multiple
                required>
+        <label>Choose a category:</label>
+        <select name="category"
+                class="light-border"
+                id="category">
+        </select>
 
     <label>buy
         <input type="radio" name="ad_typeSelector" value="buy" required />

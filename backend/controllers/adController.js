@@ -8,8 +8,6 @@ const {resizeImg} = require('../utils/resize');
   Gets data from adModel to respond to different requests from adRoute.
  */
 
-
-
 // ------------------------ Basic ad stuff --------------------------------
 
 /**
@@ -25,6 +23,7 @@ const ad_get_list = async (req, res) => {
  * Save an ad into database
  */
 const ad_post = async (req, res) => {
+  console.log("here is the body", req.body)
 
   // Check for validation errors.
   const errors = validationResult(req);
@@ -32,7 +31,6 @@ const ad_post = async (req, res) => {
     console.log('validation', errors.array());
     return res.status(400).json({errors: errors.array()});
   }
-
   // Return the res from postAd
   const ok = await adModel.postAd(req);
   res.json(ok);
@@ -58,11 +56,21 @@ const ad_get_user_ads = async (req, res) => {
  * Delete an ad
  */
 const ad_delete_by_id = async (req, res) => {
-  const deletion = await adModel.deleteAdById(req);
-  res.json(deletion);
+
+  // Get the original lister of the ad asked to be deleted
+  const adCreator = await adModel.getAdLister(req);
+  // Get the id of the deleting user
+  const tokenId = req.user.user_id;
+
+  console.log('adLister || tokenId', adCreator, ' || ', tokenId);
+
+  // Check if the two user ids match, continue deletion
+  if (tokenId === adCreator) {
+    const deletion = await adModel.deleteAdById(req);
+    res.json(deletion);
+  } else res.json('You are not authorized to delete this ad, or this ad ' +
+      'does not exist!');
 };
-
-
 
 // ------------------- Search features ----------------------------------
 
@@ -82,25 +90,28 @@ const ad_get_by_category = async (req, res) => {
   res.json(adsByCtg);
 };
 
-
-
 // --------------------------- Other --------------------------------------
 /**
  * Resize an image
  */
-const resize_image = async (req, res, next) => {
+const resize_image = async (file, res, next) => {
   try {
-    const ready = await resizeImg({width: 160, height: 160}, req.file.path,
-        './ads/thumbnails/' + req.file.filename);
+    const ready = await resizeImg({width: 160, height: 160}, file.path,
+        './ads/thumbnails/' + file.filename);
     if (ready) {
       console.log(TAG, 'Resize', ready);
       next();
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.log(TAG, e);
     next();
   }
+};
+
+// Fetches all categories available for frontend
+const ad_get_categories = async (req, res, next) => {
+  const getAllCategories = await adModel.getAllCategories(req);
+  res.json(getAllCategories);
 };
 
 module.exports = {
@@ -111,5 +122,6 @@ module.exports = {
   resize_image,
   ad_get_user_ads,
   ad_search_keywords,
-  ad_get_by_category
+  ad_get_by_category,
+  ad_get_categories,
 };

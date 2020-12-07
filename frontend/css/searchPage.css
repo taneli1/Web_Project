@@ -29,7 +29,7 @@
 
 #searchPageS {
     background-color: white;
-    background-image: url("../searchicon.png");
+    background-image: url("../../searchicon.png");
     background-position: 10px 10px;
     background-repeat: no-repeat;
     border: 1px solid black;
@@ -41,4 +41,8 @@
 .search-boxS {
     display: flex;
     flex-direction: row;
+}
+
+#searchCategories {
+    display: block;
 }

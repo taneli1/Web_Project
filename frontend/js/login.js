@@ -2,7 +2,7 @@ const login = document.getElementById('login-form')
 const signIn = document.getElementById('add-user-form')
 const url = 'http://localhost:3000'
 
-// login
+// Form for logging in, which is sent to database
 login.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(login);
@@ -27,6 +27,7 @@ login.addEventListener('submit', async (evt) => {
   }
 });
 
+//sign in = create new account
 signIn.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(signIn);
@@ -42,11 +43,13 @@ signIn.addEventListener('submit', async (evt) => {
   console.log(RegResponse)
   const json = await RegResponse.json();
   console.log('sign-in response', json);
+  //set cookie to instantly log user in as well
+  // DOESN'T WORK
   set_cookie("token", json.token)
   //document.location.href = '../html/main.html'
 });
 
-
-function set_cookie(name, value) {
+// Function for setting a cookie by name and value
+const set_cookie = (name, value) => {
   document.cookie = name +'='+ value +'; Path=/;';
 }
