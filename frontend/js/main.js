@@ -40,7 +40,7 @@ const adFilters = (type) => {
       const items = await response.json();
       console.log("here are the items", items)
 
-      await createNewItems(items);
+      await window.createNewItems(items);
     } else {
       const response = await fetch(url + '/ad/sell');
       const items = await response.json();

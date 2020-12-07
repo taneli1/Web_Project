@@ -1,0 +1,36 @@
+.page-header{
+    position: fixed;
+    color: black;
+    background-color: lightgray;
+    width: 100%;
+    line-height: 5rem;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+}
+.page-header h1{
+    margin: 0 1rem;
+}
+.page-header ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style-type: none;
+}
+.page-header li{
+    padding: 0 1rem;
+}
+.page-header a{
+    text-decoration: none;
+    color: black;
+}
+
+.light-border {
+    border-radius: 8px;
+    border: 1px solid #a4a4a4;
+    padding: 1em;
+    box-sizing: border-box;
+    margin: 1px;
+}

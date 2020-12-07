@@ -1,3 +1,35 @@
 .header {
     padding-bottom: 100px;
 }
+
+.newText {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 26px;
+}
+
+#new-item div {
+    display: flex;
+    flex-direction: column;
+    font-size: 26px;
+    border: 1px solid black;
+    width: 25%;
+    height: 25%;
+}
+
+#new-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#ad_type label {
+    font-size: 26px;
+}
+
+#ad_type {
+    display: flex;
+    justify-content: flex-start;
+}

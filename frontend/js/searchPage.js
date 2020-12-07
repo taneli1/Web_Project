@@ -5,7 +5,7 @@ const url = 'http://localhost:3000';
 let searched = localStorage.getItem('searched');
 let adType = localStorage.getItem('adType');
 const adTypeHiddenField = document.getElementById('adType');
-let search_item = document.getElementById('searchItem');
+let search_item = document.getElementById('new-item');
 const ad_buy = document.getElementById('ad_buy');
 const ad_sell = document.getElementById('ad_sell');
 const category = document.getElementById('category');
@@ -34,6 +34,7 @@ putCategoriesToForm()
 const getSearchResult = async () => {
   const response = await fetch(url + '/ad/search/' + adType + '/' + searched);
   const searchR = await response.json();
+  console.log("here we should get the ads", searchR)
 
   await window.createNewItems(searchR);
 };
@@ -104,9 +105,7 @@ const search = () => {
     } else {
       const response = await fetch(url + '/ad/search/sell/' + searched);
       const searchResult = await response.json();
-
       searchForm.reset();
-
       await window.createNewItems(searchResult);
     }
   });

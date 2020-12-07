@@ -2,7 +2,6 @@
     height: 600px;
 }
 
-
 #singleItem {
     display: flex;
     justify-content: center;
@@ -19,6 +18,30 @@
     height: 25%;
 }
 
-#new-item {
-
+#new-item div {
+    display: flex;
+    flex-direction: column;
+    font-size: 26px;
+    border: 1px solid black;
+    width: 25%;
+    height: 25%;
 }
+
+#new-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 100px;
+}
+
+#ad_type label {
+    font-size: 26px;
+}
+
+#ad_type {
+    display: flex;
+    justify-content: flex-start;
+}
+
+
