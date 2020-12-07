@@ -1,4 +1,6 @@
 
+const url = 'https://10.114.32.43/app'
+
 //  Create all the items of this user by looping through them 1 by 1
 window.createNewItems = async (items) => {
   let item = {
