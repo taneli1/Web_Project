@@ -107,8 +107,8 @@ const createNewItems = async (items) => {
 
   item.name = items.item_name != null ?
       items.item_name : 'No name';
-  item.image = items.image_1 != null ?
-      items.image_1 : 'No image';
+  item.image = items.image != null ?
+      items.image : 'No image';
   item.city = items.city != null ?
       items.city : 'No city';
   item.price = items.price != null ?
@@ -135,7 +135,7 @@ const showItems = (item) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../../ads/thumbnails' + item.image +
+  image.innerHTML += '<img src="' + '../../ads/images/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
