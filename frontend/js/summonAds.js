@@ -1,5 +1,5 @@
 
-const url = 'https://10.114.32.43/app'
+const newUrl = 'https://10.114.32.43/app'
 
 //  Create all the items of this user by looping through them 1 by 1
 window.createNewItems = async (items) => {
@@ -13,7 +13,7 @@ window.createNewItems = async (items) => {
   };
 
   for (let i = 0; i < items.length; i++) {
-    const response = await fetch(url + '/user' + '/' + items[i].user_id);
+    const response = await fetch(newUrl + '/user' + '/' + items[i].user_id);
     console.log(items)
     const user = await response.json();
     let itemId = items[i].ad_id
