@@ -47,7 +47,7 @@ signIn.addEventListener('submit', async (evt) => {
   //set cookie to instantly log user in as well
   // DOESN'T WORK
   set_cookie("token", json.token)
-  //document.location.href = '../html/main.html'
+  document.location.href = '../html/main.html'
 });
 
 // Function for setting a cookie by name and value

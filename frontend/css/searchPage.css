@@ -2,14 +2,14 @@
     height: 600px;
 }
 
-#searchItem {
+#new-item {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-#searchItem div {
+#new-item div {
     display: flex;
     flex-direction: column;
     font-size: 26px;

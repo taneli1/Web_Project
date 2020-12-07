@@ -18,8 +18,8 @@ window.createNewItems = async (items) => {
 
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
-    item.image = items[i].image_1 != null ?
-        items[i].image_1 : 'No image';
+    item.image = items[i].image != null ?
+        items[i].image : 'No image';
     item.city = items[i].city != null ?
         items[i].city : 'No city';
     item.price = items[i].price != null ?
@@ -46,6 +46,8 @@ const showItems = (item, user, itemId) => {
   new_item_slot.appendChild(h2E);
   let item_name = document.createTextNode(item.name);
   h2E.appendChild(item_name);
+
+  console.log("here is the item", item)
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);

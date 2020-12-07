@@ -11,6 +11,12 @@ const ad_buy = document.getElementById('ad_buy');
 const ad_sell = document.getElementById('ad_sell');
 const createAd = document.getElementById('createAd')
 const loginNote = document.getElementById('note')
+const search = document.getElementById('search');
+
+if (localStorage.getItem("hiddenAdType") === 'buy'){
+  ad_buy.checked = true
+}
+
 
 // Invisible hidden field, gets it's value from the radiogroup
 // All actions regarding this radiogroup/switch come from this hidden field actually
@@ -19,11 +25,16 @@ const loginNote = document.getElementById('note')
 const adTypeSwitch = () => {
   const value = document.querySelector(
       'input[name="ad_typeSelector"]:checked').value;
+  console.log("here is the value of that stupid button", value)
   if (value === 'buy') {
     adTypeHiddenField.value = 'buy';
-    console.log("adTypeHiddenField", adTypeHiddenField.value)
+    localStorage.setItem("hiddenAdType", 'buy')
+    //set_cookie('hiddenAdType', 'buy')
+
   } else {
     adTypeHiddenField.value = 'sell';
+    localStorage.setItem("hiddenAdType", 'sell')
+    //set_cookie('hiddenAdType', 'sell')
   }
 };
 const profileButton = document.getElementById('profile');
@@ -57,9 +68,16 @@ adFilters(ad_sell);
 
 const getAllAdsSell = async () => {
   // Default type for shown ads on the main page is sell
+  if (localStorage.getItem("hiddenAdType") === 'buy'){
+    const response = await fetch(url + '/ad/buy');
+    const items = await response.json();
+    await window.createNewItems(items);
+  }
+  else {
     const response = await fetch(url + '/ad/sell');
     const items = await response.json();
     await window.createNewItems(items);
+  }
 };
 
 // Shows the buttons accordingly when user is or is not logged in
@@ -91,17 +109,21 @@ getAllAdsSell();
 buttonVisibility();
 logoutAction();
 
+search.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+
+    searchButton.click();
+  }
+});
 
 // Listener for search button which also redirects user to search page
 const searchClick = () => {
-  searchButton.addEventListener('click', function() {
     const searched = document.getElementById('search').value;
     adTypeSwitch();
     const value = adTypeHiddenField.value;
     document.location.href = '../html/searchPage.html';
     localStorage.setItem('searched', searched);
     localStorage.setItem('adType', value);
-  });
 };
 
-searchClick();

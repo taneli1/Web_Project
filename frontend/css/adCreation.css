@@ -7,3 +7,8 @@ input, button, select {
     width: 100%;
     margin: .5em 0;
 }
+
+textarea {
+    width: 100%;
+    resize: vertical;
+}
