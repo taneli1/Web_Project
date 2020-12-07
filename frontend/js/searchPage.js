@@ -16,6 +16,16 @@ const searchPageS = document.getElementById('searchPageS');
 console.log(searched);
 console.log(adType);
 
+const selectedType = () => {
+  if (adType === 'buy') {
+    ad_buy.checked = true;
+  }else {
+    ad_sell.checked = true;
+  }
+};
+
+selectedType();
+
 const putCategoriesToForm = async () => {
   const fetchOptions = {
     method: 'GET',
