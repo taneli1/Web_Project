@@ -11,6 +11,7 @@ const ad_buy = document.getElementById('ad_buy');
 const ad_sell = document.getElementById('ad_sell');
 const createAd = document.getElementById('createAd')
 const loginNote = document.getElementById('note')
+const search = document.getElementById('search');
 
 // Invisible hidden field, gets it's value from the radiogroup
 // All actions regarding this radiogroup/switch come from this hidden field actually
@@ -40,7 +41,7 @@ const adFilters = (type) => {
       const items = await response.json();
       console.log("here are the items", items)
 
-      await createNewItems(items);
+      await window.createNewItems(items);
     } else {
       const response = await fetch(url + '/ad/sell');
       const items = await response.json();
@@ -91,17 +92,21 @@ getAllAdsSell();
 buttonVisibility();
 logoutAction();
 
+search.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+
+    searchButton.click();
+  }
+});
 
 // Listener for search button which also redirects user to search page
 const searchClick = () => {
-  searchButton.addEventListener('click', function() {
     const searched = document.getElementById('search').value;
     adTypeSwitch();
     const value = adTypeHiddenField.value;
     document.location.href = '../html/searchPage.html';
     localStorage.setItem('searched', searched);
     localStorage.setItem('adType', value);
-  });
 };
 
-searchClick();

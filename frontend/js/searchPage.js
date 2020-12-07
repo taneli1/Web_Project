@@ -5,12 +5,13 @@ const url = 'http://localhost:3000';
 let searched = localStorage.getItem('searched');
 let adType = localStorage.getItem('adType');
 const adTypeHiddenField = document.getElementById('adType');
-let search_item = document.getElementById('searchItem');
+let search_item = document.getElementById('new-item');
 const ad_buy = document.getElementById('ad_buy');
 const ad_sell = document.getElementById('ad_sell');
 const category = document.getElementById('category');
 const sorting = document.getElementById('sorting');
 const searchButton = document.getElementById('searchButtonS');
+const searchPageS = document.getElementById('searchPageS');
 
 console.log(searched);
 console.log(adType);
@@ -21,17 +22,20 @@ const putCategoriesToForm = async () => {
   };
   const response = await fetch(url + '/ad/category/get', fetchOptions);
   const categories = await response.json();
-  for (let i = 0; i < categories.length; i++){
-    let option = document.createElement("option")
-    option.value = categories[i].ctg_id
-    option.text = categories[i].category
-    category.appendChild(option)
+  for (let i = 0; i < categories.length; i++) {
+    let option = document.createElement('option');
+    option.value = categories[i].ctg_id;
+    option.text = categories[i].category;
+    category.appendChild(option);
   }
-}
+};
 
-putCategoriesToForm()
+
+
+putCategoriesToForm();
 
 const getSearchResult = async () => {
+  searchPageS.value = searched;
   const response = await fetch(url + '/ad/search/' + adType + '/' + searched);
   const searchR = await response.json();
 
@@ -67,13 +71,14 @@ const adFilters = (type) => {
     }
   });
 };
-
+/*
 const categorySearch = () => {
   category.addEventListener('click', async () => {
     adTypeSwitch();
     search_item.innerHTML = '';
     console.log(category.value);
-    const response = await fetch(url + '/ad/category/' + adTypeHiddenField.value + '/' + category.value);
+    const response = await fetch(
+        url + '/ad/category/' + adTypeHiddenField.value + '/' + category.value);
     const items = await response.json();
 
     await window.createNewItems(items);
@@ -81,39 +86,39 @@ const categorySearch = () => {
   });
 };
 
+ */
 const sortingSearch = (item) => {
   sorting.addEventListener('click', function() {
   });
 };
 
-const search = () => {
-  searchButton.addEventListener('click', async () => {
+searchPageS.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+
+   searchButton.click();
+  }
+});
+
+const search = async () => {
     adTypeSwitch();
     search_item.innerHTML = '';
     const searched = document.getElementById('searchPageS').value;
-    let searchForm = document.getElementsByName('search-form')[0];
     console.log(searched);
 
     if (adTypeHiddenField.value === 'buy') {
       const response = await fetch(url + '/ad/search/buy/' + searched);
       const searchResult = await response.json();
 
-      searchForm.reset();
-
       await window.createNewItems(searchResult);
     } else {
       const response = await fetch(url + '/ad/search/sell/' + searched);
       const searchResult = await response.json();
 
-      searchForm.reset();
-
       await window.createNewItems(searchResult);
     }
-  });
 };
 
 adFilters(ad_buy);
 adFilters(ad_sell);
 getSearchResult();
-categorySearch();
-search();
