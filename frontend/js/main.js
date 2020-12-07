@@ -11,6 +11,7 @@ const ad_buy = document.getElementById('ad_buy');
 const ad_sell = document.getElementById('ad_sell');
 const createAd = document.getElementById('createAd')
 const loginNote = document.getElementById('note')
+const search = document.getElementById('search');
 
 if (localStorage.getItem("hiddenAdType") === 'buy'){
   ad_buy.checked = true
@@ -102,19 +103,21 @@ getAllAdsSell();
 buttonVisibility();
 logoutAction();
 
+search.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+
+    searchButton.click();
+  }
+});
 
 // Listener for search button which also redirects user to search page
 const searchClick = () => {
-  searchButton.addEventListener('click', function() {
     const searched = document.getElementById('search').value;
     adTypeSwitch();
     const value = adTypeHiddenField.value;
     document.location.href = '../html/searchPage.html';
     localStorage.setItem('searched', searched);
     localStorage.setItem('adType', value);
-  });
 };
 
-
-
-searchClick();
