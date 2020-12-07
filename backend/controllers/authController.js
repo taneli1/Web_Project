@@ -93,6 +93,13 @@ const user_delete = async (req, res) => {
  * Update user
  */
 const user_update = async (req, res) => {
+
+  console.log(TAG, 'UserCreate');
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(TAG, 'user update error', errors);
+    return res.send(errors.array());
+  }
   const editOk = userModel.updateUser(req);
   res.json(editOk);
 };

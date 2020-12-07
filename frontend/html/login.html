@@ -22,6 +22,7 @@
                 <label>Email:</label>
                 <input class="light-border"
                        type="text"
+                       maxlength="50"
                        name="email"/>
             </div>
             <div>
@@ -41,22 +42,28 @@
             <input class="light-border"
                    type="text"
                    name="name"
-                   pattern=".{3,}"
+                   pattern=".{3,40}"
+                   maxlength="40"
                    placeholder="Name"
                    required>
             <input class="light-border"
                    type="email"
+                   maxlength="50"
                    name="email"
                    placeholder="email"
                    required>
             <input class="light-border"
                    name="phone_number"
+                   type="number"
                    placeholder="phone number"
-                   pattern="^[0-9]+$"
+                   pattern="^[0-9]{1,10}+$"
                    required>
             <input class="light-border"
                    name="city"
+                   type="text"
                    placeholder="city"
+                   pattern=".{3,50}"
+                   maxlength="50"
                    required>
             <input class="light-border"
                    type="password"
