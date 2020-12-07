@@ -4,15 +4,6 @@
     padding: 1em;
 }
 
-.light-border {
-    border-radius: 8px;
-    border: 1px solid #a4a4a4;
-    padding: 1em;
-    box-sizing: border-box;
-    margin: 1px;
-}
-
-
 .forms {
     padding-top: 100px;
     display: flex;

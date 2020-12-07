@@ -1,4 +1,5 @@
 const url = 'http://localhost:3000';
+
 const logoutButton1 = document.getElementById('logout1');
 const name = document.getElementById('userName');
 const city = document.getElementById('user_city');

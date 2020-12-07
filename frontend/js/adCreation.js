@@ -1,8 +1,12 @@
+
+const url = 'http://localhost:3000';
+
+
 const createNewAd = document.getElementById("createNewAd")
 const adTypeHiddenField = document.getElementById("adType");
 const category = document.getElementById("category");
 
-const url = 'http://localhost:3000'
+
 
 
 const adTypeSwitch = () => {

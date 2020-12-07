@@ -42,7 +42,7 @@ router.get('/category/get', adController.ad_get_categories)
 router.get('/category/:ad_type/:ctg', adController.ad_get_by_category);
 
 // Search for results in database with keyword(s)
-router.get('/search/:ad_type/:keywords', adController.ad_search_keywords);
+router.get('/search/:ad_type/:keywords/:category', adController.ad_search_keywords);
 
 
 // Post an ad, route needs user to be logged in, create thumbnails
