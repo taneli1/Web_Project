@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'http://10.114.32.43'
+const url = 'http://10.114.32.43/app'
 
 let searched = localStorage.getItem('searched');
 let adType = localStorage.getItem('adType');

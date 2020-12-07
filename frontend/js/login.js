@@ -1,6 +1,6 @@
 const login = document.getElementById('login-form')
 const signIn = document.getElementById('add-user-form')
-const url = 'http://10.114.32.43'
+const url = 'http://10.114.32.43/app'
 
 
 // Form for logging in, which is sent to database

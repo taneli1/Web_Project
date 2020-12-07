@@ -1,7 +1,7 @@
 'use strict';
 
 //const item = document.location.href = '../html/main.html';
-const url = 'http://10.114.32.43'
+const url = 'http://10.114.32.43/app'
 
 let getItemId = localStorage.getItem('itemId');
 let listedBy = localStorage.getItem('listedBy');
