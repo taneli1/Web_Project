@@ -97,6 +97,7 @@ const createNewItems = async (items) => {
     'city': '',
     'price': '',
     'desc': '',
+    'category': '',
     'listed_by': '',
   };
 
@@ -114,6 +115,8 @@ const createNewItems = async (items) => {
       items.price : 'No price';
   item.desc = items.description != null ?
       items.description : 'No description';
+  item.category = items.category != null ?
+      items.category : 'No category';
   item.user_id = user.name != null ?
       user.name : 'No username';
   showItems(item);
@@ -124,7 +127,6 @@ const showItems = (item) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
-
 
   let h2E = document.createElement('h2');
   new_item_slot.appendChild(h2E);
@@ -137,28 +139,35 @@ const showItems = (item) => {
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
-  let city = document.createElement('p');
+  let city = document.createElement('a');
   new_item_slot.appendChild(cityText);
   new_item_slot.appendChild(city);
   cityText.innerHTML += 'Location: ';
   city.innerHTML += item.city;
 
   let priceText = document.createElement('label');
-  let price = document.createElement('p');
+  let price = document.createElement('a');
   new_item_slot.appendChild(priceText);
   new_item_slot.appendChild(price);
   priceText.innerHTML += 'Price: ';
   price.innerHTML += item.price + '€';
 
   let descText = document.createElement('label');
-  let desc = document.createElement('p');
+  let desc = document.createElement('a');
   new_item_slot.appendChild(descText);
   new_item_slot.appendChild(desc);
   descText.innerHTML += 'Description: ';
   desc.innerHTML += item.desc;
 
+  let catText = document.createElement('label');
+  let cat = document.createElement('a');
+  new_item_slot.appendChild(catText);
+  new_item_slot.appendChild(cat);
+  catText.innerHTML += 'Category: ';
+  cat.innerHTML += item.category;
+
   let listedText = document.createElement('label')
-  let user_id = document.createElement('p');
+  let user_id = document.createElement('a');
   new_item_slot.appendChild(listedText);
   new_item_slot.appendChild(user_id)
   listedText.innerHTML += 'Listed by: ';

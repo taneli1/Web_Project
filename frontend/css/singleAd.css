@@ -14,16 +14,17 @@
     justify-content: center;
     font-size: 26px;
     border: 1px solid black;
-    width: 25%;
+    width: 50%;
     height: 25%;
 }
 
 #new-item div {
+    overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
     font-size: 26px;
     border: 1px solid black;
-    width: 25%;
+    width: 50%;
     height: 25%;
 }
 
@@ -44,4 +45,29 @@
     justify-content: flex-start;
 }
 
+h1{
+    margin: 0 1rem;
+}
+ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style-type: none;
+}
+li{
+    padding: 0 1rem;
+}
 
+a{
+    text-decoration: none;
+    color: black;
+}
+
+#new-item label {
+    width: auto;
+    background: #b8b8b8;
+}
+
+#new-item a {
+    background: #e0e0e0;
+}
