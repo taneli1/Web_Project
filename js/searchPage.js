@@ -82,21 +82,18 @@ const search = () => {
     adTypeSwitch();
     search_item.innerHTML = '';
     const searched = document.getElementById('searchPageS').value;
-    let searchForm = document.getElementsByName('search-form')[0];
     console.log(searched);
 
     if (adTypeHiddenField.value === 'buy') {
       const response = await fetch(url + '/ad/search/buy/' + searched);
       const searchResult = await response.json();
 
-      searchForm.reset();
 
       createNewItems(searchResult);
     } else {
       const response = await fetch(url + '/ad/search/sell/' + searched);
       const searchResult = await response.json();
 
-      searchForm.reset();
 
       createNewItems(searchResult);
     }
