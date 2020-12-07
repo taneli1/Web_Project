@@ -21,6 +21,7 @@ const selectedType = () => {
     ad_buy.checked = true;
   }else {
     ad_sell.checked = true;
+    
   }
 };
 
