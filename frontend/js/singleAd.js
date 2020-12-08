@@ -136,7 +136,7 @@ const showItems = (item) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../../ads/images/' + item.image +
+  image.innerHTML += '<img src="' + 'https://10.114.32.43/html/ads/images/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
