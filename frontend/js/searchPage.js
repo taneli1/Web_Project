@@ -39,6 +39,11 @@ const putCategoriesToForm = async () => {
     option.text = categories[i].category;
     category.appendChild(option);
   }
+  document.addEventListener('change', function(event) {
+    if (event.target && event.target.id === 'category') {
+      searchButton.click();
+    }
+  });
 };
 
 putCategoriesToForm();
