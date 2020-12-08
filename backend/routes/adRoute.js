@@ -28,7 +28,7 @@ const resizeImages = async (req, res, next) => {
 }
 
 // Where to upload image(s)
-const upload = multer({dest: 'https://10.114.32.43/html/ads/images/', fileFilter});
+const upload = multer({dest: 'https://10.114.32.43/ads/images/', fileFilter});
 
 // Get all ads of specified type
 router.get('/:ad_type', adController.ad_get_list);
