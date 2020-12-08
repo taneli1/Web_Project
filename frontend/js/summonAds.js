@@ -53,7 +53,7 @@ const showItems = (item, user, itemId) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="'+ newUrl + '../../ads/thumbnails/' + item.image +
+  image.innerHTML += '<img src="' + 'https://10.114.32.43/app/ads/thumbnails/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');
