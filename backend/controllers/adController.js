@@ -101,7 +101,7 @@ const ad_get_by_category = async (req, res) => {
 const resize_image = async (file, res, next) => {
   try {
     const ready = await resizeImg({width: 160, height: 160}, file.path,
-        'https://10.114.32.43/ads/thumbnails/' + file.filename);
+        'https://10.114.32.43/public/thumbnails/' + file.filename);
     if (ready) {
       console.log(TAG, 'Resize', ready);
       next();
