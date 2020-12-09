@@ -4,12 +4,14 @@ DROP TABLE IF EXISTS bm_user;
 DROP TABLE IF EXISTS bm_ad;
 DROP TABLE IF EXISTS bm_images;
 DROP TABLE IF EXISTS bm_ctg;
+DROP TABLE IF EXISTS bm_rep;
 
 /*
     Create all the tables the app needs.
         - Users
         - Ads / Images
         - Table for different categories used by ads
+        - User reputation
 */
 
 CREATE TABLE `bm_user` (
@@ -46,6 +48,13 @@ CREATE TABLE `bm_ctg` (
   `category` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bm_rep` (
+  `rep_id` int (11) NOT NULL,
+  `user` int (11) NOT NULL,
+  `voter` int (11) NOT NULL,
+  `is_like` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 /*
     Insert a few users/ads for test purposes
@@ -61,12 +70,12 @@ INSERT INTO `bm_ad` (`ad_id`, `item_name`, `city`, `price`, `description`, `list
 (2, 'Better computer', 'Espoo', '1200', 'Better pc', 1, 'buy', 4);
 
 INSERT INTO `bm_ctg` (`ctg_id`, `category`) VALUES
-(1, 'lifestyle'),
-(2, 'housing'),
-(3, 'vehicles'),
-(4, 'electronics'),
-(5, 'hobbies'),
-(6, 'other');
+(1, 'Lifestyle'),
+(2, 'Housing'),
+(3, 'Vehicles'),
+(4, 'Electronics'),
+(5, 'Hobbies'),
+(6, 'Other');
 
 
 /*
@@ -87,6 +96,12 @@ ALTER TABLE `bm_images`
 ALTER TABLE `bm_ctg`
     ADD PRIMARY KEY (`ctg_id`);
 
+ALTER TABLE `bm_rep`
+    ADD PRIMARY KEY (`rep_id`),
+    ADD FOREIGN KEY (`user`) REFERENCES bm_user(`user_id`),
+    ADD FOREIGN KEY (`voter`) REFERENCES bm_user(`user_id`);
+
+
 
 /*
     Auto Incrementing for primary keys
@@ -100,3 +115,7 @@ ALTER TABLE `bm_ad`
 
 ALTER TABLE `bm_images`
   MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `bm_rep`
+  MODIFY `rep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+

@@ -5,6 +5,7 @@ const url = 'http://localhost:3000';
 const createNewAd = document.getElementById("createNewAd")
 const adTypeHiddenField = document.getElementById("adType");
 const category = document.getElementById("category");
+const logoutButton = document.getElementById("logout");
 
 
 
@@ -65,6 +66,16 @@ createNewAd.addEventListener('submit', async (evt) => {
   }
 
 });
+
+//Event listener to log out button
+logoutButton.addEventListener('click', async () => {
+  delete_cookie("token");
+})
+// deletes the cookie which keeps user logged in
+function delete_cookie(name) {
+  document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 
 // get value of the cookie by it's name
 const getCookie = (name) => {

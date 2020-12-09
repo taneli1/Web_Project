@@ -18,61 +18,65 @@
 </div>
 <div class="forms" id="login-wrapper">
     <div class="form-wrapper">
-        <h3>Login</h3>
-        <form id="login-form" class="light-border">
-            <div>
-                <label>Email:</label>
-                <input class="light-border"
-                       type="text"
-                       maxlength="50"
-                       name="email"/>
-            </div>
-            <div>
-                <label>Password:</label>
-                <input class="light-border"
-                       type="password"
-                       name="password"/>
-            </div>
-            <div>
-                <button class="light-border" type="submit">Log In</button>
+        <form class="newBox" id="login-form">
+            <h2>Login</h2>
+            <div class="newBox1">
+                <div>
+                    <label>Email:</label>
+                    <input class="light-border"
+                           type="text"
+                           maxlength="50"
+                           name="email"/>
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input class="light-border"
+                           type="password"
+                           name="password"/>
+                </div>
+                <div>
+                    <button class="light-border" type="submit">Log In</button>
+                </div>
             </div>
         </form>
     </div>
     <div class="form-wrapper">
-        <h3>Register</h3>
-        <form class="light-border" id="add-user-form">
-            <input class="light-border"
-                   type="text"
-                   name="name"
-                   pattern=".{3,40}"
-                   maxlength="40"
-                   placeholder="Name"
-                   required>
-            <input class="light-border"
-                   type="email"
-                   maxlength="50"
-                   name="email"
-                   placeholder="email"
-                   required>
-            <input class="light-border"
-                   name="phone_number"
-                   type="number"
-                   placeholder="phone number"
-                   pattern="^[0-9]{1,10}+$"
-                   required>
-            <input class="light-border"
-                   name="city"
-                   type="text"
-                   placeholder="city"
-                   pattern=".{3,50}"
-                   maxlength="50"
-                   required>
-            <input class="light-border"
-                   type="password"
-                   name="password"
-                   pattern="(?=.*[A-Z]).{8,}"
-                   placeholder="Password" required>
-            <button class="light-border" type="submit">Save</button>
+        <form class="newBox" id="add-user-form">
+            <h2>Register</h2>
+            <div class="newBox1">
+                <input class="light-border"
+                       type="text"
+                       name="name"
+                       pattern=".{3,40}"
+                       maxlength="40"
+                       placeholder="Name"
+                       required>
+                <input class="light-border"
+                       type="email"
+                       maxlength="50"
+                       name="email"
+                       placeholder="email"
+                       required>
+                <input class="light-border"
+                       name="phone_number"
+                       type="number"
+                       placeholder="phone number"
+                       pattern="^[0-9]{8,13}+$"
+                       required>
+                <input class="light-border"
+                       name="city"
+                       type="text"
+                       placeholder="city"
+                       pattern=".{3,50}"
+                       maxlength="50"
+                       required>
+                <input class="light-border"
+                       type="password"
+                       name="password"
+                       pattern="(?=.*[A-Z]).{8,}"
+                       placeholder="Password" required>
+                <button class="light-border" type="submit">Save</button>
+            </div>
         </form>
     </div>
 </div>
