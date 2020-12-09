@@ -42,11 +42,11 @@
 
         <label>Item:</label>
         <input class="light-border"
-               placeholder="5 to 50 characters"
+               placeholder="5 to 40 characters"
                name="item_name"
                type="text"
                pattern=".{3,40}"
-               maxlength="50"
+               maxlength="40"
                minlength="5"
                required>
 
@@ -67,7 +67,8 @@
         <input class="light-border"
                type="text"
                name="city"
-               pattern=".{3,50}"
+               maxlength="30"
+               pattern=".{3,30}"
                required>
 
         <input id="adType"

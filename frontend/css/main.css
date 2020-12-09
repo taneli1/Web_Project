@@ -32,25 +32,6 @@ input {
     font-size: 26px;
 }
 
-#new-item div {
-    display: flex;
-    flex-direction: column;
-    font-size: 26px;
-    border: 1px solid black;
-    width: 25%;
-    height: 25%;
-}
-
-#new-item {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-#ad_type label {
-    font-size: 26px;
-}
 
 #ad_type {
     display: flex;
@@ -58,13 +39,23 @@ input {
     flex-direction: row;
 }
 
-p {
-    height: 100px;
-    width: 100%;
-    overflow: auto;
-    word-wrap: break-word;
+#ad_type label {
+    font-size: 26px;
 }
 
 #ad_buy, #ad_sell {
-    width: 30px;
+    width: 17px;
+    height: 25px;
+}
+
+body {
+    margin-right: 165px;
+    margin-left: 165px;
+    background-color: #d2eeff;
+}
+
+#everything {
+    background-color: #d2eeff;
+    padding-right: 10px;
+    padding-left: 10px;
 }

@@ -55,7 +55,7 @@ router.post('/',
     resizeImages,
     [
         body('item_name', 'min length 3 chars').isLength({min: 3, max: 40}),
-        body('city', 'min length 3 chars').isLength({min: 3, max: 50}),
+        body('city', 'min length 3 chars').isLength({min: 3, max: 30}),
         body('price', 'must be a number').isLength({min: 1, max: 10}).isNumeric(),
         body('description', 'min length 3 chars').isLength({min: 3, max: 1000}),
     ],
