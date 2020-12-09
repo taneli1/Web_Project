@@ -95,8 +95,29 @@ const deleteVote = async (req) => {
   }
 };
 
+// Get logged in user's vote for another user (For frontend display purposes)
+const getVote = async (req) => {
+
+  // User who's votes we are checking
+  const userId = req.params.id;
+  // Get the user id from token
+  const voterId = req.user.user_id;
+
+  try {
+    const [rows] = await promisePool.execute(
+        'SELECT is_like FROM bm_rep ' +
+        'WHERE user = ? AND voter = ?',
+        [userId, voterId]);
+    console.log("Vote value: ", rows)
+    return rows;
+  } catch (e) {
+    console.log(TAG + e.message);
+  }
+};
+
 module.exports = {
   getUserRep,
   voteUser,
   deleteVote,
+  getVote
 };

@@ -9,9 +9,14 @@ const rep_get_user_rep = async (req, res) => {
   res.json(rep);
 };
 
+// See if logged in has voted for an user (For frontend display purposes)
+const rep_get_vote = async (req, res) => {
+  const vote = await repModel.getVote(req);
+  res.json(vote);
+};
+
 // Vote for a user, also modifies existing vote if it exists
 const rep_vote = async (req, res) => {
-  console.log("Rep vote", req.params);
   const vote = await repModel.voteUser(req);
   res.json(vote);
 };
@@ -25,5 +30,6 @@ const rep_delete_vote = async (req, res) => {
 module.exports = {
   rep_get_user_rep,
   rep_vote,
-  rep_delete_vote
+  rep_delete_vote,
+  rep_get_vote
 }
