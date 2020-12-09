@@ -120,8 +120,6 @@ const updateUser = async (req) => {
  */
 const deleteUser = async (req) => {
 
-  // TODO Check that user_id matches do delete
-
   try {
     console.log(TAG, 'delete user');
     const [rows] = await promisePool.execute(

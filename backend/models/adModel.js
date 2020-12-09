@@ -85,7 +85,7 @@ const getAdById = async (req) => {
  */
 const getAllUserAds = async (req) => {
 
-  const userId = req.params.user_id;
+  const userId = req.params.id;
   try {
     const [rows] = await promisePool.execute(
         'SELECT bm_ad.*, bm_images.image, bm_ctg.category, bm_user.user_id ' +
@@ -170,7 +170,7 @@ const searchAd = async (req) => {
 const getByCategory = async (req) => {
 
   const adType = req.params.ad_type;
-  const category = req.params.ctg;
+  const category = req.params.category;
 
   try {
     if (!isNaN(category)){
@@ -275,7 +275,6 @@ const postImages = async (req) => {
 
 /**
  * Delete a single ad from DB with the id of ad
- * TODO Remove images locally
  */
 const deleteAdById = async (req) => {
 
