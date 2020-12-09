@@ -1,0 +1,39 @@
+@media only screen and (max-width: 600px) {
+    .page-header h1 {
+        font-size: 17px;
+    }
+
+    .newBox {
+        border-radius: 8px;
+        padding: 1em;
+        box-sizing: border-box;
+    }
+
+    #createNewAd {
+        width: 90%;
+    }
+
+    #adCreation {
+        display: flex;
+        justify-content: center;
+    }
+
+    #adCreation label {
+        font-size: 20px;
+    }
+
+    input[name="item_name"], textarea[name="description"], input[name="price"], input[name="city"], input[name="image"] {
+        font-size: 15px;
+    }
+
+    #category {
+        font-size: 15px;
+    }
+
+    body {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+
+}
