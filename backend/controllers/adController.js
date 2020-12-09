@@ -1,5 +1,5 @@
 'use strict';
-const {validationResult} = require('express-validator');
+
 const TAG = 'adController: ';
 const adModel = require('../models/adModel');
 const {resizeImg} = require('../utils/resize');
@@ -11,7 +11,7 @@ const {resizeImg} = require('../utils/resize');
 // ------------------------ Basic ad stuff --------------------------------
 
 /**
- * Responds with ads of requested type from database
+ * Responds with all ads of requested type from database
  */
 const ad_get_list = async (req, res) => {
   const ads = await adModel.getAllAds(req);
@@ -22,18 +22,16 @@ const ad_get_list = async (req, res) => {
  * Save an ad into database
  */
 const ad_post = async (req, res) => {
-  // Return the res from postAd
   try {
     const ok = await adModel.postAd(req);
     res.json(ok);
-  }
-  catch (e) {
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
 };
 
 /**
- * Get a single ad with ad_id
+ * Get all information of a single ad with its id
  */
 const ad_get_by_id = async (req, res) => {
   const ad = await adModel.getAdById(req);
@@ -41,7 +39,7 @@ const ad_get_by_id = async (req, res) => {
 };
 
 /**
- * Get all ads from a user
+ * Get all of user's posted ads
  */
 const ad_get_user_ads = async (req, res) => {
   const userAds = await adModel.getAllUserAds(req);
@@ -53,14 +51,12 @@ const ad_get_user_ads = async (req, res) => {
  */
 const ad_delete_by_id = async (req, res) => {
 
-  // Get the original lister of the ad asked to be deleted
+  // Get the original lister of the ad which is asked to be deleted
   const adCreator = await adModel.getAdLister(req);
-  // Get the id of the deleting user
+  // Get the id of the deleting user from the token
   const tokenId = req.user.user_id;
 
-  console.log('adLister || tokenId', adCreator, ' || ', tokenId);
-
-  // Check if the two user ids match, continue deletion
+  // Check if the two user ids match, continue deletion if true
   if (tokenId === adCreator) {
     const deletion = await adModel.deleteAdById(req);
     res.json(deletion);
@@ -71,7 +67,7 @@ const ad_delete_by_id = async (req, res) => {
 // ------------------- Search features ----------------------------------
 
 /**
- * Search for ads in db
+ * Search all ads in the database with parameters (keywords,type,category)
  */
 const ad_search_keywords = async (req, res) => {
   const results = await adModel.searchAd(req);
@@ -79,7 +75,7 @@ const ad_search_keywords = async (req, res) => {
 };
 
 /**
- * Get ads by category
+ * Get all ads specified by the category requested (and type)
  */
 const ad_get_by_category = async (req, res) => {
   const adsByCtg = await adModel.getByCategory(req);
@@ -88,7 +84,7 @@ const ad_get_by_category = async (req, res) => {
 
 // --------------------------- Other --------------------------------------
 /**
- * Resize an image
+ * Resize an image, save the smaller version of it
  */
 const resize_image = async (file, res, next) => {
   try {

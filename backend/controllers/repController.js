@@ -1,6 +1,5 @@
 'use strict'
 
-const TAG = 'repController: ';
 const repModel = require('../models/repModel');
 
 // Get user rep with user id

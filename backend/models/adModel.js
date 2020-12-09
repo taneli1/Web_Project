@@ -29,7 +29,6 @@ const cleanUpResponse = async (arr) => {
 
 /**
  * Get all ads of specified type from DB, join with image table, return all
- * @param req specifies what kind of ads we want to get
  */
 const getAllAds = async (req) => {
 
@@ -173,7 +172,7 @@ const getByCategory = async (req) => {
   const category = req.params.category;
 
   try {
-    if (!isNaN(category)){
+    if (!isNaN(category)) {
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
           'FROM bm_ad ' +
@@ -188,8 +187,7 @@ const getByCategory = async (req) => {
           [adType, category]);
       console.log(cleanUpResponse(rows));
       return cleanUpResponse(rows);
-    }
-    else{ // Pretty redundant, could just use basic getAllAds
+    } else { // Pretty redundant, could just use basic getAllAds
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
           'FROM bm_ad ' +
@@ -290,13 +288,6 @@ const deleteAdById = async (req) => {
         'WHERE ad_ref = ?',
         [adId]);
 
-    // Remove the files from local
-    /*      try {
-            fs.unlinkSync(path);
-            fs.unlinkSync(path2);
-          } catch (err) {
-            console.error(err);
-          }*/
     return {
       'Ad': ad,
       'Images': images,
@@ -310,7 +301,7 @@ const deleteAdById = async (req) => {
 // ---------------------------- Other --------------------------------------
 // -------------------------------------------------------------------------
 
-// Get all categories
+// Get all categories for frontend
 const getAllCategories = async (req) => {
   try {
     const [rows] = await promisePool.execute(

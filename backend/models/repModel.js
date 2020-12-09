@@ -45,8 +45,8 @@ const voteUser = async (req) => {
 
   // Check if the user being voted exists
   const isUser = await userExists(userId);
-  if (!isUser){
-    return "The account you tried to vote for does not exist"
+  if (!isUser) {
+    return 'The account you tried to vote for does not exist';
   }
 
   // Continue with the vote process
@@ -108,7 +108,7 @@ const getVote = async (req) => {
         'SELECT is_like FROM bm_rep ' +
         'WHERE user = ? AND voter = ?',
         [userId, voterId]);
-    console.log("Vote value: ", rows)
+    console.log('Vote value: ', rows);
     return rows;
   } catch (e) {
     console.log(TAG + e.message);
@@ -119,5 +119,5 @@ module.exports = {
   getUserRep,
   voteUser,
   deleteVote,
-  getVote
+  getVote,
 };
