@@ -6,7 +6,7 @@ const TAG = 'rootRoute: ';
 
 router.get('/', (req, res) => {
   console.log(TAG + 'Get req');
-  res.send(`RootRoute get`);
+  res.send(`App is running`);
 });
 
 module.exports = router;

@@ -22,14 +22,6 @@ const ad_get_list = async (req, res) => {
  * Save an ad into database
  */
 const ad_post = async (req, res) => {
-
-  // Check for validation errors.
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log('validation', errors.array());
-    return res.status(400).json({errors: errors.array()});
-  }
-
   // Return the res from postAd
   try {
     const ok = await adModel.postAd(req);
@@ -100,7 +92,7 @@ const ad_get_by_category = async (req, res) => {
  */
 const resize_image = async (file, res, next) => {
   try {
-    const ready = await resizeImg({width: 160, height: 160}, file.path,
+    const ready = await resizeImg({width: 320, height: 320}, file.path,
         './ads/thumbnails/' + file.filename);
     if (ready) {
       console.log(TAG, 'Resize', ready);
