@@ -65,3 +65,4 @@ exports.paramKeyword = [
     validationRes
 ]
 
+// TODO Validate vote 0 or 1

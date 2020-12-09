@@ -22,6 +22,8 @@ const rootRoute = require('./backend/routes/rootRoute');
 const userRoute = require('./backend/routes/userRoute');
 const adRoute = require('./backend/routes/adRoute');
 const authRoute = require('./backend/routes/authRoute');
+const repRoute = require('./backend/routes/repRoute');
+
 
 // --- Setup
 app.use(cors());
@@ -32,6 +34,7 @@ app.use('/', rootRoute);
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/ad', adRoute);
+app.use('/rep', repRoute);
 
 // ---
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
