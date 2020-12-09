@@ -61,12 +61,12 @@ INSERT INTO `bm_ad` (`ad_id`, `item_name`, `city`, `price`, `description`, `list
 (2, 'Better computer', 'Espoo', '1200', 'Better pc', 1, 'buy', 4);
 
 INSERT INTO `bm_ctg` (`ctg_id`, `category`) VALUES
-(1, 'lifestyle'),
-(2, 'housing'),
-(3, 'vehicles'),
-(4, 'electronics'),
-(5, 'hobbies'),
-(6, 'other');
+(1, 'Lifestyle'),
+(2, 'Housing'),
+(3, 'Vehicles'),
+(4, 'Electronics'),
+(5, 'Hobbies'),
+(6, 'Other');
 
 
 /*

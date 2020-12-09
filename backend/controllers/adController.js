@@ -23,12 +23,7 @@ const ad_get_list = async (req, res) => {
  */
 const ad_post = async (req, res) => {
 
-  // Check for validation errors.
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log('validation', errors.array());
-    return res.status(400).json({errors: errors.array()});
-  }
+  console.log("AdPostController")
 
   // Return the res from postAd
   try {

@@ -3,7 +3,6 @@
 const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
-const fs = require('fs');
 
 // Delete unneeded things from a response
 const cleanUpResponse = async (arr) => {
@@ -24,9 +23,6 @@ const cleanUpResponse = async (arr) => {
   next time. Would have been easier to save everything in the same table...
  */
 
-// TODO Save thumbnail in ad table, additional images only fetched when
-//  opening up a single ad page
-//  - Validate user input (ad_type)
 // -------------------------------------------------------------------------
 // ---------------------------- Get from db --------------------------------
 // -------------------------------------------------------------------------
@@ -61,7 +57,6 @@ const getAllAds = async (req) => {
 /**
  * Get a single ad from DB with the id of ad,
  * get all images and user info too
- * TODO Return and clean up index 0
  */
 const getAdById = async (req) => {
 
@@ -179,7 +174,6 @@ const getByCategory = async (req) => {
 
   try {
     if (!isNaN(category)){
-      console.log("isnan")
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
           'FROM bm_ad ' +
@@ -196,7 +190,6 @@ const getByCategory = async (req) => {
       return cleanUpResponse(rows);
     }
     else{ // Pretty redundant, could just use basic getAllAds
-      console.log("other")
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
           'FROM bm_ad ' +

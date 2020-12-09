@@ -1,5 +1,4 @@
 'use strict';
-// TODO Image uploads, Validation
 
 const express = require('express');
 const router = express.Router();
@@ -7,6 +6,7 @@ const multer = require('multer');
 const adController = require('../controllers/adController');
 const passport = require('passport');
 const {body} = require('express-validator');
+const validate = require('../utils/validation')
 
 // Image check
 const fileFilter = (req, file, cb) => {
@@ -53,12 +53,7 @@ router.post('/',
     passport.authenticate('jwt', {session: false}),
     upload.array('image', 1),
     resizeImages,
-    [
-        body('item_name', 'min length 3 chars').isLength({min: 3}),
-        body('city', 'min length 3 chars').isLength({min: 3}),
-        body('price', 'must be a number').isLength({min: 1}).isNumeric(),
-        body('description', 'min length 3 chars').isLength({min: 3}),
-    ],
+    validate.adPost,
     adController.ad_post);
 
 // Delete an ad, route needs user to be logged in
