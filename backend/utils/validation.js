@@ -65,4 +65,8 @@ exports.paramKeyword = [
     validationRes
 ]
 
-// TODO Validate vote 0 or 1
+// Check vote value, 0 or 1
+exports.paramVote = [
+    check('value','Value needs to be 0 or 1').matches(/^[01]$/),
+    validationRes
+]
