@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router = express.Router();
-const {body} = require('express-validator');
 const authController = require('../controllers/authController');
 const passport = require('passport');
 const validate = require('../utils/validation');
@@ -10,19 +9,22 @@ const validate = require('../utils/validation');
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
+// Register an user, login with the information after
 router.post('/register',
     validate.userRegister,
     authController.user_create_post,
-    authController.login
+    authController.login,
 );
 
+// Update user information
 router.put('/update/:id',
     passport.authenticate('jwt', {session: false}),
     validate.userUpdate,
     validate.paramId,
-    authController.user_update
-)
+    authController.user_update,
+);
 
+// Delete an user (not currently used)
 router.delete('/:id',
     passport.authenticate('jwt', {session: false}),
     validate.paramId,

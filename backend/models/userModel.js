@@ -16,8 +16,7 @@ const getAllUsers = async () => {
     const [rows] = await promisePool.execute(
         'SELECT name, user_city FROM bm_user');
     return rows;
-  }
-  catch (e) {
+  } catch (e) {
     console.log(TAG + e.message);
   }
 };
@@ -33,10 +32,9 @@ const getUserById = async (id) => {
         'SELECT * FROM bm_user WHERE user_id = ?',
         [id]);
 
-    delete rows[0].password
+    delete rows[0].password;
     return rows[0];
-  }
-  catch (e) {
+  } catch (e) {
     console.error('userModel:', e.message);
   }
 };
@@ -51,8 +49,7 @@ const getUserLogin = async (email) => {
         'SELECT * FROM bm_user WHERE email = ?;',
         email);
     return rows;
-  }
-  catch (e) {
+  } catch (e) {
     console.log('error', e.message);
   }
 };
@@ -79,13 +76,11 @@ const createUser = async (req) => {
 
       console.log(TAG + `insert ${rows.insertId}`);
       return rows.insertId;
-    }
-    catch (e) {
+    } catch (e) {
       console.error(TAG, e);
       return 0;
     }
-  }
-  else {
+  } else {
     console.log(TAG,
         `Account with email address ${req.body.email} already exists!`);
     return `Account with email address ${req.body.email} already exists!`;
@@ -108,8 +103,7 @@ const updateUser = async (req) => {
           req.params.id]);
     console.log('user update:', rows);
     return rows.affectedRows === 1;
-  }
-  catch (e) {
+  } catch (e) {
     return false;
   }
 };
@@ -126,8 +120,7 @@ const deleteUser = async (req) => {
         'DELETE FROM bm_user WHERE user_id = ?',
         [req.params.id]);
     return rows.affectedRows === 1;
-  }
-  catch (e) {
+  } catch (e) {
     console.error(TAG, 'delete:', e.message);
   }
 };
@@ -138,5 +131,5 @@ module.exports = {
   getUserById,
   getUserLogin,
   deleteUser,
-  updateUser
+  updateUser,
 };

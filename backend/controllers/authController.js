@@ -11,7 +11,7 @@ const {validationResult} = require('express-validator');
   Acts as the middleman to authRoute and userModel
   for more complex user interaction (Login, register...).
 
-  Basic fetches are done via userController.
+  Basic user fetches are done via userController.
  */
 
 /**
@@ -50,7 +50,6 @@ const login = (req, res) => {
  * already exists. Res includes the err message if user already exists.
  */
 const user_create_post = async (req, res, next) => {
-  console.log(TAG, 'UserCreate')
 
   // Password Hashing
   const salt = bcrypt.genSaltSync(10);
@@ -74,20 +73,27 @@ const user_create_post = async (req, res, next) => {
 };
 
 /**
- * Delete an user
+ * Delete an user (Not currently available)
  */
 const user_delete = async (req, res) => {
-  const userDeletion = await userModel.deleteUser(req);
-  res.json(userDeletion);
+/*  const userDeletion = await userModel.deleteUser(req);
+  res.json(userDeletion);*/
 };
 
 /**
- * Update user
+ * Update an user
  */
 const user_update = async (req, res) => {
-  console.log(TAG, 'UserCreate');
-  const editOk = userModel.updateUser(req);
-  res.json(editOk);
+
+  // See if the user wanted to be updated matches with the token user
+  // Update if they do
+  const tokenId = req.user.user_id;
+  if (tokenId.toString() === req.params.id) {
+    const editOk = userModel.updateUser(req);
+    res.json(editOk);
+  } else {
+    res.json("Cannot update someone else's profile");
+  }
 };
 
 // Logout
