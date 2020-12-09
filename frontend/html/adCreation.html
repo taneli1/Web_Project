@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create new ad</title>
     <link href="../css/header.css" rel="stylesheet">
     <link href="../css/adCreation.css" rel="stylesheet">
     <link href="../css/switch.css" rel="stylesheet">
+    <link href="../css/breakpoints3.css" rel="stylesheet">
 </head>
 <body>
 <div class="flex-container">
@@ -19,14 +21,14 @@
         <ul>
             <li id="profile">
                 <a href="../html/profile.html">
-                    <button class="light-border">
+                    <button class="light-border" name="profile">
                         My profile
                     </button>
                 </a>
             </li>
             <li id="logout">
                 <a href="../html/main.html">
-                    <button class="light-border">
+                    <button class="light-border" name="logout">
                         Logout
                     </button>
                 </a>
@@ -89,14 +91,14 @@
                 id="category">
         </select>
 
-        <label>buy
+        <label>Buy
             <input type="radio" name="ad_typeSelector" value="buy" required />
         </label>
-        <label>sell
+        <label>Sell
             <input type="radio" name="ad_typeSelector" value="sell" />
         </label>
 
-        <button class="light-border" type="submit">Save</button>
+        <button class="light-border" type="submit" name="save">Save</button>
     </form>
 </div>
 
