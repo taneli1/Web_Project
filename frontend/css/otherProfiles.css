@@ -103,6 +103,6 @@ input, select {
     display: block;
     margin-left: 10px;
 }
- #userInfo {
-     display: flex;
- }
+#userInfo {
+    display: flex;
+}

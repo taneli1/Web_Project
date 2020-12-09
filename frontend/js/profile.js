@@ -12,7 +12,14 @@ const editName = document.querySelector("form[id='editProfile'] input[name='edit
 const editCity = document.querySelector("form[id='editProfile'] input[name='editCity']");
 const editEmail = document.querySelector("form[id='editProfile'] input[name='editEmail']");
 const editPhoneNumber = document.querySelector("form[id='editProfile'] input[name='editPhoneNumber']");
+const likes = document.getElementById('likes')
+const dislikes = document.getElementById('dislikes')
+const average = document.getElementById('average')
 
+const getReputationValues = async () => {
+  const response = await fetch(url + '/ad/user/' + id);
+  console.log(response)
+}
 
 editField.style.display = "none"
 // Here we get the ad owner's information by making a fetch with it's ID
@@ -33,7 +40,6 @@ const getUserInfo = async () => {
     };
     const response = await fetch(url + '/user/' + userId, options);
     const user = await response.json();
-    console.log("KÄYTTÄJÄ", user)
     name.innerText = user.name
     editName.setAttribute('value', user.name)
     city.innerText = user.user_city
@@ -52,7 +58,7 @@ const getUserInfo = async () => {
 // Button for logging out
 logoutButton1.addEventListener('click', async () => {
   delete_cookie("token");
-  })
+})
 
 // Button for editing profile
 editButton.addEventListener('click', async () => {
@@ -82,15 +88,15 @@ editField.addEventListener('submit', async (evt) => {
     body: JSON.stringify(fd2),
   };
   try {
-    await fetch(url + '/auth/update/' + userId , fetchOptions);
+    const response = await fetch(url + '/auth/update/' + userId , fetchOptions);
+    console.log(response)
   }
   catch (e) {
     console.log(e.message)
   }
-
   editField.style.display = "none"
   editButton.style.display = "block"
-  userInfo.style.display = "block"
+  userInfo.style.display = "flex"
   document.location.reload();
 });
 
