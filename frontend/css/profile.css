@@ -102,6 +102,7 @@ input, select {
     width: 30%;
     display: block;
     margin-left: 10px;
+    height: fit-content;
 }
  #userInfo {
      display: flex;

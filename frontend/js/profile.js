@@ -12,13 +12,12 @@ const editName = document.querySelector("form[id='editProfile'] input[name='edit
 const editCity = document.querySelector("form[id='editProfile'] input[name='editCity']");
 const editEmail = document.querySelector("form[id='editProfile'] input[name='editEmail']");
 const editPhoneNumber = document.querySelector("form[id='editProfile'] input[name='editPhoneNumber']");
-const likes = document.getElementById('likes')
-const dislikes = document.getElementById('dislikes')
-const average = document.getElementById('average')
+let likes = document.getElementById('likes')
+let dislikes = document.getElementById('dislikes')
+const percentage = document.getElementById('percentage')
 
-const getReputationValues = async () => {
-  const response = await fetch(url + '/ad/user/' + id);
-  console.log(response)
+const getReputationValues = async (id) => {
+
 }
 
 editField.style.display = "none"
@@ -48,7 +47,7 @@ const getUserInfo = async () => {
     editEmail.setAttribute('value', user.email)
     phoneNumber.innerText = user.phone_number
     editPhoneNumber.setAttribute('value', user.phone_number)
-    await getAllAds(userId)
+    await getLikes(userId)
   }
   catch (e) {
     console.log(e.message);
@@ -66,6 +65,8 @@ editButton.addEventListener('click', async () => {
   editButton.style.display = "none"
   userInfo.style.display = "none"
 })
+
+
 
 // Event listener for form which is sent to database with the included information
 editField.addEventListener('submit', async (evt) => {
@@ -97,7 +98,8 @@ editField.addEventListener('submit', async (evt) => {
   editField.style.display = "none"
   editButton.style.display = "block"
   userInfo.style.display = "flex"
-  document.location.reload();
+  await getUserInfo()
+  await getLikes(userId)
 });
 
 // deletes the cookie which keeps user logged in
@@ -121,9 +123,17 @@ const getCookie = (name) => {
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 // Function for getting all the ads of passed user
-const getAllAds = async (id) =>  {
+const getAllAds = async () =>  {
+  let userId
+  const token = getCookie("token")
+  if (token === undefined){
+    console.log("voi voi")
+  }
+  else {
+    userId = tokenFormatter(token)
+  }
   try {
-    const response = await fetch(url + '/ad/user/' + id);
+    const response = await fetch(url + '/ad/user/' + userId);
     const items = await response.json();
     console.log("hello", items);
     await window.createNewItems(items);
@@ -131,7 +141,28 @@ const getAllAds = async (id) =>  {
   catch (e) {
     console.log(e.message)
   }
-
 };
 
+const getLikes = async (userId) => {
+  let likeAmount = 0
+  let disLikeAmount = 0
+  let percentageValue
+  const response2 = await fetch(url + '/rep/' + userId);
+  const res = await response2.json()
+  for (let i = 0; i < res.length; i++) {
+    if (res[i].is_like === 1){
+      likeAmount ++
+    }
+    else {
+      disLikeAmount ++
+    }
+  }
+  percentageValue =  likeAmount / (likeAmount + disLikeAmount) * 100
+  const percentageRounded = Math.round(percentageValue * 10) / 10
+  percentage.innerText = "(" + percentageRounded + "%)"
+  likes.innerText = likeAmount.toString()
+  dislikes.innerText = disLikeAmount.toString()
+}
+
+getAllAds()
 getUserInfo()
