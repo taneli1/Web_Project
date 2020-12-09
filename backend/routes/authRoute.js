@@ -14,8 +14,8 @@ router.get('/logout', authController.logout);
 
 router.post('/register',
     [
-      body('name', 'minimum 3 characters').isLength({min: 3}),
-      body('email', 'email is not valid').isEmail(),
+      body('name', 'minimum 3 characters').isLength({min: 3, max: 50}),
+      body('email', 'email is not valid').isEmail().isLength({min: 3, max: 50}),
       body('password', 'at least one upper case letter').
           matches('(?=.*[A-Z]).{8,}'),
     ],
@@ -26,10 +26,10 @@ router.post('/register',
 router.put('/update/:id',
     passport.authenticate('jwt', {session: false}),
     [
-      body('editUserName', 'min length 3 chars').isLength({min: 3}),
-      body('editEmail', 'email is not valid').isEmail(),
+      body('editUserName', 'min length 3 chars').isLength({min: 3, max: 50}),
+      body('editEmail', 'email is not valid').isEmail().isLength({min: 3, max: 50}),
       body('editCity', 'minimum 2 characters').isLength({min: 2}),
-      body('editPhoneNumber', 'must be a phone num').isLength({min: 8}).isNumeric(),
+      body('editPhoneNumber', 'must be a phone num').isLength({min: 8, max: 13}).isNumeric(),
     ],
     authController.user_update
 )

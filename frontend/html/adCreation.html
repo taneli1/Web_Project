@@ -42,11 +42,11 @@
 
         <label>Item:</label>
         <input class="light-border"
-               placeholder="5 to 50 characters"
+               placeholder="5 to 40 characters"
                name="item_name"
                type="text"
-               pattern=".{5,50}"
-               maxlength="50"
+               pattern=".{3,40}"
+               maxlength="40"
                minlength="5"
                required>
 
@@ -60,14 +60,15 @@
         <input class="light-border"
                type="number"
                name="price"
-               pattern="^[0-9]+$"
+               pattern="^[0-9]{1,10}$"
                required>
 
         <label>City:</label>
         <input class="light-border"
                type="text"
                name="city"
-               pattern=".{3,}"
+               maxlength="30"
+               pattern=".{3,30}"
                required>
 
         <input id="adType"

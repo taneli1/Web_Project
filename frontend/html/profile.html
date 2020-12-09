@@ -5,6 +5,7 @@
     <title>Profile</title>
     <link href="../css/header.css" rel="stylesheet">
     <link href="../css/profile.css" rel="stylesheet">
+    <link href="../css/items.css" rel="stylesheet">
 </head>
 <body>
 <div class="header">
@@ -16,7 +17,7 @@
             <li id="logout1">
                 <a href="../html/main.html">
                     <button class="light-border">
-                        log out
+                        Logout
                     </button>
                 </a>
             </li>
@@ -30,52 +31,56 @@
         </ul>
     </header>
 </div>
-<h2>
-    My information
-</h2>
-<div class="light-border" id="userInfo">
 
-    <label>Name:</label>
-    <div id="userName"></div><br>
-    <label>City:</label>
-    <div id="user_city"></div><br>
-    <label>E-mail:</label>
-    <div id="eMail"></div><br>
-    <label>Phone number:</label>
-    <div id="phoneNumber"></div>
+<div class="newBox" id="userInfo">
+    <h2>
+        My information
+        <button id="edit" class="light-border">
+            Edit
+        </button>
+    </h2>
+    <div class="newBox2">
+        <label>Name:</label>
+        <div id="userName"></div><br>
+        <label>City:</label>
+        <div id="user_city"></div><br>
+        <label>E-mail:</label>
+        <div id="eMail"></div><br>
+        <label>Phone number:</label>
+        <div id="phoneNumber"></div>
+    </div>
 </div>
-<form class="light-border"
+<form class="newBox"
       id="editProfile"
       enctype="multipart/form-data">
-    <label>Name:</label>
-    <input class="light-border"
-           type="text"
-           name="editUserName"
-           required>
-    <label>City:</label>
-    <input class="light-border"
-           type="text"
-           name="editCity"
-           required>
-    <label>E-mail:</label>
-    <input class="light-border"
-           type="email"
-           name="editEmail"
-           required>
-    <label>Phone number:</label>
-    <input class="light-border"
-           type="number"
-           name="editPhoneNumber"
-           pattern=".{3,}"
-           required>
-
-    <button class="light-border" type="submit">Save</button>
+    <div class="newBox3">
+        <label>Name:</label>
+        <input class="light-border"
+               type="text"
+               name="editUserName"
+               required>
+        <label>City:</label>
+        <input class="light-border"
+               type="text"
+               name="editCity"
+               required>
+        <label>E-mail:</label>
+        <input class="light-border"
+               type="email"
+               name="editEmail"
+               required>
+        <label>Phone number:</label>
+        <input class="light-border"
+               type="number"
+               name="editPhoneNumber"
+               pattern=".{3,}"
+               required>
+        <button class="light-border" type="submit">Save</button>
+    </div>
 </form>
-<button id="edit" class="light-border">
-    Edit
-</button>
-<h2>My ads</h2>
-<div id="ads" class="light-border">
+
+<h2 id="myAds">My ads</h2>
+<div id="ads">
     <div id="new-item">
     </div>
 </div>

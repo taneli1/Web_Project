@@ -46,3 +46,15 @@
 #searchCategories {
     display: block;
 }
+
+#ad_buy, #ad_sell {
+    width: 17px;
+    height: 17px;
+}
+
+body {
+    background-color: #d2eeff;
+    padding-left: 165px;
+    padding-right: 165px
+;
+}
