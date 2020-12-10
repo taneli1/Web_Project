@@ -29,8 +29,8 @@ exports.userRegister = [
   check('email', 'Email is not valid').isEmail().isLength({min: 3, max: 50}),
   check('password', 'At least one upper case letter, min 8').
       matches('(?=.*[A-Z]).{8,}'),
-  check('phoneNumber', '8-13').isLength({min: 8, max: 13}).isNumeric(),
-  check('user_city', '3-50').isLength({min: 3, max: 50}),
+  check('phone_number', '8-13').isLength({min: 8, max: 13}).isNumeric(),
+  check('city', '3-50').isLength({min: 3, max: 50}),
   validationRes,
 ];
 
