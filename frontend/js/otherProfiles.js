@@ -155,6 +155,7 @@ const getLikes = async (user_id) => {
 
   }
 
+
   let likeAmount = 0
   let disLikeAmount = 0
   let percentageValue
