@@ -5,6 +5,7 @@
     <title>Search page</title>
     <link href="../css/searchPage.css" rel="stylesheet">
     <link href="../css/header.css" rel="stylesheet">
+    <link href="../css/items.css" rel="stylesheet">
 </head>
 <body>
 <div class="flex-container">
@@ -33,36 +34,21 @@
 
         <div class="search-boxS" id="searchBS">
             <form name="search-form">
-
                 <input type="text" id="searchPageS" placeholder="Search">
-
             </form>
-
             <button id="searchButtonS" onclick="search()">Search</button>
         </div>
-
         <div id="ad_typeS">
-            <label> Buy
+            <label for="ad_buy">Buy </label>
                 <input class="ad_typeS" type="radio" id="ad_buy" name="ad_typeSelector" value="buy" required/>
-            </label>
-            <label> Sell
+            <label for="ad_sell">Sell </label>
                 <input class="ad_typeS" type="radio" id="ad_sell" name="ad_typeSelector" value="sell" checked/>
-            </label>
-        </div>
-
-        <div id="searchSort">
-            <label for="sorting">Sort by:</label>
-
-            <select name="sorting" id="sorting">
-                <option selected="selected" value="1">Price</option>
-                <option value="2">Time of listing</option>
-            </select>
-
         </div>
     </div>
     <div id="new-item"></div>
 </div>
 </body>
+<script src="../../settings.js"></script>
 <script src="../js/summonAds.js"></script>
 <script src="../js/searchPage.js"></script>
 </html>

@@ -1,9 +1,5 @@
 'use strict';
 
-const urlExport = window.location.hostname === 'localhost'
-    ? window.location.origin
+window.url = window.location.hostname === 'localhost'
+    ? 'https://localhost:8000'
     : window.location.origin + '/app';
-
-export {
-  urlExport
-}

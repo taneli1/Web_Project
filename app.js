@@ -10,24 +10,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const app = express();
 const passport = require('./backend/utils/passport');
-
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
 
 // --- Routes
 const rootRoute = require('./backend/routes/rootRoute');
 const userRoute = require('./backend/routes/userRoute');
 const adRoute = require('./backend/routes/adRoute');
 const authRoute = require('./backend/routes/authRoute');
+const repRoute = require('./backend/routes/repRoute');
+
 
 // --- Setup
-app.use(cors());
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
 app.use(express.static('public'));
+app.use(cors());
 
 // --- Server
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -40,8 +38,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-// --- Routes
 app.use('/', rootRoute);
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/ad', adRoute);
+app.use('/rep', repRoute);

@@ -6,16 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-}
-
-#singleItem div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 26px;
-    border: 1px solid black;
-    width: 50%;
-    height: 25%;
+    margin-top: 10px;
 }
 
 #new-item div {
@@ -26,6 +17,8 @@
     border: 1px solid black;
     width: 50%;
     height: 25%;
+    background-color: #ffffff;
+    box-shadow: 3px 2px 17px 0px rgba(0,0,0,0.75);
 }
 
 #new-item {
@@ -38,6 +31,7 @@
 
 #ad_type label {
     font-size: 26px;
+
 }
 
 #ad_type {
@@ -63,11 +57,35 @@ a{
     color: black;
 }
 
+h2 {
+    padding: 10px;
+    margin: 0;
+    background-color: #00091e;
+    color: white;
+}
+
 #new-item label {
+    border-top: black 1px solid;
     width: auto;
-    background: #b8b8b8;
+    padding-left: 10px;
+    font-weight: bold;
+    background-color: white;
+    color: #000000;
+    padding-top: 5px;
 }
 
 #new-item a {
-    background: #e0e0e0;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+img {
+    max-width: 100%;
+}
+
+body {
+    background-color: #d2eeff;
 }

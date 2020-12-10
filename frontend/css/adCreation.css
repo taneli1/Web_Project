@@ -10,5 +10,43 @@ input, button, select {
 
 textarea {
     width: 100%;
+    height: 200px;
     resize: vertical;
+}
+
+body {
+    background-color: #d2eeff;
+    margin-right: 165px;
+    margin-left: 165px;
+}
+
+#createNewAd {
+    box-shadow: 3px 2px 17px 0px rgba(0,0,0,0.75);
+    background-color: white;
+    padding: 0;
+}
+h2 {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    background-color: #00091e;
+    margin: 0;
+}
+
+#form {
+    margin: 25px;
+}
+
+#buy, #sell{
+    width: 20px;
+}
+
+.newBox {
+    border-radius: 8px;
+    border: 1px solid #00091e;
+    padding: 1em;
+    box-sizing: border-box;
 }

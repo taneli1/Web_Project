@@ -1,7 +1,6 @@
 'use strict';
 
-const url = 'https://10.114.32.43/app'
-
+const url = window.url
 
 const searchButton = document.getElementById('searchButton');
 const loginButton = document.getElementById('login');
@@ -30,12 +29,9 @@ const adTypeSwitch = () => {
   if (value === 'buy') {
     adTypeHiddenField.value = 'buy';
     localStorage.setItem("hiddenAdType", 'buy')
-    //set_cookie('hiddenAdType', 'buy')
-
   } else {
     adTypeHiddenField.value = 'sell';
     localStorage.setItem("hiddenAdType", 'sell')
-    //set_cookie('hiddenAdType', 'sell')
   }
 };
 const profileButton = document.getElementById('profile');
@@ -45,18 +41,15 @@ const profileButton = document.getElementById('profile');
 const adFilters = (type) => {
   type.addEventListener('click', async () => {
     adTypeSwitch();
-    console.log(adTypeHiddenField.value);
     new_item.innerHTML = '';
     if (adTypeHiddenField.value === 'buy') {
       const response = await fetch(url + '/ad/buy');
       const items = await response.json();
       console.log("here are the items", items)
-
       await window.createNewItems(items);
     } else {
       const response = await fetch(url + '/ad/sell');
       const items = await response.json();
-
       await window.createNewItems(items);
     }
   });

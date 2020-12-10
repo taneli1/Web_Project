@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Main</title>
+    <link href="../css/items.css" rel="stylesheet">
     <link href="../css/header.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
 </head>
@@ -48,34 +49,40 @@
             </ul>
         </header>
     </div>
-    <div class="search-box" id="searchB">
-        <form>
-            <input type="text" id="search" placeholder="Search">
-        </form>
+    <div id="everything">
+        <div class="search-box" id="searchB">
+            <form>
+                <input type="text" id="search" placeholder="Search">
+            </form>
 
-        <button id="searchButton" onclick="searchClick()">Search</button>
+            <button id="searchButton" onclick="searchClick()">Search</button>
 
-        <input id="adType"
-               type="hidden"
-               value=""
-               name="ad_type">
-    </div>
+            <input id="adType"
+                   type="hidden"
+                   value=""
+                   name="ad_type">
+        </div>
         <div id="ad_type">
-            <label> Buy
-                <input  class="ad_type" type="radio" id="ad_buy" name="ad_typeSelector" value="buy" required />
+            <label>
+                Filter by
             </label>
-            <label> Sell
-                <input class="ad_type" type="radio" id="ad_sell" name="ad_typeSelector" value="sell" checked />
-            </label>
+            <p></p>
+            <label for="ad_buy"> Buy </label>
+            <input  class="ad_type" type="radio" id="ad_buy" name="ad_typeSelector" value="buy" required />
+
+            <label for="ad_sell"> Sell </label>
+            <input class="ad_type" type="radio" id="ad_sell" name="ad_typeSelector" value="sell" checked />
         </div>
 
-    <div class="newText">
-        <p id="textNew"><b>New</b></p>
+        <div class="newText">
+            <p id="textNew"><h2>New</h2></p>
+        </div>
+        <div id="new-item"></div>
     </div>
-    <div id="new-item"></div>
 </div>
 
 </body>
+<script src="../../settings.js"></script>
 <script src="../js/summonAds.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/serialize.js"></script>

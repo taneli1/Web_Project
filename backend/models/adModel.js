@@ -3,7 +3,6 @@
 const TAG = 'adModel: ';
 const pool = require('../database/database');
 const promisePool = pool.promise();
-const fs = require('fs');
 
 // Delete unneeded things from a response
 const cleanUpResponse = async (arr) => {
@@ -24,16 +23,12 @@ const cleanUpResponse = async (arr) => {
   next time. Would have been easier to save everything in the same table...
  */
 
-// TODO Save thumbnail in ad table, additional images only fetched when
-//  opening up a single ad page
-//  - Validate user input (ad_type)
 // -------------------------------------------------------------------------
 // ---------------------------- Get from db --------------------------------
 // -------------------------------------------------------------------------
 
 /**
  * Get all ads of specified type from DB, join with image table, return all
- * @param req specifies what kind of ads we want to get
  */
 const getAllAds = async (req) => {
 
@@ -61,7 +56,6 @@ const getAllAds = async (req) => {
 /**
  * Get a single ad from DB with the id of ad,
  * get all images and user info too
- * TODO Return and clean up index 0
  */
 const getAdById = async (req) => {
 
@@ -90,7 +84,7 @@ const getAdById = async (req) => {
  */
 const getAllUserAds = async (req) => {
 
-  const userId = req.params.user_id;
+  const userId = req.params.id;
   try {
     const [rows] = await promisePool.execute(
         'SELECT bm_ad.*, bm_images.image, bm_ctg.category, bm_user.user_id ' +
@@ -175,11 +169,10 @@ const searchAd = async (req) => {
 const getByCategory = async (req) => {
 
   const adType = req.params.ad_type;
-  const category = req.params.ctg;
+  const category = req.params.category;
 
   try {
-    if (!isNaN(category)){
-      console.log("isnan")
+    if (!isNaN(category)) {
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
           'FROM bm_ad ' +
@@ -194,9 +187,7 @@ const getByCategory = async (req) => {
           [adType, category]);
       console.log(cleanUpResponse(rows));
       return cleanUpResponse(rows);
-    }
-    else{ // Pretty redundant, could just use basic getAllAds
-      console.log("other")
+    } else { // Pretty redundant, could just use basic getAllAds
       const [rows] = await promisePool.execute(
           'SELECT bm_ad.*, bm_images.image, bm_user.user_id, bm_ctg.category ' +
           'FROM bm_ad ' +
@@ -254,7 +245,7 @@ const postAd = async (req) => {
 
 /**
  * Save images to db, return the insertId , which is then saved to ad table
- * with all the other data
+ * with all the other dbInit
  */
 const postImages = async (req) => {
 
@@ -282,7 +273,6 @@ const postImages = async (req) => {
 
 /**
  * Delete a single ad from DB with the id of ad
- * TODO Remove images locally
  */
 const deleteAdById = async (req) => {
 
@@ -298,13 +288,6 @@ const deleteAdById = async (req) => {
         'WHERE ad_ref = ?',
         [adId]);
 
-    // Remove the files from local
-    /*      try {
-            fs.unlinkSync(path);
-            fs.unlinkSync(path2);
-          } catch (err) {
-            console.error(err);
-          }*/
     return {
       'Ad': ad,
       'Images': images,
@@ -318,7 +301,7 @@ const deleteAdById = async (req) => {
 // ---------------------------- Other --------------------------------------
 // -------------------------------------------------------------------------
 
-// Get all categories
+// Get all categories for frontend
 const getAllCategories = async (req) => {
   try {
     const [rows] = await promisePool.execute(
