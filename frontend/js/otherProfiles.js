@@ -37,6 +37,8 @@ buttonVisibility()
 const getUserInfo = async () => {
   let get_owner = localStorage.getItem('listedBy');
   const response = await fetch(url + '/user/' + get_owner);
+  const token = getCookie("token")
+  if (token)
   user = await response.json();
   console.log("KÄYTTÄJÄ", user)
   name.innerText = user.name
@@ -62,7 +64,7 @@ const getCookie = (name) => {
 
 
 
-
+//Function for liking the user
 const likeUser = async () => {
   let get_owner = localStorage.getItem('listedBy');
   const response = await fetch(url + '/user/' + get_owner);
@@ -79,6 +81,12 @@ const likeUser = async () => {
     };
     try {
       await fetch(url + '/rep/' + user.user_id + '/' + "1", fetchOptions);
+      likeButton.style.border = "0px"
+      likeButton.style.outline = "none"
+      likeButton.style.backgroundColor = "white"
+      dislikeButton.style.border = "1px solid #00091e"
+      dislikeButton.style.outline = "auto"
+      dislikeButton.style.backgroundColor = "rgb(239, 239, 239)"
       await getLikes(user.user_id)
     }
     catch (e) {
@@ -87,6 +95,7 @@ const likeUser = async () => {
   })
 }
 
+//Function for disliking the user
 const disLikeUser = async () => {
   let get_owner = localStorage.getItem('listedBy');
   const response = await fetch(url + '/user/' + get_owner);
@@ -102,6 +111,12 @@ const disLikeUser = async () => {
     };
     try {
       await fetch(url + '/rep/' + user.user_id + '/' + "0", fetchOptions);
+      dislikeButton.style.border = "0px"
+      dislikeButton.style.outline = "none"
+      dislikeButton.style.backgroundColor = "white"
+      likeButton.style.border = "1px solid #00091e"
+      likeButton.style.outline = "auto"
+      likeButton.style.backgroundColor = "rgb(239, 239, 239)"
       await getLikes(user.user_id)
     }
     catch (e) {
@@ -110,7 +125,10 @@ const disLikeUser = async () => {
   })
 }
 
+//Function for getting all the likes and dislikes for that user
 const getLikes = async (user_id) => {
+  const voted = await fetch(url + '/rep/vote/' + user_id)
+  console.log(voted)
   let likeAmount = 0
   let disLikeAmount = 0
   let percentageValue
@@ -129,6 +147,7 @@ const getLikes = async (user_id) => {
   percentage.innerText = "(" + percentageRounded + "%)"
   likes.innerText = likeAmount.toString()
   dislikes.innerText = disLikeAmount.toString()
+  console.log(voted2)
 }
 
 
