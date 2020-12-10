@@ -34,7 +34,6 @@ input {
 
 
 #ad_type {
-    display: flex;
     justify-content: flex-start;
     flex-direction: row;
     margin: 10px;
