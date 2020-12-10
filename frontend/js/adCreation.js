@@ -1,5 +1,5 @@
 
-const url = 'http://localhost:3000';
+const url = window.url;
 
 
 const createNewAd = document.getElementById("createNewAd")

@@ -1,6 +1,6 @@
 const login = document.getElementById('login-form')
 const signIn = document.getElementById('add-user-form')
-const url = 'http://localhost:3000';
+const url = window.url;
 
 
 // Form for logging in, which is sent to database

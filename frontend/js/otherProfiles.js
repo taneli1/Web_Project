@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000';
+const url = window.url;
 const logoutButton = document.getElementById('logout');
 const name = document.getElementById('userName');
 const city = document.getElementById('user_city');

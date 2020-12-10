@@ -123,5 +123,12 @@ Temporary Items
 # DB conf
 bm_data.txt
 
+# Uploads
 ads
 .ads
+public
+
+# Cert
+certrequest.csr
+ssl-key.pem
+ssl-cert.pem
