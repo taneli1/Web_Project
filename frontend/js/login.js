@@ -43,13 +43,12 @@ signIn.addEventListener('submit', async (evt) => {
   console.log(RegResponse);
   const json = await RegResponse.json();
   console.log('sign-in response', json);
-  if (json.token === undefined){
-    window.alert("Account with this e-mail already exists")
-  }
-  else {
-    set_cookie("token", json.token)
-    document.location.href = '../html/main.html'
-    window.alert("Account successfully created")
+  if (json.token === undefined) {
+    window.alert('Account with this e-mail already exists');
+  } else {
+    set_cookie('token', json.token);
+    document.location.href = '../html/main.html';
+    window.alert('Account successfully created');
   }
 
 });
