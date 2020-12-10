@@ -10,7 +10,6 @@ window.createNewItems = async (items) => {
 
   for (let i = 0; i < items.length; i++) {
     const response = await fetch(url + '/user' + '/' + items[i].user_id);
-    console.log(items);
     const user = await response.json();
     let itemId = items[i].ad_id;
 
@@ -31,7 +30,6 @@ window.createNewItems = async (items) => {
 // passed to this function, which
 // transforms it into a div (box) of it's own
 const showItems = (item, user, itemId) => {
-  console.log('here are the items 3.0', item);
 
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');

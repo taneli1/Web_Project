@@ -15,9 +15,7 @@ login.addEventListener('submit', async (evt) => {
   };
 
   const response = await fetch(url + '/auth/login/', fetchOptions);
-  console.log(response);
   const json = await response.json();
-  console.log('login response', json);
   if (!json.user) {
     alert(json.message);
   } else {
@@ -40,9 +38,7 @@ signIn.addEventListener('submit', async (evt) => {
   };
 
   const RegResponse = await fetch(url + '/auth/register/', fetchOptions);
-  console.log(RegResponse);
   const json = await RegResponse.json();
-  console.log('sign-in response', json);
   if (json.token === undefined) {
     window.alert('Account with this e-mail already exists');
   } else {

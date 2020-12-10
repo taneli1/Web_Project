@@ -8,7 +8,6 @@ const logoutButton = document.getElementById('logout');
 const adTypeSwitch = () => {
   const value = document.querySelector(
       'input[name="ad_typeSelector"]:checked').value;
-  console.log(value);
   if (value === 'buy') {
     adTypeHiddenField.value = 'buy';
   } else {
@@ -39,7 +38,6 @@ createNewAd.addEventListener('submit', async (evt) => {
   const token = getCookie('token');
   try {
     const fd2 = new FormData(createNewAd);
-    console.log('here is the stuff', createNewAd);
     const fetchOptions = {
       method: 'POST',
       headers: {
@@ -47,7 +45,6 @@ createNewAd.addEventListener('submit', async (evt) => {
       },
       body: fd2,
     };
-    console.log(fetchOptions.body);
     await fetch(url + '/ad/', fetchOptions);
     document.location.href = '../html/main.html';
     window.alert('Ad created');

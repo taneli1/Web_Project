@@ -29,11 +29,9 @@ const createDeleteButton = (listedBy) => {
   let userId;
   const token = getCookie('token');
   if (token === undefined) {
-    console.log('voi voi');
   } else {
     userId = tokenFormatter(token).toString();
   }
-  console.log('here are the ids', listedBy, userId);
   if (listedBy.toString() === userId) {
     deleteButton.style.display = 'block';
     deleteAd(token);
@@ -89,7 +87,6 @@ putItemsToBoxes();
 
 /*Create all the items of this user by looping through them 1 by 1*/
 const createNewItems = async (items) => {
-  console.log('items: ', items);
   let item = {
     'name': '',
     'image': '',
@@ -103,7 +100,6 @@ const createNewItems = async (items) => {
 
   const response = await fetch(url + '/user' + '/' + items.user_id);
   const user = await response.json();
-  console.log(user);
 
   item.name = items.item_name != null ?
       items.item_name : 'No name';

@@ -12,9 +12,6 @@ const category = document.getElementById('category');
 const searchButton = document.getElementById('searchButtonS');
 const searchPageS = document.getElementById('searchPageS');
 
-console.log(searched);
-console.log(adType);
-
 /*Checks buy if search was made with buy and sell if sell*/
 const selectedType = () => {
   if (adType === 'buy') {
@@ -75,7 +72,6 @@ const adTypeSwitch = () => {
 const adFilters = (type) => {
   type.addEventListener('click', async () => {
     adTypeSwitch();
-    console.log(adTypeHiddenField.value);
     search_item.innerHTML = '';
     const searched = document.getElementById('searchPageS').value;
     const cateG = document.getElementById('category').value;
@@ -127,8 +123,6 @@ const search = async () => {
   search_item.innerHTML = '';
   const searched = document.getElementById('searchPageS').value;
   const cateG = document.getElementById('category').value;
-  console.log(searched);
-  console.log(cateG);
 
   if (adTypeHiddenField.value === 'buy' && searched !== '') {
     const response = await fetch(

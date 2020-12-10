@@ -24,7 +24,6 @@ if (localStorage.getItem('hiddenAdType') === 'buy') {
 const adTypeSwitch = () => {
   const value = document.querySelector(
       'input[name="ad_typeSelector"]:checked').value;
-  console.log('here is the value of that stupid button', value);
   if (value === 'buy') {
     adTypeHiddenField.value = 'buy';
     localStorage.setItem('hiddenAdType', 'buy');
@@ -44,7 +43,6 @@ const adFilters = (type) => {
     if (adTypeHiddenField.value === 'buy') {
       const response = await fetch(url + '/ad/buy');
       const items = await response.json();
-      console.log('here are the items', items);
       await window.createNewItems(items);
     } else {
       const response = await fetch(url + '/ad/sell');

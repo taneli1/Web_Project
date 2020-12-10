@@ -48,7 +48,6 @@ const getUserInfo = async () => {
     dislikes2.style.display = 'none';
   }
   user = await response.json();
-  console.log('KÄYTTÄJÄ', user);
   name.innerText = user.name;
   city.innerText = user.user_city;
   eMail.innerText = user.email;

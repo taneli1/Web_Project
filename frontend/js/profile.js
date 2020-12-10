@@ -33,7 +33,6 @@ const getUserInfo = async () => {
   let userId;
   const token = getCookie('token');
   if (token === undefined) {
-    console.log('voi voi');
   } else {
     userId = tokenFormatter(token);
   }
@@ -80,7 +79,6 @@ editField.addEventListener('submit', async (evt) => {
   let userId;
   const token = getCookie('token');
   if (token === undefined) {
-    console.log('voi voi');
   } else {
     userId = tokenFormatter(token);
   }
@@ -95,7 +93,6 @@ editField.addEventListener('submit', async (evt) => {
   };
   try {
     const response = await fetch(url + '/auth/update/' + userId, fetchOptions);
-    console.log(response);
   } catch (e) {
     console.log(e.message);
   }
@@ -131,14 +128,12 @@ const getAllAds = async () => {
   let userId;
   const token = getCookie('token');
   if (token === undefined) {
-    console.log('voi voi');
   } else {
     userId = tokenFormatter(token);
   }
   try {
     const response = await fetch(url + '/ad/user/' + userId);
     const items = await response.json();
-    console.log('hello', items);
     await window.createNewItems(items);
   } catch (e) {
     console.log(e.message);
