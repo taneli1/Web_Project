@@ -10,6 +10,7 @@
     <link href="../css/breakpoints.css" rel="stylesheet">
 </head>
 <body>
+<div class="flex-container">
 <div class="header">
     <header class="page-header">
         <h1>
@@ -33,37 +34,40 @@
         </ul>
     </header>
 </div>
+    <div id="userInfo">
+        <div id="user" class="newBox">
+            <h2>
+                My information
+                <button id="edit" class="light-border" name="profileEdit">
+                    Edit
+                </button>
+            </h2>
+            <div class="newBox2">
+                <label>Name:</label>
+                <div id="userName"></div>
+                <br>
+                <label>City:</label>
+                <div id="user_city"></div>
+                <br>
+                <label>E-mail:</label>
+                <div id="eMail"></div>
+                <br>
+                <label>Phone number:</label>
+                <div id="phoneNumber"></div>
+            </div>
+        </div>
+        <div id="reputation" class="newBox">
+            <h2>
+                User reputation
+            </h2>
+            <div class="newBox2">
+                <h3 id="percentage"></h3>
+                <h3 id="likes">Likes: </h3>
+                <h3 id="dislikes">Dislikes: </h3>
+            </div>
+        </div>
+    </div>
 
-<div id="userInfo">
-    <div id="user" class="newBox">
-        <h2>
-            My information
-            <button id="edit" class="light-border">
-                Edit
-            </button>
-        </h2>
-        <div class="newBox2">
-            <label>Name:</label>
-            <div id="userName"></div><br>
-            <label>City:</label>
-            <div id="user_city"></div><br>
-            <label>E-mail:</label>
-            <div id="eMail"></div><br>
-            <label>Phone number:</label>
-            <div id="phoneNumber"></div>
-        </div>
-    </div>
-    <div id="reputation" class="newBox">
-        <h2>
-            User reputation
-        </h2>
-        <div class="newBox2">
-            <h3 id="percentage"></h3>
-            <h3 id="likes">Likes: </h3>
-            <h3 id="dislikes">Dislikes: </h3>
-        </div>
-    </div>
-</div>
 <form class="newBox"
       id="editProfile"
       enctype="multipart/form-data">
@@ -98,7 +102,7 @@
                placeholder="phone number"
                pattern="^[0-9]{8,13}+$"
                required>
-        <button class="light-border" type="submit">Save</button>
+        <button class="light-border" type="submit" name="profileSave">Save</button>
     </div>
 </form>
 
@@ -107,7 +111,7 @@
     <div id="new-item">
     </div>
 </div>
-
+</div>
 <script src="../js/summonAds.js"></script>
 <script src="../js/profile.js"></script>
 <script src="../js/serialize.js"></script>

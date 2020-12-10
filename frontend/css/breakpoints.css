@@ -10,7 +10,6 @@
         justify-content: space-around;
         font-size: 1px;
         padding-left: 10px;
-
     }
 
     #note {
@@ -60,7 +59,7 @@
     }
 
     #ad_buy, #ad_sell {
-        width: 12px;
+        width: 16px;
         height: 18px;
     }
 
@@ -117,4 +116,41 @@
         width: 200%;
         padding: 5px;
     }
+    .newBox2 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+    }
+    #userInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    #reputation {
+        width: 80%;
+    }
+
+    #user {
+        width: 80%;
+    }
+
+    #likeButton, #dislikeButton {
+        width: 50%;
+    }
+
+    #editProfile label {
+        font-size: 20px;
+    }
+
+    input[name="editUserName"], input[name="editCity"], input[name="editEmail"], input[name="editPhoneNumber"] {
+        font-size: 15px;
+    }
+
+    button[name="profileSave"] {
+        font-size: 15px;
+    }
+    
 }
