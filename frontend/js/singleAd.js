@@ -9,6 +9,7 @@ const profileButton = document.getElementById('profileButton')
 
 deleteButton.style.display = "none"
 
+
 profileButton.addEventListener('click', async () => {
   let myId
   const token = getCookie("token")
@@ -43,6 +44,7 @@ const createDeleteButton = (listedBy) => {
 }
 
 const deleteAd = async (token) => {
+  const itemId2 = parseInt(getItemId)
   deleteButton.addEventListener('click', async () => {
     const fetchOptions = {
       method: 'DELETE',
@@ -51,10 +53,8 @@ const deleteAd = async (token) => {
         'Authorization': 'Bearer ' + token,
       },
     };
-    console.log(getItemId)
-    const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
-    const json = await response.json();
-    console.log(json);
+    await fetch(url + '/ad/' + itemId2, fetchOptions);
+    document.location.href = '../html/profile.html'
     window.alert("delete successful");
   })
 }
@@ -99,6 +99,7 @@ const createNewItems = async (items) => {
     'desc': '',
     'category': '',
     'listed_by': '',
+    'listDate': '',
   };
 
   const response = await fetch(url + '/user' + '/' + items.user_id);
@@ -119,6 +120,8 @@ const createNewItems = async (items) => {
       items.category : 'No category';
   item.user_id = user.name != null ?
       user.name : 'No username';
+  item.posted_on = items.posted_on != null ?
+      items.posted_on : 'No date';
   showItems(item);
 };
 
@@ -172,4 +175,12 @@ const showItems = (item) => {
   new_item_slot.appendChild(user_id)
   listedText.innerHTML += 'Listed by: ';
   user_id.innerHTML += item.user_id;
+
+  let date = document.createElement('label');
+  let dateText = document.createElement('a');
+  new_item_slot.appendChild(date);
+  new_item_slot.appendChild(dateText);
+  date.innerHTML += 'Posted on: ';
+  const date2 = item.posted_on.substring(0, item.posted_on.indexOf('T'));
+  dateText.innerHTML += date2;
 };

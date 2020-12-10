@@ -11,9 +11,14 @@ const createAd = document.getElementById('createAd')
 let likes = document.getElementById('likes')
 let dislikes = document.getElementById('dislikes')
 const percentage = document.getElementById('percentage')
+const creationDate = document.getElementById('creationDate');
+
 
 const likeButton = document.getElementById('likeButton')
 const dislikeButton = document.getElementById('dislikeButton')
+
+const likes2 = document.getElementById('likes2')
+const dislikes2 = document.getElementById('dislikes2')
 
 
 let user
@@ -38,13 +43,22 @@ const getUserInfo = async () => {
   let get_owner = localStorage.getItem('listedBy');
   const response = await fetch(url + '/user/' + get_owner);
   const token = getCookie("token")
-  if (token)
+  if (token === undefined){
+    likeButton.style.display = "none"
+    dislikeButton.style.display = "none"
+  }
+  else {
+    likes2.style.display = "none"
+    dislikes2.style.display = "none"
+  }
   user = await response.json();
   console.log("KÄYTTÄJÄ", user)
   name.innerText = user.name
   city.innerText = user.user_city
   eMail.innerText = user.email
   phoneNumber.innerText = user.phone_number
+  const date = user.creation_date.toString().substring(0, user.creation_date.toString().indexOf('T'));
+  creationDate.innerText = date
   await getLikes(user.user_id)
   await getAllAds(get_owner)
 }
@@ -127,8 +141,8 @@ const disLikeUser = async () => {
 
 //Function for getting all the likes and dislikes for that user
 const getLikes = async (user_id) => {
-  const voted = await fetch(url + '/rep/vote/' + user_id)
-  console.log(voted)
+  //const voted = await fetch(url + '/rep/vote/' + user_id)
+  //console.log(voted)
   let likeAmount = 0
   let disLikeAmount = 0
   let percentageValue
@@ -144,10 +158,11 @@ const getLikes = async (user_id) => {
   }
   percentageValue =  likeAmount / (likeAmount + disLikeAmount) * 100
   const percentageRounded = Math.round(percentageValue * 10) / 10
-  percentage.innerText = "(" + percentageRounded + "%)"
+  percentage.innerText = "(" + percentageRounded + "% recommends)"
   likes.innerText = likeAmount.toString()
+  likes2.innerText += likeAmount.toString()
   dislikes.innerText = disLikeAmount.toString()
-  console.log(voted2)
+  dislikes2.innerText += disLikeAmount.toString()
 }
 
 

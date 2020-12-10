@@ -123,3 +123,7 @@ input, select {
     box-sizing: border-box;
     margin: 1px;
 }
+
+#phoneNumber {
+    padding-bottom: 50px;
+}
