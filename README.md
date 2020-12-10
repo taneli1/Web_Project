@@ -40,5 +40,4 @@ $ npm i
 5. Run the app
 $ node app
 
-6. Open localhost:3000/ in the browser once and accept the https redirection. After this
-the app works
+6. If the app does not work correctly, open localhost:3000/ in the browser once and accept the https redirection through the advanced options.
