@@ -34,40 +34,39 @@
         </ul>
     </header>
 </div>
-    <div id="userInfo">
-        <div id="user" class="newBox">
-            <h2>
-                My information
-                <button id="edit" class="light-border" name="profileEdit">
-                    Edit
-                </button>
-            </h2>
-            <div class="newBox2">
-                <label>Name:</label>
-                <div id="userName"></div>
-                <br>
-                <label>City:</label>
-                <div id="user_city"></div>
-                <br>
-                <label>E-mail:</label>
-                <div id="eMail"></div>
-                <br>
-                <label>Phone number:</label>
-                <div id="phoneNumber"></div>
-            </div>
-        </div>
-        <div id="reputation" class="newBox">
-            <h2>
-                User reputation
-            </h2>
-            <div class="newBox2">
-                <h3 id="percentage"></h3>
-                <h3 id="likes">Likes: </h3>
-                <h3 id="dislikes">Dislikes: </h3>
-            </div>
+
+<div id="userInfo">
+    <div id="user" class="newBox">
+        <h2>
+            My information
+            <button id="edit" class="light-border" name="profileEdit">
+                Edit
+            </button>
+        </h2>
+        <div class="newBox2">
+            <label>Name:</label>
+            <div id="userName"></div><br>
+            <label>City:</label>
+            <div id="user_city"></div><br>
+            <label>E-mail:</label>
+            <div id="eMail"></div><br>
+            <label>Phone number:</label>
+            <div id="phoneNumber"></div>
+            <label>Account creation date: (yyyy-mm-dd)</label>
+            <div id="creationDate"></div>
         </div>
     </div>
-
+    <div id="reputation" class="newBox">
+        <h2>
+            User reputation
+        </h2>
+        <div class="newBox2">
+            <h3 id="percentage"></h3>
+            <h3 id="likes">Likes: </h3>
+            <h3 id="dislikes">Dislikes: </h3>
+        </div>
+    </div>
+</div>
 <form class="newBox"
       id="editProfile"
       enctype="multipart/form-data">
@@ -112,6 +111,7 @@
     </div>
 </div>
 </div>
+<script src="../../settings.js"></script>
 <script src="../js/summonAds.js"></script>
 <script src="../js/profile.js"></script>
 <script src="../js/serialize.js"></script>

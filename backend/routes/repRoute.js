@@ -14,7 +14,8 @@ router.get('/:id',
 // Check if logged user has voted for another user (For frontend display purposes)
 router.get('/vote/:id',
     passport.authenticate('jwt', {session: false}),
-    validate.paramId);
+    validate.paramId,
+    repController.rep_get_vote);
 
 // Save / modify a vote for user| :id = who to vote for, :value = 0,1 (dislike,like)
 router.post('/:id/:value',

@@ -1,10 +1,11 @@
-const url = 'http://localhost:3000';
+const url = window.url;
 
 const logoutButton1 = document.getElementById('logout1');
 const name = document.getElementById('userName');
 const city = document.getElementById('user_city');
 const eMail = document.getElementById('eMail');
 const phoneNumber = document.getElementById('phoneNumber');
+const creationDate = document.getElementById('creationDate');
 const editButton = document.getElementById('edit');
 const editField = document.getElementById('editProfile');
 const userInfo = document.getElementById('userInfo');
@@ -47,6 +48,8 @@ const getUserInfo = async () => {
     editEmail.setAttribute('value', user.email)
     phoneNumber.innerText = user.phone_number
     editPhoneNumber.setAttribute('value', user.phone_number)
+    const date = user.creation_date.toString().substring(0, user.creation_date.toString().indexOf('T'));
+    creationDate.innerText = date
     await getLikes(userId)
   }
   catch (e) {
@@ -159,7 +162,12 @@ const getLikes = async (userId) => {
   }
   percentageValue =  likeAmount / (likeAmount + disLikeAmount) * 100
   const percentageRounded = Math.round(percentageValue * 10) / 10
-  percentage.innerText = "(" + percentageRounded + "%)"
+  if (isNaN(percentageRounded)){
+    percentage.innerText = "No reviews yet"
+  }
+  else {
+    percentage.innerText = "(" + percentageRounded + "%)"
+  }
   likes.innerText = likeAmount.toString()
   dislikes.innerText = disLikeAmount.toString()
 }

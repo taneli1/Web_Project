@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'http://localhost:3000';
+const url = window.url;
 
 let searched = localStorage.getItem('searched');
 let adType = localStorage.getItem('adType');

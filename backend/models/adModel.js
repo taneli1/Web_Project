@@ -245,7 +245,7 @@ const postAd = async (req) => {
 
 /**
  * Save images to db, return the insertId , which is then saved to ad table
- * with all the other data
+ * with all the other dbInit
  */
 const postImages = async (req) => {
 
@@ -276,7 +276,7 @@ const postImages = async (req) => {
  */
 const deleteAdById = async (req) => {
 
-  const adId = req.params.ad_id;
+  const adId = req.params.id;
   try {
     const [ad] = await promisePool.execute(
         'DELETE FROM bm_ad ' +
@@ -317,7 +317,7 @@ const getAllCategories = async (req) => {
  */
 const getAdLister = async (req) => {
 
-  const deleteId = req.params.ad_id;
+  const deleteId = req.params.id;
   try {
     const [rows] = await promisePool.execute(
         'SELECT listed_by FROM bm_ad ' +

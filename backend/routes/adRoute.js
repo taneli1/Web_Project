@@ -27,7 +27,7 @@ const resizeImages = async (req, res, next) => {
 };
 
 // Image(s) upload destination
-const upload = multer({dest: './ads/images/', fileFilter});
+const upload = multer({dest: './public/images/', fileFilter});
 
 // Specify ad type (buy/sell) and fetch all of them
 router.get('/:ad_type',
@@ -68,7 +68,7 @@ router.post('/',
     adController.ad_post);
 
 // Delete an ad, route needs user to be logged in
-router.delete('/:ad_id',
+router.delete('/:id',
     passport.authenticate('jwt', {session: false}),
     validate.paramId,
     adController.ad_delete_by_id);

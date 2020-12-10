@@ -1,5 +1,5 @@
 
-const url = 'http://localhost:3000';
+const url = window.url;
 
 
 const createNewAd = document.getElementById("createNewAd")
@@ -58,7 +58,7 @@ createNewAd.addEventListener('submit', async (evt) => {
     console.log(fetchOptions.body)
     await fetch(url + '/ad/', fetchOptions);
     document.location.href = '../html/main.html'
-    window.alert("CREATEd")
+    window.alert("Ad created")
   }
   catch (e) {
     console.log(e)
