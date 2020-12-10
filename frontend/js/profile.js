@@ -16,6 +16,8 @@ const editPhoneNumber = document.querySelector("form[id='editProfile'] input[nam
 let likes = document.getElementById('likes')
 let dislikes = document.getElementById('dislikes')
 const percentage = document.getElementById('percentage')
+const likes2 = document.getElementById('likes2')
+const dislikes2 = document.getElementById('dislikes2')
 
 const getReputationValues = async (id) => {
 
@@ -168,8 +170,8 @@ const getLikes = async (userId) => {
   else {
     percentage.innerText = "(" + percentageRounded + "%)"
   }
-  likes.innerText = likeAmount.toString()
-  dislikes.innerText = disLikeAmount.toString()
+  likes2.innerText = "👍" + likeAmount.toString()
+  dislikes2.innerText = "👎" + disLikeAmount.toString()
 }
 
 getAllAds()
