@@ -23,7 +23,7 @@ DB_HOST = **
 DB_USER = **
 DB_PASS = **
 DB_NAME = **
-NODE_ENV = production/development
+NODE_ENV = development
 HTTP_PORT = 3000
 HTTPS_PORT = 8000
 PORT = 3000
@@ -40,5 +40,4 @@ $ npm i
 5. Run the app
 $ node app
 
-6. Open localhost:3000/ in the browser once and accept the https redirection. After this
-the app works
+6. If the app does not work correctly, open localhost:3000/ in the browser once and accept the https redirection through the advanced options.
