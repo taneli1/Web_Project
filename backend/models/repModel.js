@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 const TAG = 'repModel: ';
 
 /*
-  Provides the reputation data for users.
+  Provides the reputation dbInit for users.
  */
 
 const userExists = async (userId) => {

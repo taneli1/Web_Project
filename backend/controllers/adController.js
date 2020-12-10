@@ -5,7 +5,7 @@ const adModel = require('../models/adModel');
 const {resizeImg} = require('../utils/resize');
 
 /*
-  Gets data from adModel to respond to different requests from adRoute.
+  Gets dbInit from adModel to respond to different requests from adRoute.
  */
 
 // ------------------------ Basic ad stuff --------------------------------
