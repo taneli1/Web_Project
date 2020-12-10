@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link href="../css/login.css" rel="stylesheet">
+    <link href="../css/header.css" rel="stylesheet">
+    <link href="../css/breakpoints3.css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <header class="page-header">
+        <h1>
+            <a href="../html/main.html">BetterMarket</a>
+        </h1>
+    </header>
+</div>
+<div class="forms" id="login-wrapper">
+    <div class="form-wrapper">
+        <form class="newBox" id="login-form">
+            <h2>Login</h2>
+            <div class="newBox1">
+                <div>
+                    <label>Email:</label>
+                    <input class="light-border"
+                           type="text"
+                           maxlength="50"
+                           name="email"/>
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input class="light-border"
+                           type="password"
+                           name="password"/>
+                </div>
+                <div>
+                    <button class="light-border" type="submit">Log In</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="form-wrapper">
+        <form class="newBox" id="add-user-form">
+            <h2>Register</h2>
+            <div class="newBox1">
+                <input class="light-border"
+                       type="text"
+                       name="name"
+                       pattern=".{3,40}"
+                       maxlength="40"
+                       placeholder="Name"
+                       required>
+                <input class="light-border"
+                       type="email"
+                       maxlength="50"
+                       name="email"
+                       placeholder="email"
+                       required>
+                <input class="light-border"
+                       name="phone_number"
+                       type="number"
+                       placeholder="phone number"
+                       pattern="^[0-9]{8,13}+$"
+                       required>
+                <input class="light-border"
+                       name="city"
+                       type="text"
+                       placeholder="city"
+                       pattern=".{3,50}"
+                       maxlength="50"
+                       required>
+                <input class="light-border"
+                       type="password"
+                       name="password"
+                       pattern="(?=.*[A-Z]).{8,}"
+                       placeholder="Password" required>
+                <button class="light-border" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../js/settings.js"></script>
+<script src="../js/serialize.js"></script>
+<script src="../js/login.js"></script>
+</body>
+</html>

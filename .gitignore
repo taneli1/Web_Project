@@ -13,7 +13,7 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# Runtime data
+# Runtime dbInit
 pids
 *.pid
 *.seed
@@ -123,5 +123,12 @@ Temporary Items
 # DB conf
 bm_data.txt
 
+# Uploads
 ads
-/uploads/
+.ads
+public
+
+# Cert
+certrequest.csr
+ssl-key.pem
+ssl-cert.pem

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search page</title>
+    <link href="../css/searchPage.css" rel="stylesheet">
+    <link href="../css/header.css" rel="stylesheet">
+    <link href="../css/items.css" rel="stylesheet">
+    <link href="../css/breakpoints2.css" rel="stylesheet">
+</head>
+<body>
+<div class="flex-container">
+    <div class="header">
+        <header class="page-header">
+            <h1>
+                <a href="../html/main.html">BetterMarket</a>
+            </h1>
+        </header>
+    </div>
+
+    <div id="searchDiv">
+        <div id="searchCategories">
+            <label for="category">Choose a category:</label>
+            <select name="category"
+                    class="light-border"
+                    id="category">
+                <option value="empty" selected>All categories</option>
+            </select>
+        </div>
+
+        <input id="adType"
+               type="hidden"
+               value=""
+               name="ad_type">
+
+        <div class="search-boxS" id="searchBS">
+            <form name="search-form">
+                <input type="text" id="searchPageS" placeholder="Search">
+            </form>
+            <button id="searchButtonS" onclick="search()">Search</button>
+        </div>
+        <div id="ad_typeS">
+            <label for="ad_buy">Buy </label>
+                <input class="ad_typeS" type="radio" id="ad_buy" name="ad_typeSelector" value="buy" required/>
+            <label for="ad_sell">Sell </label>
+                <input class="ad_typeS" type="radio" id="ad_sell" name="ad_typeSelector" value="sell" checked/>
+        </div>
+    </div>
+    <div id="new-item"></div>
+</div>
+</body>
+<script src="../js/settings.js"></script>
+<script src="../js/summonAds.js"></script>
+<script src="../js/searchPage.js"></script>
+</html>

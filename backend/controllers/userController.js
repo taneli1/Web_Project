@@ -13,7 +13,6 @@ const {validationResult} = require('express-validator');
 
 /**
  * Get all users
- * @see userModel.getAllUsers()
  */
 const user_list_get = async (req, res) => {
   const users = await userModel.getAllUsers();
