@@ -138,14 +138,21 @@ const getLikes = async (user_id) => {
     catch (e) {
       console.log(e.message)
     }
-    if (voted2[0].is_like === 0){
+    if (voted2[0]){
+      if (voted2[0].is_like === 0){
+        showButton(likeButton)
+        hideButton(dislikeButton)
+      }
+      else {
+        showButton(dislikeButton)
+        hideButton(likeButton)
+      }
+    }else{
       showButton(likeButton)
-      hideButton(dislikeButton)
-    }
-    else {
       showButton(dislikeButton)
-      hideButton(likeButton)
+
     }
+
   }
 
   let likeAmount = 0
