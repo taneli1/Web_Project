@@ -96,5 +96,11 @@
         justify-content: space-evenly;
         min-height: 500px;
     }
+}
 
+@media only screen and (max-width: 790px) {
+    body {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
 }

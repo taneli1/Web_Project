@@ -131,6 +131,7 @@
 
     #reputation {
         width: 80%;
+        margin-left: 0px;
     }
 
     #user {
@@ -151,5 +152,12 @@
 
     button[name="profileSave"] {
         font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 790px) {
+    body {
+        margin-right: 0px;
+        margin-left: 0px;
     }
 }
