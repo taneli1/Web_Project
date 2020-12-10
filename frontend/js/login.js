@@ -1,8 +1,8 @@
-const login = document.getElementById('login-form')
-const signIn = document.getElementById('add-user-form')
-const url = 'http://10.114.32.43'
+const login = document.getElementById('login-form');
+const signIn = document.getElementById('add-user-form');
+const url = window.url;
 
-// login
+// Form for logging in, which is sent to database
 login.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(login);
@@ -15,18 +15,19 @@ login.addEventListener('submit', async (evt) => {
   };
 
   const response = await fetch(url + '/auth/login/', fetchOptions);
-  console.log(response)
+  console.log(response);
   const json = await response.json();
   console.log('login response', json);
   if (!json.user) {
     alert(json.message);
   } else {
     // save token to cookie
-    set_cookie("token", json.token)
-    document.location.href = '../html/main.html'
+    set_cookie('token', json.token);
+    document.location.href = '../html/main.html';
   }
 });
 
+//sign in = create new account
 signIn.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(signIn);
@@ -39,14 +40,20 @@ signIn.addEventListener('submit', async (evt) => {
   };
 
   const RegResponse = await fetch(url + '/auth/register/', fetchOptions);
-  console.log(RegResponse)
+  console.log(RegResponse);
   const json = await RegResponse.json();
   console.log('sign-in response', json);
-  set_cookie("token", json.token)
-  //document.location.href = '../html/main.html'
+  if (json.token === undefined) {
+    window.alert('Account with this e-mail already exists');
+  } else {
+    set_cookie('token', json.token);
+    document.location.href = '../html/main.html';
+    window.alert('Account successfully created');
+  }
+
 });
 
-
-function set_cookie(name, value) {
-  document.cookie = name +'='+ value +'; Path=/;';
-}
+// Function for setting a cookie by name and value
+const set_cookie = (name, value) => {
+  document.cookie = name + '=' + value + '; Path=/;';
+};

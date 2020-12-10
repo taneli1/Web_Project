@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="../css/header.css" rel="stylesheet">
+    <link href="../css/profile.css" rel="stylesheet">
+    <link href="../css/items.css" rel="stylesheet">
+    <link href="../css/breakpoints.css" rel="stylesheet">
+</head>
+<body>
+<div class="flex-container">
+<div class="header">
+    <header class="page-header">
+        <h1>
+            <a href="main.html">BetterMarket</a>
+        </h1>
+        <ul>
+            <li id="logout1">
+                <a href="../html/main.html">
+                    <button class="light-border">
+                        Logout
+                    </button>
+                </a>
+            </li>
+            <li id="createAd">
+                <a href="../html/adCreation.html">
+                    <button class="light-border">
+                        Create new ad
+                    </button>
+                </a>
+            </li>
+        </ul>
+    </header>
+</div>
+
+<div id="userInfo">
+    <div id="user" class="newBox">
+        <h2>
+            My information
+            <button id="edit" class="light-border" name="profileEdit">
+                Edit
+            </button>
+        </h2>
+        <div class="newBox2">
+            <label>Name:</label>
+            <div id="userName"></div><br>
+            <label>City:</label>
+            <div id="user_city"></div><br>
+            <label>E-mail:</label>
+            <div id="eMail"></div><br>
+            <label>Phone number:</label>
+            <div id="phoneNumber"></div>
+            <label>Account creation date: (yyyy-mm-dd)</label>
+            <div id="creationDate"></div>
+        </div>
+    </div>
+    <div id="reputation" class="newBox">
+        <h2>
+            My reputation
+        </h2>
+        <div class="newBox2">
+            <h3 id="percentage"></h3>
+            <a id="likes2"></a>
+            <a id="dislikes2"></a>
+        </div>
+    </div>
+</div>
+<form class="newBox"
+      id="editProfile"
+      enctype="multipart/form-data">
+    <div class="newBox3">
+        <label>Name:</label>
+        <input class="light-border"
+               type="text"
+               pattern=".{3,40}"
+               maxlength="40"
+               placeholder="Name"
+               name="editUserName"
+               required>
+        <label>City:</label>
+        <input class="light-border"
+               type="text"
+               placeholder="city"
+               pattern=".{3,50}"
+               maxlength="50"
+               name="editCity"
+               required>
+        <label>E-mail:</label>
+        <input class="light-border"
+               placeholder="email"
+               type="email"
+               maxlength="50"
+               name="editEmail"
+               required>
+        <label>Phone number:</label>
+        <input class="light-border"
+               name="editPhoneNumber"
+               type="number"
+               placeholder="phone number"
+               pattern="^[0-9]{8,13}+$"
+               required>
+        <button class="light-border" type="submit" name="profileSave">Save</button>
+    </div>
+</form>
+
+<h2 id="myAds">My ads</h2>
+<div id="ads">
+    <div id="new-item">
+    </div>
+</div>
+</div>
+<script src="../../settings.js"></script>
+<script src="../js/summonAds.js"></script>
+<script src="../js/profile.js"></script>
+<script src="../js/serialize.js"></script>
+
+</body>
+</html>
