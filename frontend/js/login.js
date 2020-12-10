@@ -43,10 +43,15 @@ signIn.addEventListener('submit', async (evt) => {
   console.log(RegResponse);
   const json = await RegResponse.json();
   console.log('sign-in response', json);
-  //set cookie to instantly log user in as well
-  // DOESN'T WORK
-  set_cookie('token', json.token);
-  document.location.href = '../html/main.html';
+  if (json.token === undefined){
+    window.alert("Account with this e-mail already exists")
+  }
+  else {
+    set_cookie("token", json.token)
+    document.location.href = '../html/main.html'
+    window.alert("Account successfully created")
+  }
+
 });
 
 // Function for setting a cookie by name and value
