@@ -142,6 +142,7 @@ const disLikeUser = async () => {
 //Function for getting all the likes and dislikes for that user
 const getLikes = async (user_id) => {
   const voted = await fetch(url + '/rep/vote/' + user_id)
+  console.log(url + '/rep/vote/' + user_id)
   console.log(voted)
   let likeAmount = 0
   let disLikeAmount = 0
