@@ -95,12 +95,6 @@ const likeUser = async () => {
     };
     try {
       await fetch(url + '/rep/' + user.user_id + '/' + "1", fetchOptions);
-      likeButton.style.border = "0px"
-      likeButton.style.outline = "none"
-      likeButton.style.backgroundColor = "white"
-      dislikeButton.style.border = "1px solid #00091e"
-      dislikeButton.style.outline = "auto"
-      dislikeButton.style.backgroundColor = "rgb(239, 239, 239)"
       await getLikes(user.user_id)
     }
     catch (e) {
@@ -125,12 +119,6 @@ const disLikeUser = async () => {
     };
     try {
       await fetch(url + '/rep/' + user.user_id + '/' + "0", fetchOptions);
-      dislikeButton.style.border = "0px"
-      dislikeButton.style.outline = "none"
-      dislikeButton.style.backgroundColor = "white"
-      likeButton.style.border = "1px solid #00091e"
-      likeButton.style.outline = "auto"
-      likeButton.style.backgroundColor = "rgb(239, 239, 239)"
       await getLikes(user.user_id)
     }
     catch (e) {
@@ -141,8 +129,30 @@ const disLikeUser = async () => {
 
 //Function for getting all the likes and dislikes for that user
 const getLikes = async (user_id) => {
-  const voted = await fetch(url + '/rep/vote/' + user_id)
-  console.log(voted)
+  let voted2
+  try {
+    const token = getCookie("token")
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+    };
+    const voted = await fetch(url + '/rep/vote/' + user_id, fetchOptions)
+    voted2 = await voted.json()
+  }
+  catch (e) {
+    console.log(e.message)
+  }
+  if (voted2[0].is_like === 0){
+    showButton(likeButton)
+    hideButton(dislikeButton)
+  }
+  else {
+    showButton(dislikeButton)
+    hideButton(likeButton)
+  }
   let likeAmount = 0
   let disLikeAmount = 0
   let percentageValue
@@ -158,11 +168,28 @@ const getLikes = async (user_id) => {
   }
   percentageValue =  likeAmount / (likeAmount + disLikeAmount) * 100
   const percentageRounded = Math.round(percentageValue * 10) / 10
-  percentage.innerText = "(" + percentageRounded + "% recommends)"
+  if (isNaN(percentageRounded)){
+    percentage.innerText = "No reviews yet"
+  }
+  else {
+    percentage.innerText = "(" + percentageRounded + "% recommends)"
+  }
   likes.innerText = likeAmount.toString()
   likes2.innerText += likeAmount.toString()
   dislikes.innerText = disLikeAmount.toString()
   dislikes2.innerText += disLikeAmount.toString()
+}
+
+const hideButton = (button) => {
+  button.style.border = "0px"
+  button.style.outline = "none"
+  button.style.backgroundColor = "white"
+}
+
+const showButton = (button) => {
+  button.style.border = "1px solid #00091e"
+  button.style.outline = "auto"
+  button.style.backgroundColor = "rgb(239, 239, 239)"
 }
 
 

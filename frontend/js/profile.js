@@ -168,7 +168,7 @@ const getLikes = async (userId) => {
     percentage.innerText = "No reviews yet"
   }
   else {
-    percentage.innerText = "(" + percentageRounded + "%)"
+    percentage.innerText = "(" + percentageRounded + "% recommends)"
   }
   likes2.innerText = "👍" + likeAmount.toString()
   dislikes2.innerText = "👎" + disLikeAmount.toString()
