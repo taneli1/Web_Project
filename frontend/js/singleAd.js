@@ -1,48 +1,48 @@
 'use strict';
 
-//const item = document.location.href = '../html/main.html';
 const url = window.url;
 let getItemId = localStorage.getItem('itemId');
 let listedBy = localStorage.getItem('listedBy');
-const deleteButton = document.getElementById('deleteButton')
-const profileButton = document.getElementById('profileButton')
+const deleteButton = document.getElementById('deleteButton');
+const profileButton = document.getElementById('profileButton');
 
-deleteButton.style.display = "none"
+deleteButton.style.display = 'none';
 
+/*Adds event listener to profile button*/
 profileButton.addEventListener('click', async () => {
-  let myId
-  const token = getCookie("token")
-  if (token === undefined){
+  let myId;
+  const token = getCookie('token');
+  if (token === undefined) {
     document.location.href = '../html/otherProfiles.html';
+  } else {
+    myId = tokenFormatter(token).toString();
   }
-  else {
-    myId = tokenFormatter(token).toString()
-  }
-  if (listedBy === myId){
+  if (listedBy === myId) {
     document.location.href = '../html/profile.html';
-  }
-  else {
+  } else {
     document.location.href = '../html/otherProfiles.html';
   }
-})
+});
 
+/*Creates the delete button*/
 const createDeleteButton = (listedBy) => {
-  let userId
-  const token = getCookie("token")
-  if (token === undefined){
-    console.log("voi voi")
+  let userId;
+  const token = getCookie('token');
+  if (token === undefined) {
+    console.log('voi voi');
+  } else {
+    userId = tokenFormatter(token).toString();
   }
-  else {
-    userId = tokenFormatter(token).toString()
+  console.log('here are the ids', listedBy, userId);
+  if (listedBy.toString() === userId) {
+    deleteButton.style.display = 'block';
+    deleteAd(token);
   }
-  console.log("here are the ids", listedBy, userId)
-  if (listedBy.toString() === userId){
-    deleteButton.style.display = "block"
-    deleteAd(token)
-  }
-}
+};
 
+/*Adds event listener to delete button and handles the deletion*/
 const deleteAd = async (token) => {
+  const itemId2 = parseInt(getItemId);
   deleteButton.addEventListener('click', async () => {
     const fetchOptions = {
       method: 'DELETE',
@@ -51,28 +51,26 @@ const deleteAd = async (token) => {
         'Authorization': 'Bearer ' + token,
       },
     };
-    console.log(getItemId)
-    const response = await fetch(url + '/ad/' + getItemId, fetchOptions);
-    const json = await response.json();
-    console.log(json);
-    window.alert("delete successful");
-  })
-}
+    await fetch(url + '/ad/' + itemId2, fetchOptions);
+    document.location.href = '../html/profile.html';
+    window.alert('delete successful');
+  });
+};
+
 // Formatter for json parse
 const tokenFormatter = (token) => {
-  const id1 = token.substring(token.indexOf(".") + 1);
+  const id1 = token.substring(token.indexOf('.') + 1);
   const id2 = id1.substring(0, id1.indexOf('.'));
-  const data = atob(id2)
-  const jsonData = JSON.parse(data)
-  return jsonData.user_id
-}
+  const data = atob(id2);
+  const jsonData = JSON.parse(data);
+  return jsonData.user_id;
+};
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
+};
 
 const putItemsToBoxes = async () => {
   const fetchOptions = {
@@ -83,14 +81,15 @@ const putItemsToBoxes = async () => {
   };
   const response = await fetch(url + '/ad/id/' + getItemId, fetchOptions);
   const json = await response.json();
-  const user_id = json.user_id
-  createDeleteButton(user_id)
-  await createNewItems(json)
-}
-putItemsToBoxes()
+  const user_id = json.user_id;
+  createDeleteButton(user_id);
+  await createNewItems(json);
+};
+putItemsToBoxes();
 
+/*Create all the items of this user by looping through them 1 by 1*/
 const createNewItems = async (items) => {
-  console.log("items: ", items)
+  console.log('items: ', items);
   let item = {
     'name': '',
     'image': '',
@@ -99,11 +98,12 @@ const createNewItems = async (items) => {
     'desc': '',
     'category': '',
     'listed_by': '',
+    'listDate': '',
   };
 
   const response = await fetch(url + '/user' + '/' + items.user_id);
   const user = await response.json();
-  console.log(user)
+  console.log(user);
 
   item.name = items.item_name != null ?
       items.item_name : 'No name';
@@ -119,10 +119,14 @@ const createNewItems = async (items) => {
       items.category : 'No category';
   item.user_id = user.name != null ?
       user.name : 'No username';
+  item.posted_on = items.posted_on != null ?
+      items.posted_on : 'No date';
   showItems(item);
 };
 
-
+// After getting all the info from 1 item, the values are
+// passed to this function, which
+// transforms it into a div (box) of it's own
 const showItems = (item) => {
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
@@ -165,10 +169,18 @@ const showItems = (item) => {
   catText.innerHTML += 'Category: ';
   cat.innerHTML += item.category;
 
-  let listedText = document.createElement('label')
+  let listedText = document.createElement('label');
   let user_id = document.createElement('a');
   new_item_slot.appendChild(listedText);
-  new_item_slot.appendChild(user_id)
+  new_item_slot.appendChild(user_id);
   listedText.innerHTML += 'Listed by: ';
   user_id.innerHTML += item.user_id;
+
+  let date = document.createElement('label');
+  let dateText = document.createElement('a');
+  new_item_slot.appendChild(date);
+  new_item_slot.appendChild(dateText);
+  date.innerHTML += 'Posted on: ';
+  const date2 = item.posted_on.substring(0, item.posted_on.indexOf('T'));
+  dateText.innerHTML += date2;
 };

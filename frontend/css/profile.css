@@ -103,7 +103,28 @@ input, select {
     display: block;
     margin-left: 10px;
     height: fit-content;
+    font-size: 20px;
 }
  #userInfo {
      display: flex;
  }
+
+#likeButton {
+    font-size: 20px;
+    border-radius: 8px;
+    border: 1px solid #00091e;
+    box-sizing: border-box;
+    margin: 1px;
+}
+
+#dislikeButton {
+    font-size: 20px;
+    border-radius: 8px;
+    border: 1px solid #00091e;
+    box-sizing: border-box;
+    margin: 1px;
+}
+
+#phoneNumber {
+    padding-bottom: 50px;
+}

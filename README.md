@@ -1,5 +1,15 @@
 # BetterMarket
-Marketplace for secondhand items
+
+Marketplace for secondhand items.
+
+
+Contributors: 
+Teme8 = Teemu Tirkkonen
+j4zuu  = Jasu Honkanen
+taneli1 = Leevi Limnell
+
+
+
 
 Installation: 
 
@@ -7,7 +17,8 @@ Installation:
 
 2. Create a folder "public" to the project folder and a folder "thumbnails" inside of it.
 
-3. Create a file: .env and add all of these:
+3. Create a file ".env" to the project root folder and add all of these into it:
+
 DB_HOST = **
 DB_USER = **
 DB_PASS = **
@@ -16,6 +27,7 @@ NODE_ENV = production/development
 HTTP_PORT = 3000
 HTTPS_PORT = 8000
 PORT = 3000
+
 
 3. Create required certification files to the root project folder:
 $ openssl genrsa -out ssl-key.pem 2048
