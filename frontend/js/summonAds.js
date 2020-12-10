@@ -1,4 +1,3 @@
-
 //  Create all the items of this user by looping through them 1 by 1
 window.createNewItems = async (items) => {
   let item = {
@@ -11,9 +10,9 @@ window.createNewItems = async (items) => {
 
   for (let i = 0; i < items.length; i++) {
     const response = await fetch(url + '/user' + '/' + items[i].user_id);
-    console.log(items)
+    console.log(items);
     const user = await response.json();
-    let itemId = items[i].ad_id
+    let itemId = items[i].ad_id;
 
     item.name = items[i].item_name != null ?
         items[i].item_name : 'No name';
@@ -32,21 +31,20 @@ window.createNewItems = async (items) => {
 // passed to this function, which
 // transforms it into a div (box) of it's own
 const showItems = (item, user, itemId) => {
-  console.log("here are the items 3.0", item)
-
+  console.log('here are the items 3.0', item);
 
   let new_item = document.getElementById('new-item');
   let new_item_slot = document.createElement('div');
   new_item.appendChild(new_item_slot);
 
   let h2E = document.createElement('h4');
-  h2E.setAttribute("id", "name")
+  h2E.setAttribute('id', 'name');
   new_item_slot.appendChild(h2E);
   let item_name = document.createTextNode(item.name);
   h2E.appendChild(item_name);
 
   let price = document.createElement('h4');
-  price.setAttribute("id", "price")
+  price.setAttribute('id', 'price');
   new_item_slot.appendChild(price);
   price.innerHTML += item.price + '€';
 
@@ -59,14 +57,12 @@ const showItems = (item, user, itemId) => {
   new_item_slot.appendChild(cityText);
   cityText.innerHTML += 'Location: ' + item.city;
 
-
   let catText = document.createElement('a');
   new_item_slot.appendChild(catText);
   catText.innerHTML += 'Category: ' + item.category;
 
   clickItem(new_item_slot, user, itemId);
 };
-
 
 // after item and a div for it are created, we set an click listener to it
 // that redirects to the clicked individual div
@@ -75,7 +71,7 @@ const showItems = (item, user, itemId) => {
 const clickItem = (item, user, itemId) => {
   item.addEventListener('click', function() {
     document.location.href = '../html/singleAd.html';
-    localStorage.setItem('listedBy', user.user_id)
+    localStorage.setItem('listedBy', user.user_id);
     localStorage.setItem('itemId', itemId);
   });
 };

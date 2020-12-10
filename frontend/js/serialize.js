@@ -35,11 +35,11 @@ if (!Array.prototype.reduce) {
   Object.defineProperty(Array.prototype, 'reduce', {
     value: function(callback /*, initialValue*/) {
       if (this === null) {
-        throw new TypeError( 'Array.prototype.reduce ' +
-            'called on null or undefined' );
+        throw new TypeError('Array.prototype.reduce ' +
+            'called on null or undefined');
       }
       if (typeof callback !== 'function') {
-        throw new TypeError( callback +
+        throw new TypeError(callback +
             ' is not a function');
       }
 
@@ -63,8 +63,8 @@ if (!Array.prototype.reduce) {
         // 3. If len is 0 and initialValue is not present,
         //    throw a TypeError exception.
         if (k >= len) {
-          throw new TypeError( 'Reduce of empty array ' +
-              'with no initial value' );
+          throw new TypeError('Reduce of empty array ' +
+              'with no initial value');
         }
         value = o[k++];
       }
@@ -88,41 +88,42 @@ if (!Array.prototype.reduce) {
 
       // 9. Return accumulator.
       return value;
-    }
+    },
   });
 }
 
 // main function
-function serializeJson (form, protected = false) {
+function serializeJson(form, protected = false) {
   var data = {}, form_arr = [];
   // export to array
-  if(typeof HTMLFormElement === "function" && form instanceof HTMLFormElement) {
-    for(var i in form.elements) {
-      if(form.elements[i] instanceof HTMLInputElement ||
+  if (typeof HTMLFormElement === 'function' && form instanceof
+      HTMLFormElement) {
+    for (var i in form.elements) {
+      if (form.elements[i] instanceof HTMLInputElement ||
           form.elements[i] instanceof HTMLSelectElement ||
           form.elements[i] instanceof HTMLTextAreaElement)
-        form_arr.push({name:form.elements[i].name, value:form.elements[i].value});
+        form_arr.push(
+            {name: form.elements[i].name, value: form.elements[i].value});
     }
-  }
-  else if(Array.isArray(form)) {
+  } else if (Array.isArray(form)) {
     form_arr = form;
   }
 
   // serialize to json
-  data = form_arr.reduce(function (r, o) {
+  data = form_arr.reduce(function(r, o) {
     var s = r, arr = o.name.split('.');
     arr.forEach((n, k) => {
-      var ck = n.replace(/\[[0-9]*\]$/, "");
+      var ck = n.replace(/\[[0-9]*\]$/, '');
       if (!s.hasOwnProperty(ck))
-        s[ck] = (new RegExp("\[[0-9]*\]$").test(n)) ? [] : {};
+        s[ck] = (new RegExp('\[[0-9]*\]$').test(n)) ? [] : {};
       if (s[ck] instanceof Array) {
-        var i = parseInt((n.match(new RegExp("([0-9]+)\]$")) || []).pop(), 10);
+        var i = parseInt((n.match(new RegExp('([0-9]+)\]$')) || []).pop(), 10);
         i = isNaN(i) ? s[ck].length : i;
         s[ck][i] = s[ck][i] || {};
-        if(k === arr.length - 1) {
-          if(protected && JSON.stringify({}) !== JSON.stringify(s[ck][i])) {
+        if (k === arr.length - 1) {
+          if (protected && JSON.stringify({}) !== JSON.stringify(s[ck][i])) {
 
-            while(s[ck][i] !== undefined) {
+            while (s[ck][i] !== undefined) {
               var tmp = s[ck][i];
               s[ck][i] = o.value;
               o.value = tmp;
@@ -130,12 +131,10 @@ function serializeJson (form, protected = false) {
             }
           }
           return s[ck][i] = o.value;
-        }
-        else {
+        } else {
           return s = s[ck][i];
         }
-      }
-      else {
+      } else {
         return (k === arr.length - 1) ? s[ck] = o.value : s = s[ck];
       }
     });
@@ -145,15 +144,15 @@ function serializeJson (form, protected = false) {
 }
 
 // for jquery
-if(typeof jQuery !== "undefined") {
+if (typeof jQuery !== 'undefined') {
   jQuery.fn.extend({
     serializeJson: function() {
-      return serializeJson( this.serializeArray() );
-    }
+      return serializeJson(this.serializeArray());
+    },
   });
 }
 
 // for nodejs
-if(typeof module !== "undefined") {
+if (typeof module !== 'undefined') {
   module.exports = serializeJson;
 }
