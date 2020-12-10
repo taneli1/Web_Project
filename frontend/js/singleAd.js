@@ -1,7 +1,7 @@
 'use strict';
 
 //const item = document.location.href = '../html/main.html';
-const url = 'http://localhost:3000';
+const url = window.url;
 let getItemId = localStorage.getItem('itemId');
 let listedBy = localStorage.getItem('listedBy');
 const deleteButton = document.getElementById('deleteButton')
@@ -135,7 +135,7 @@ const showItems = (item) => {
 
   let image = document.createElement('figure');
   new_item_slot.appendChild(image);
-  image.innerHTML += '<img src="' + '../../ads/images/' + item.image +
+  image.innerHTML += '<img src="' + '../../public/images/' + item.image +
       '" alt="There is no picture">\n';
 
   let cityText = document.createElement('label');

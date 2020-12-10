@@ -5,7 +5,7 @@ const adModel = require('../models/adModel');
 const {resizeImg} = require('../utils/resize');
 
 /*
-  Gets data from adModel to respond to different requests from adRoute.
+  Gets dbInit from adModel to respond to different requests from adRoute.
  */
 
 // ------------------------ Basic ad stuff --------------------------------
@@ -89,7 +89,7 @@ const ad_get_by_category = async (req, res) => {
 const resize_image = async (file, res, next) => {
   try {
     const ready = await resizeImg({width: 320, height: 320}, file.path,
-        './ads/thumbnails/' + file.filename);
+        './public/thumbnails/' + file.filename);
     if (ready) {
       console.log(TAG, 'Resize', ready);
       next();

@@ -245,7 +245,7 @@ const postAd = async (req) => {
 
 /**
  * Save images to db, return the insertId , which is then saved to ad table
- * with all the other data
+ * with all the other dbInit
  */
 const postImages = async (req) => {
 
