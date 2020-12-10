@@ -195,6 +195,11 @@ const showButton = (button) => {
   button.style.backgroundColor = 'rgb(239, 239, 239)';
 };
 
+// Button for logging out
+logoutButton.addEventListener('click', async () => {
+  delete_cookie("token");
+})
+
 likeUser();
 disLikeUser();
 getUserInfo();
