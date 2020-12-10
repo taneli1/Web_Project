@@ -49,19 +49,37 @@
     </header>
 </div>
 
-<div class="newBox" id="userInfo">
-    <h2>
-        User information
-    </h2>
-    <div class="newBox2">
-        <label>Name:</label>
-        <div id="userName"></div><br>
-        <label>City:</label>
-        <div id="user_city"></div><br>
-        <label>E-mail:</label>
-        <div id="eMail"></div><br>
-        <label>Phone number:</label>
-        <div id="phoneNumber"></div>
+<div id="userInfo">
+    <div id="user" class="newBox">
+        <h2>
+            User information
+        </h2>
+        <div class="newBox2">
+            <label>Name:</label>
+            <div id="userName"></div><br>
+            <label>City:</label>
+            <div id="user_city"></div><br>
+            <label>E-mail:</label>
+            <div id="eMail"></div><br>
+            <label>Phone number:</label>
+            <div id="phoneNumber"></div>
+        </div>
+    </div>
+    <div id="reputation" class="newBox">
+        <h2>
+            User reputation
+        </h2>
+        <div class="newBox2">
+            <h3 id="percentage"></h3>
+            <h3 id="likes">Likes: </h3>
+            <button id="likeButton">
+                Like
+            </button>
+            <h3 id="dislikes">Dislikes: </h3>
+            <button id="dislikeButton">
+                Dislike
+            </button>
+        </div>
     </div>
 </div>
 <h2 id="myAds">This user's ads</h2>

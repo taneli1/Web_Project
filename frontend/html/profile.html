@@ -32,22 +32,34 @@
     </header>
 </div>
 
-<div class="newBox" id="userInfo">
-    <h2>
-        My information
-        <button id="edit" class="light-border">
-            Edit
-        </button>
-    </h2>
-    <div class="newBox2">
-        <label>Name:</label>
-        <div id="userName"></div><br>
-        <label>City:</label>
-        <div id="user_city"></div><br>
-        <label>E-mail:</label>
-        <div id="eMail"></div><br>
-        <label>Phone number:</label>
-        <div id="phoneNumber"></div>
+<div id="userInfo">
+    <div id="user" class="newBox">
+        <h2>
+            My information
+            <button id="edit" class="light-border">
+                Edit
+            </button>
+        </h2>
+        <div class="newBox2">
+            <label>Name:</label>
+            <div id="userName"></div><br>
+            <label>City:</label>
+            <div id="user_city"></div><br>
+            <label>E-mail:</label>
+            <div id="eMail"></div><br>
+            <label>Phone number:</label>
+            <div id="phoneNumber"></div>
+        </div>
+    </div>
+    <div id="reputation" class="newBox">
+        <h2>
+            User reputation
+        </h2>
+        <div class="newBox2">
+            <h3 id="percentage"></h3>
+            <h3 id="likes">Likes: </h3>
+            <h3 id="dislikes">Dislikes: </h3>
+        </div>
     </div>
 </div>
 <form class="newBox"
@@ -57,23 +69,32 @@
         <label>Name:</label>
         <input class="light-border"
                type="text"
+               pattern=".{3,40}"
+               maxlength="40"
+               placeholder="Name"
                name="editUserName"
                required>
         <label>City:</label>
         <input class="light-border"
                type="text"
+               placeholder="city"
+               pattern=".{3,50}"
+               maxlength="50"
                name="editCity"
                required>
         <label>E-mail:</label>
         <input class="light-border"
+               placeholder="email"
                type="email"
+               maxlength="50"
                name="editEmail"
                required>
         <label>Phone number:</label>
         <input class="light-border"
-               type="number"
                name="editPhoneNumber"
-               pattern=".{3,}"
+               type="number"
+               placeholder="phone number"
+               pattern="^[0-9]{8,13}+$"
                required>
         <button class="light-border" type="submit">Save</button>
     </div>

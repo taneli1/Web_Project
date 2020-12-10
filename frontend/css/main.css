@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 300px;
+    margin-top: 150px;
 }
 
 input {
@@ -34,9 +34,9 @@ input {
 
 
 #ad_type {
-    display: flex;
     justify-content: flex-start;
     flex-direction: row;
+    margin: 10px;
 }
 
 #ad_type label {
@@ -59,3 +59,17 @@ body {
     padding-right: 10px;
     padding-left: 10px;
 }
+
+h2 {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    background-color: #00091e;
+    margin: 40px 0px;
+    box-shadow: 3px 2px 17px 0px rgba(0,0,0,0.75);
+    width: 100%;
+}
+
