@@ -122,52 +122,59 @@ const disLikeUser = async () => {
 
 //Function for getting all the likes and dislikes for that user
 const getLikes = async (user_id) => {
-  let voted2;
-  try {
-    const token = getCookie('token');
-    const fetchOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
-      },
-    };
-    const voted = await fetch(url + '/rep/vote/' + user_id, fetchOptions);
-    voted2 = await voted.json();
-  } catch (e) {
-    console.log(e.message);
-  }
-  if (voted2[0].is_like === 0) {
-    showButton(likeButton);
-    hideButton(dislikeButton);
-  } else {
-    showButton(dislikeButton);
-    hideButton(likeButton);
-  }
-  let likeAmount = 0;
-  let disLikeAmount = 0;
-  let percentageValue;
-  const response2 = await fetch(url + '/rep/' + user_id);
-  const res = await response2.json();
-  for (let i = 0; i < res.length; i++) {
-    if (res[i].is_like === 1) {
-      likeAmount++;
-    } else {
-      disLikeAmount++;
+  let voted2
+  const token = getCookie("token")
+  if (!token === undefined){
+    try {
+      const fetchOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+      };
+      const voted = await fetch(url + '/rep/vote/' + user_id, fetchOptions)
+      voted2 = await voted.json()
+    }
+    catch (e) {
+      console.log(e.message)
+    }
+    if (voted2[0].is_like === 0){
+      showButton(likeButton)
+      hideButton(dislikeButton)
+    }
+    else {
+      showButton(dislikeButton)
+      hideButton(likeButton)
     }
   }
-  percentageValue = likeAmount / (likeAmount + disLikeAmount) * 100;
-  const percentageRounded = Math.round(percentageValue * 10) / 10;
-  if (isNaN(percentageRounded)) {
-    percentage.innerText = 'No reviews yet';
-  } else {
-    percentage.innerText = '(' + percentageRounded + '% recommends)';
+
+  let likeAmount = 0
+  let disLikeAmount = 0
+  let percentageValue
+  const response2 = await fetch(url + '/rep/' + user_id);
+  const res = await response2.json()
+  for (let i = 0; i < res.length; i++) {
+    if (res[i].is_like === 1){
+      likeAmount ++
+    }
+    else {
+      disLikeAmount ++
+    }
   }
-  likes.innerText = likeAmount.toString();
-  likes2.innerText += likeAmount.toString();
-  dislikes.innerText = disLikeAmount.toString();
-  dislikes2.innerText += disLikeAmount.toString();
-};
+  percentageValue =  likeAmount / (likeAmount + disLikeAmount) * 100
+  const percentageRounded = Math.round(percentageValue * 10) / 10
+  if (isNaN(percentageRounded)){
+    percentage.innerText = "No reviews yet"
+  }
+  else {
+    percentage.innerText = "(" + percentageRounded + "% recommends)"
+  }
+  likes.innerText = likeAmount.toString()
+  likes2.innerText += likeAmount.toString()
+  dislikes.innerText = disLikeAmount.toString()
+  dislikes2.innerText += disLikeAmount.toString()
+}
 
 const hideButton = (button) => {
   button.style.border = '0px';
