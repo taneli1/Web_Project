@@ -195,6 +195,11 @@ const showButton = (button) => {
   button.style.backgroundColor = 'rgb(239, 239, 239)';
 };
 
+// deletes the cookie which keeps user logged in
+function delete_cookie(name) {
+  document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 // Button for logging out
 logoutButton.addEventListener('click', async () => {
   delete_cookie("token");
