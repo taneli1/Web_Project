@@ -109,12 +109,12 @@ const updateUser = async (req) => {
 };
 
 /**
- * Delete an user
+ * Delete an user (Not currently used in the app!)
  * @return boolean, true if something was removed, false otherwise
  */
 const deleteUser = async (req) => {
 
-  try {
+/*  try {
     console.log(TAG, 'delete user');
     const [rows] = await promisePool.execute(
         'DELETE FROM bm_user WHERE user_id = ?',
@@ -122,7 +122,7 @@ const deleteUser = async (req) => {
     return rows.affectedRows === 1;
   } catch (e) {
     console.error(TAG, 'delete:', e.message);
-  }
+  }*/
 };
 
 module.exports = {

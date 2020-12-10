@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const userModel = require('../models/userModel');
-const {validationResult} = require('express-validator');
 
 /*
   Acts as the middleman to authRoute and userModel
@@ -73,7 +72,7 @@ const user_create_post = async (req, res, next) => {
 };
 
 /**
- * Delete an user (Not currently available)
+ * Delete an user (Not currently used in the app!)
  */
 const user_delete = async (req, res) => {
 /*  const userDeletion = await userModel.deleteUser(req);

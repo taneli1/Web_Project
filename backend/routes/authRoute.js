@@ -24,7 +24,7 @@ router.put('/update/:id',
     authController.user_update,
 );
 
-// Delete an user (not currently used)
+// Delete an user (not currently used in the app! All commented for now)
 router.delete('/:id',
     passport.authenticate('jwt', {session: false}),
     validate.paramId,
