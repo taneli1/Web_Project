@@ -27,6 +27,7 @@ const selectedType = () => {
 
 selectedType();
 
+/*Takes categories from database and adds them to the category list*/
 const putCategoriesToForm = async () => {
   const fetchOptions = {
     method: 'GET',
@@ -58,6 +59,7 @@ const getSearchResult = async () => {
   await window.createNewItems(searchR);
 };
 
+/*Changes the value if buy is clicked to "buy" and sell id "sell"*/
 const adTypeSwitch = () => {
   const value = document.querySelector(
       'input[name="ad_typeSelector"]:checked').value;
@@ -68,6 +70,8 @@ const adTypeSwitch = () => {
   }
 };
 
+/*Adds event listeners to sell and buy radio buttons. After that fetches information from database
+* according to which radio button is chosen, what category is chosen and what is in the search bar*/
 const adFilters = (type) => {
   type.addEventListener('click', async () => {
     adTypeSwitch();
