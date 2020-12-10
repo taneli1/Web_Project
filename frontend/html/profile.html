@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link href="../css/header.css" rel="stylesheet">
     <link href="../css/profile.css" rel="stylesheet">
     <link href="../css/items.css" rel="stylesheet">
+    <link href="../css/breakpoints.css" rel="stylesheet">
 </head>
 <body>
+<div class="flex-container">
 <div class="header">
     <header class="page-header">
         <h1>
@@ -36,7 +39,7 @@
     <div id="user" class="newBox">
         <h2>
             My information
-            <button id="edit" class="light-border">
+            <button id="edit" class="light-border" name="profileEdit">
                 Edit
             </button>
         </h2>
@@ -98,7 +101,7 @@
                placeholder="phone number"
                pattern="^[0-9]{8,13}+$"
                required>
-        <button class="light-border" type="submit">Save</button>
+        <button class="light-border" type="submit" name="profileSave">Save</button>
     </div>
 </form>
 
@@ -106,6 +109,7 @@
 <div id="ads">
     <div id="new-item">
     </div>
+</div>
 </div>
 <script src="../../settings.js"></script>
 <script src="../js/summonAds.js"></script>
