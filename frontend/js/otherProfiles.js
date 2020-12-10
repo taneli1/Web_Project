@@ -124,7 +124,7 @@ const disLikeUser = async () => {
 const getLikes = async (user_id) => {
   let voted2
   const token = getCookie("token")
-  if (!token === undefined){
+  if (token){
     try {
       const fetchOptions = {
         method: 'GET',
