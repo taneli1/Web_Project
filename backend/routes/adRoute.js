@@ -68,7 +68,7 @@ router.post('/',
     adController.ad_post);
 
 // Delete an ad, route needs user to be logged in
-router.delete('/:ad_id',
+router.delete('/:id',
     passport.authenticate('jwt', {session: false}),
     validate.paramId,
     adController.ad_delete_by_id);
