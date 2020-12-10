@@ -2,14 +2,14 @@
     height: 600px;
 }
 
-#searchItem {
+#new-item {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-#searchItem div {
+#new-item div {
     display: flex;
     flex-direction: column;
     font-size: 26px;
@@ -29,7 +29,7 @@
 
 #searchPageS {
     background-color: white;
-    background-image: url("../searchicon.png");
+    background-image: url("../../searchicon.png");
     background-position: 10px 10px;
     background-repeat: no-repeat;
     border: 1px solid black;
@@ -44,5 +44,17 @@
 }
 
 #searchCategories {
-    display: none;
+    display: block;
+}
+
+#ad_buy, #ad_sell {
+    width: 17px;
+    height: 17px;
+}
+
+body {
+    background-color: #d2eeff;
+    padding-left: 165px;
+    padding-right: 165px
+;
 }

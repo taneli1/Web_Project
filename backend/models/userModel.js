@@ -16,8 +16,7 @@ const getAllUsers = async () => {
     const [rows] = await promisePool.execute(
         'SELECT name, user_city FROM bm_user');
     return rows;
-  }
-  catch (e) {
+  } catch (e) {
     console.log(TAG + e.message);
   }
 };
@@ -33,11 +32,9 @@ const getUserById = async (id) => {
         'SELECT * FROM bm_user WHERE user_id = ?',
         [id]);
 
-    delete rows[0].password
-    delete rows[0].admin_key
+    delete rows[0].password;
     return rows[0];
-  }
-  catch (e) {
+  } catch (e) {
     console.error('userModel:', e.message);
   }
 };
@@ -52,8 +49,7 @@ const getUserLogin = async (email) => {
         'SELECT * FROM bm_user WHERE email = ?;',
         email);
     return rows;
-  }
-  catch (e) {
+  } catch (e) {
     console.log('error', e.message);
   }
 };
@@ -74,22 +70,17 @@ const createUser = async (req) => {
           'INSERT INTO bm_user (name, password, email, phone_number, user_city)' +
           ' VALUES (?, ?, ?, ?, ?);',
           [
-            req.body.name, req.body.password,
+            req.body.name, req.body.passwordHash,
             req.body.email, req.body.phone_number,
             req.body.city]);
 
       console.log(TAG + `insert ${rows.insertId}`);
       return rows.insertId;
-    }
-    catch (e) {
+    } catch (e) {
       console.error(TAG, e);
       return 0;
     }
-  }
-  else {
-    // TODO response to account existing to frontend, cant return anything here
-    //  Since authController.user_create_post currently thinks reg is complete
-    //  if something comes back
+  } else {
     console.log(TAG,
         `Account with email address ${req.body.email} already exists!`);
     return `Account with email address ${req.body.email} already exists!`;
@@ -112,8 +103,7 @@ const updateUser = async (req) => {
           req.params.id]);
     console.log('user update:', rows);
     return rows.affectedRows === 1;
-  }
-  catch (e) {
+  } catch (e) {
     return false;
   }
 };
@@ -124,16 +114,13 @@ const updateUser = async (req) => {
  */
 const deleteUser = async (req) => {
 
-  // TODO Check that user_id matches do delete
-
   try {
     console.log(TAG, 'delete user');
     const [rows] = await promisePool.execute(
         'DELETE FROM bm_user WHERE user_id = ?',
         [req.params.id]);
     return rows.affectedRows === 1;
-  }
-  catch (e) {
+  } catch (e) {
     console.error(TAG, 'delete:', e.message);
   }
 };
@@ -144,5 +131,5 @@ module.exports = {
   getUserById,
   getUserLogin,
   deleteUser,
-  updateUser
+  updateUser,
 };

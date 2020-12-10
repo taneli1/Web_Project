@@ -11,7 +11,7 @@ const {validationResult} = require('express-validator');
   Acts as the middleman to authRoute and userModel
   for more complex user interaction (Login, register...).
 
-  Basic fetches are done via userController.
+  Basic user fetches are done via userController.
  */
 
 /**
@@ -51,50 +51,49 @@ const login = (req, res) => {
  */
 const user_create_post = async (req, res, next) => {
 
-  console.log(TAG, 'UserCreate');
-  const errors = validationResult(req);
+  // Password Hashing
+  const salt = bcrypt.genSaltSync(10);
+  req.body.passwordHash = bcrypt.hashSync(req.body.password, salt);
 
-  if (!errors.isEmpty()) {
-    console.log(TAG, 'user create error', errors);
-    res.send(errors.array());
+  /*
+  Since createUser returns the insertID of the account created,
+  Check if the answer is number, if it is, we know that the
+  User registration completed successfully.
+  Else respond with the err message, inside of const ok
+   */
+  const ok = await userModel.createUser(req);
+
+  if (!isNaN(ok)) {
+    next();
   }
   else {
-
-    // Password Hashing
-    const salt = bcrypt.genSaltSync(10);
-    req.body.password = bcrypt.hashSync(req.body.password, salt);
-
-    /*
-    Since createUser returns the insertID of the account created,
-    Check if the answer is number, if it is, we know that the
-    User registration completed successfully.
-    Else respond with the err message, inside of const ok
-     */
-    const ok = await userModel.createUser(req);
-
-    if (!isNaN(ok)) {
-      next();
-    }
-    else {
-      res.status(400).json({error: ok});
-    }
+    return res.status(400).json({error: ok});
   }
+
 };
 
 /**
- * Delete an user
+ * Delete an user (Not currently available)
  */
 const user_delete = async (req, res) => {
-  const userDeletion = await userModel.deleteUser(req);
-  res.json(userDeletion);
+/*  const userDeletion = await userModel.deleteUser(req);
+  res.json(userDeletion);*/
 };
 
 /**
- * Update user
+ * Update an user
  */
 const user_update = async (req, res) => {
-  const editOk = userModel.updateUser(req);
-  res.json(editOk);
+
+  // See if the user wanted to be updated matches with the token user
+  // Update if they do
+  const tokenId = req.user.user_id;
+  if (tokenId.toString() === req.params.id) {
+    const editOk = userModel.updateUser(req);
+    res.json(editOk);
+  } else {
+    res.json("Cannot update someone else's profile");
+  }
 };
 
 // Logout

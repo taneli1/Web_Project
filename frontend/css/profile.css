@@ -1,0 +1,109 @@
+.header {
+    padding-bottom: 100px;
+}
+
+.newText {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 26px;
+}
+
+#new-item div {
+    display: flex;
+    flex-direction: column;
+    font-size: 26px;
+    border: 1px solid black;
+    width: 25%;
+    height: 25%;
+}
+
+#new-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#ad_type label {
+    font-size: 26px;
+}
+
+#ad_type {
+    display: flex;
+    justify-content: flex-start;
+}
+body {
+    margin-right: 165px;
+    margin-left: 165px;
+    background-color: #d2eeff;
+}
+
+.newBox {
+    border-radius: 8px;
+    color: #000000;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    box-shadow: 3px 2px 17px 0px rgba(0,0,0,0.75);
+    display: flex;
+}
+
+.newBox2 {
+    padding: 10px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 26px;
+}
+
+h2 {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    background-color: #00091e;
+}
+
+#myAds {
+    margin: 40px 0px;
+    box-shadow: 3px 2px 17px 0px rgba(0,0,0,0.75);
+}
+
+#edit {
+    float: right;
+}
+input, select {
+    display: inline-block;
+    width: 100%;
+    margin: .5em 0;
+}
+
+.newBox3 {
+    padding: 10px;
+}
+
+.newBox2 div {
+    font-size: 20px;
+}
+
+#user {
+    width: 70%;
+    display: block;
+}
+
+#user h2, #reputation h2 {
+    margin: 0;
+}
+
+#reputation {
+    width: 30%;
+    display: block;
+    margin-left: 10px;
+    height: fit-content;
+}
+ #userInfo {
+     display: flex;
+ }

@@ -1,0 +1,75 @@
+.flex-container {
+    height: 600px;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+}
+
+input {
+    width: 100%;
+}
+
+#search {
+    background-color: white;
+    background-image: url("../../searchicon.png");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    border-radius: 12px;
+    font-size: 26px;
+    padding: 12px 30px 12px 40px;
+}
+
+
+.newText {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 26px;
+}
+
+
+#ad_type {
+    justify-content: flex-start;
+    flex-direction: row;
+    margin: 10px;
+}
+
+#ad_type label {
+    font-size: 26px;
+}
+
+#ad_buy, #ad_sell {
+    width: 17px;
+    height: 25px;
+}
+
+body {
+    margin-right: 165px;
+    margin-left: 165px;
+    background-color: #d2eeff;
+}
+
+#everything {
+    background-color: #d2eeff;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+h2 {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    background-color: #00091e;
+    margin: 40px 0px;
+    box-shadow: 3px 2px 17px 0px rgba(0,0,0,0.75);
+    width: 100%;
+}
+

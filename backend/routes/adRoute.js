@@ -1,63 +1,76 @@
 'use strict';
-// TODO Image uploads, Validation
 
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const adController = require('../controllers/adController');
 const passport = require('passport');
-const {body} = require('express-validator');
+const validate = require('../utils/validation');
 
-// Image check
+// Image type check
 const fileFilter = (req, file, cb) => {
-    if (!file.mimetype.includes('image')) {
-        return cb(null, false, new Error('not an image'));
-    } else cb(null, true)
+  if (!file.mimetype.includes('image')) {
+    return cb(null, false, new Error('not an image'));
+  } else cb(null, true);
 };
 
+// Resize all images in the array, current limit 1 image per post
 const resizeImages = async (req, res, next) => {
-    console.log("Resize")
-    console.log(req.files.length)
+  try {
     for (let i = 0; i < req.files.length; i++) {
-        await adController.resize_image(req.files[i],res,next)
-        console.log("inside for loop")
+      await adController.resize_image(req.files[i], res, next);
+      console.log('inside for loop');
     }
-    next()
-}
-// Where to upload images
-const upload = multer({dest: './ads/images/', fileFilter});
+  } catch (e) {
+    console.log(e);
+  }
+};
 
-// Get all of user's ads from this route
-router.get('/user/:userId', adController.ad_get_user_ads);
+// Image(s) upload destination
+const upload = multer({dest: './public/images/', fileFilter});
 
-// Search for results in database with keyword(s)
-router.get('/search/:ad_type/:keywords', adController.ad_search_keywords);
+// Specify ad type (buy/sell) and fetch all of them
+router.get('/:ad_type',
+    validate.paramType,
+    adController.ad_get_list);
 
-// Get results with the category of ads
-router.get('/category/:ad_type/:ctg', adController.ad_get_by_category);
+// Get single ad with its id
+router.get('/id/:id',
+    validate.paramId,
+    adController.ad_get_by_id);
 
-// Get all ads of specified type
-router.get('/:ad_type', adController.ad_get_list);
-// Get single ad of specified type with its id
-router.get('/:ad_type/:id', adController.ad_get_by_id);
+// Get all of single user's ads
+router.get('/user/:id',
+    validate.paramId,
+    adController.ad_get_user_ads);
 
+// Get all possible categories for frontend
+router.get('/category/get', adController.ad_get_categories);
+// Get all ads of specified type (buy/sell) from a category
+router.get('/category/:ad_type/:category',
+    validate.paramType,
+    validate.paramCategory,
+    adController.ad_get_by_category);
 
-// Post an ad, route needs user to be logged in, create thumbnails
-router.post('/:ad_type',
+// Search for results in database with keyword(s), type and category (optional)
+router.get('/search/:ad_type/:keywords/:category',
+    validate.paramType,
+    validate.paramKeyword,
+    validate.paramCategory,
+    adController.ad_search_keywords);
+
+// Post an ad, route needs user to be logged in, create thumbnail(s)
+router.post('/',
     passport.authenticate('jwt', {session: false}),
-    upload.array('image', 5),
+    upload.array('image', 1),
     resizeImages,
-    [
-        body('item_name', 'min length 3 chars').isLength({min: 3}),
-        body('city', 'min length 3 chars').isLength({min: 3}),
-        body('price', 'must be a number').isLength({min: 1}).isNumeric(),
-        body('description', 'min length 3 chars').isLength({min: 3}),
-    ],
+    validate.adPost,
     adController.ad_post);
 
 // Delete an ad, route needs user to be logged in
-router.delete('/:ad_type/:ad_id',
+router.delete('/:ad_id',
     passport.authenticate('jwt', {session: false}),
+    validate.paramId,
     adController.ad_delete_by_id);
 
 module.exports = router;
