@@ -3,12 +3,6 @@
 Marketplace for secondhand items.
 
 
-Contributors: 
-Teme8 = Teemu Tirkkonen
-j4zuu  = Jasu Honkanen
-taneli1 = Leevi Limnell
-
-
 
 
 Installation: 
